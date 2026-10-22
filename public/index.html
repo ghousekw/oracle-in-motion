@@ -16382,7 +16382,7 @@ function renderNotes(l){
   $('words').innerHTML=(l.words||[]).map((w,i)=>'<div class="w" data-i="'+i+'"><dt>'+esc(w[0])+'</dt><dd>'+md(w[1])+'</dd></div>').join('');
   /* mistakes */
   const ms=l.mistakes||[];
-  $('p-galti').innerHTML=ms.length?'<p class="note">Beginners yeh galtiyan sabse zyada karte hain. Galat wala chala ke dekho, error khud dekho, phir sahi wala.</p>'+ms.map((m,i)=>{
+  $('p-galti').innerHTML=ms.length?'<p class="note">'+(nx||py?'Beginners yeh galtiyan sabse zyada karte hain. Galat aur sahi code ko milake dekho, farq samajh aa jayega.':'Beginners yeh galtiyan sabse zyada karte hain. Galat wala chala ke dekho, error khud dekho, phir sahi wala.')+'</p>'+ms.map((m,i)=>{
     const errLab=m.err==='no rows'?'koi row nahi':m.err==='wrong'?'galat result':m.err;
     return '<div class="mis"><div class="row bad"><div class="lab"><span>Galat</span><span class="chipe">'+esc(errLab)+'</span></div><pre>'+hlBlock(m.bad||'',py||m.py)+'</pre>'+(m.py||py||m.nx||nx?'':'<div><button class="lk" type="button" data-try="bad" data-i="'+i+'">Playground mein chala ke dekho</button></div>')+'</div>'+
       '<div class="row"><p class="why">'+md(m.why||'')+'</p></div>'+
