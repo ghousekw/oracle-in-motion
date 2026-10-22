@@ -1,5 +1,6 @@
 name: voice-samples
 on:
+  workflow_dispatch:
   push:
     branches: [voice-samples]
     paths: ['tools/voice/**', '.github/workflows/voice-samples.yml']
@@ -15,6 +16,8 @@ jobs:
           python-version: '3.12'
       - run: pip install edge-tts
       - run: python tools/voice/samples.py
+        env:
+          SARVAM_API_KEY: ${{ secrets.SARVAM_API_KEY }}
       - name: Commit samples
         run: |
           git config user.name "github-actions[bot]"
