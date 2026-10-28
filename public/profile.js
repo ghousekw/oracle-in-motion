@@ -726,7 +726,7 @@ function renderModalTab(tabName){
         msg.textContent = 'Signing in...';
         let res = await sbClient.auth.signInWithPassword({ email, password });
         if(res.error && /Invalid login credentials/i.test(res.error.message)){
-          res = await sbClient.auth.signUp({ email, password });
+          res = await sbClient.auth.signUp({ email, password, options: { emailRedirectTo: location.origin + location.pathname } });
           if(!res.error){
             if(res.data && res.data.session){
               msg.textContent = 'Account ban gaya aur sign in ho gaya!';
