@@ -202,27 +202,39 @@ function initUI(){
   modalWrap.className = 'pmodal-back';
   modalWrap.id = 'pModalBack';
   modalWrap.hidden = true;
+  const ico = d => `<svg viewBox="0 0 16 16" aria-hidden="true"><path d="${d}" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
   modalWrap.innerHTML = `
     <div class="pmodal" role="dialog" aria-modal="true" aria-labelledby="pmTitle">
-      <header class="pmodal-hd">
-        <div class="pmodal-user">
+      <aside class="pm-rail">
+        <div class="pm-id">
           <div class="pmodal-av" id="pmAv">L</div>
-          <div>
+          <div class="pm-id-txt">
             <h2 id="pmTitle">Learner</h2>
-            <p><span id="pmRole">SQL & PL/SQL Developer</span> <span class="pbadge" id="pmLevel">LVL 1 · 0 XP</span> <span class="pbadge ok" id="pmSyncBadge" hidden>Cloud Synced</span></p>
+            <p id="pmRole">SQL & PL/SQL Developer</p>
           </div>
         </div>
-        <button class="ibtn" id="pmClose" type="button" aria-label="Band karo" title="Band karo (Esc)">
-          <svg viewBox="0 0 16 16"><path d="M3.5 3.5l9 9M12.5 3.5l-9 9" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
-        </button>
-      </header>
-      <div class="ptabs" role="tablist" id="pmTabs">
-        <button type="button" class="ptab" role="tab" data-ptab="overview" aria-selected="true">Dashboard & Tracking</button>
-        <button type="button" class="ptab" role="tab" data-ptab="bookmarks" aria-selected="false">Bookmarks & Notes</button>
-        <button type="button" class="ptab" role="tab" data-ptab="certificates" aria-selected="false">Certificates</button>
-        <button type="button" class="ptab" role="tab" data-ptab="cloud" aria-selected="false">Profile & Cloud Login</button>
-      </div>
-      <div class="pbody" id="pmBody"></div>
+        <div class="pm-level">
+          <div class="pm-level-top"><b id="pmLevel">Level 1</b><span id="pmXp">0 / 250 XP</span></div>
+          <div class="pm-meter"><i id="pmXpBar"></i></div>
+          <small id="pmXpNext"></small>
+        </div>
+        <nav class="ptabs" role="tablist" id="pmTabs" aria-orientation="vertical" aria-label="Profile sections">
+          <button type="button" class="ptab" role="tab" data-ptab="overview" aria-selected="true">${ico('M2.5 13.5h11M4 11V8M7 11V4.5M10 11V6.5M13 11V3')}Progress</button>
+          <button type="button" class="ptab" role="tab" data-ptab="bookmarks" aria-selected="false">${ico('M4 2.5h8a1 1 0 0 1 1 1v10l-5-3-5 3v-10a1 1 0 0 1 1-1z')}Bookmarks & notes<span class="ct" id="pmSavedCt"></span></button>
+          <button type="button" class="ptab" role="tab" data-ptab="certificates" aria-selected="false">${ico('M8 9.5a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM5.8 8.6 5 14l3-1.6 3 1.6-.8-5.4')}Certificates<span class="ct" id="pmCertCt"></span></button>
+          <button type="button" class="ptab" role="tab" data-ptab="cloud" aria-selected="false">${ico('M8 7.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5zM3 13.5c.6-2.6 2.6-4 5-4s4.4 1.4 5 4')}Account</button>
+        </nav>
+        <p class="pm-sync" id="pmSyncBadge"><span class="dot"></span><span id="pmSyncTxt">Sirf is browser mein saved</span></p>
+      </aside>
+      <section class="pm-main">
+        <header class="pm-main-hd">
+          <h3 id="pmTabTitle">Progress</h3>
+          <button class="ibtn" id="pmClose" type="button" aria-label="Band karo" title="Band karo (Esc)">
+            <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 3.5l9 9M12.5 3.5l-9 9" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+          </button>
+        </header>
+        <div class="pbody" id="pmBody" role="tabpanel" aria-labelledby="pmTabTitle"></div>
+      </section>
     </div>
   `;
   document.body.appendChild(modalWrap);
@@ -234,6 +246,16 @@ function initUI(){
     const b = e.target.closest('.ptab');
     if(!b) return;
     renderModalTab(b.dataset.ptab);
+  });
+  $('pmTabs').addEventListener('keydown', e => {
+    const step = { ArrowDown: 1, ArrowRight: 1, ArrowUp: -1, ArrowLeft: -1 }[e.key];
+    if(!step) return;
+    e.preventDefault();
+    const tabs = [...$('pmTabs').querySelectorAll('.ptab')];
+    const i = tabs.findIndex(b => b.dataset.ptab === activeModalTab);
+    const next = tabs[(i + step + tabs.length) % tabs.length];
+    renderModalTab(next.dataset.ptab);
+    next.focus();
   });
 
   // Hook into Quiz (`Test` tab) clicks to record quiz score
@@ -394,28 +416,47 @@ function decorateSidebarBookmarks(){
 
 /* ---------- Modal Rendering ---------- */
 let activeModalTab = 'overview';
+let modalReturnFocus = null;
+const TAB_TITLES = { overview: 'Progress', bookmarks: 'Bookmarks aur notes', certificates: 'Certificates', cloud: 'Profile aur account' };
+
 function openProfileModal(tabName){
   activeModalTab = tabName || 'overview';
+  modalReturnFocus = document.activeElement;
   $('pModalBack').hidden = false;
-  renderModalHeader();
   renderModalTab(activeModalTab);
+  const sel = document.querySelector('#pmTabs .ptab[aria-selected="true"]');
+  if(sel) sel.focus();
 }
 function closeProfileModal(){
   $('pModalBack').hidden = true;
+  if(modalReturnFocus && modalReturnFocus.focus) modalReturnFocus.focus();
+}
+
+function courseCounts(c, done){
+  const cDone = c.lessons.filter(l => done.has(l.id)).length;
+  return { cDone, total: c.lessons.length, pct: c.lessons.length ? cDone / c.lessons.length * 100 : 0 };
 }
 
 function renderModalHeader(){
   const st = calcStats();
+  const done = getDoneSet();
+  const lvFloor = (st.level - 1) * 250, lvCeil = st.level * 250;
   $('pmAv').textContent = getInitials(profile.name);
   $('pmAv').style.background = profile.avatarColor || 'var(--accent)';
   $('pmTitle').textContent = profile.name || 'Learner';
   $('pmRole').textContent = profile.role || 'SQL & PL/SQL Developer';
-  $('pmLevel').textContent = 'LVL ' + st.level + ' · ' + st.xp + ' XP';
+  $('pmLevel').textContent = 'Level ' + st.level;
+  $('pmXp').textContent = st.xp + ' / ' + lvCeil + ' XP';
+  $('pmXpBar').style.width = ((st.xp - lvFloor) / 250 * 100).toFixed(1) + '%';
+  $('pmXpNext').textContent = (lvCeil - st.xp) + ' XP aur, phir Level ' + (st.level + 1);
+  const saved = bookmarks.size + Object.keys(notes).filter(id => notes[id] && notes[id].trim()).length;
+  $('pmSavedCt').textContent = saved || '';
+  const certs = getCoursesList().filter(c => { const k = courseCounts(c, done); return k.total && k.cDone >= k.total; }).length;
+  $('pmCertCt').textContent = certs || '';
   const sb = $('pmSyncBadge');
-  if(sb){
-    sb.hidden = !sbUser;
-    if(sbUser) sb.textContent = '☁ ' + (sbUser.email || 'Cloud Synced');
-  }
+  sb.classList.toggle('on', !!sbUser);
+  $('pmSyncTxt').textContent = sbUser ? 'Cloud sync: ' + (sbUser.email || 'on') : 'Sirf is browser mein saved';
+  sb.title = sbUser ? (lastSyncAt ? 'Last sync ' + new Date(lastSyncAt).toLocaleTimeString() : '') : 'Account tab se sign in karke cloud sync chalu karo';
 }
 
 function getCoursesList(){
@@ -429,22 +470,27 @@ function getCoursesList(){
 function renderModalTab(tabName){
   activeModalTab = tabName;
   document.querySelectorAll('#pmTabs .ptab').forEach(b => {
-    b.setAttribute('aria-selected', b.dataset.ptab === tabName ? 'true' : 'false');
+    const on = b.dataset.ptab === tabName;
+    b.setAttribute('aria-selected', on ? 'true' : 'false');
+    b.tabIndex = on ? 0 : -1;
   });
+  $('pmTabTitle').textContent = TAB_TITLES[tabName] || '';
   renderModalHeader();
   const body = $('pmBody');
+  body.scrollTop = 0;
   const st = calcStats();
   const done = getDoneSet();
   const tasks = getTasksSet();
   const courses = getCoursesList();
 
   if(tabName === 'overview'){
-    const pct = st.totalLessons ? Math.round((st.doneCount / st.totalLessons) * 100) : 0;
+    const pct = st.totalLessons ? (st.doneCount / st.totalLessons) * 100 : 0;
     const todayMin = Math.round(st.streak.todaySec / 60);
     const goalMin = profile.goalMin || 20;
     const goalPct = Math.min(100, Math.round((todayMin / goalMin) * 100));
+    const tKey = todayKey();
 
-    // Build last 14 days heatmap
+    // Last 14 days activity strip
     const days14 = [];
     for(let i = 13; i >= 0; i--){
       const dt = new Date(Date.now() - i * 86400000);
@@ -452,72 +498,88 @@ function renderModalTab(tabName){
       const a = activity[k] || { sec: 0, lessons: 0, tasks: 0 };
       const min = Math.round((a.sec || 0) / 60);
       const lv = (min >= 20 || a.lessons >= 2) ? 'l3' : (min >= 5 || a.lessons >= 1 || a.tasks >= 1) ? 'l2' : (a.sec > 0 ? 'l1' : '');
-      days14.push({ k, label: k.slice(8,10), min, lessons: a.lessons || 0, lv });
+      days14.push({ k, wd: dt.toLocaleDateString('en', { weekday: 'narrow' }), dn: +k.slice(8,10), min, lessons: a.lessons || 0, lv, today: k === tKey });
     }
 
+    // Course ruler: one segment per course, sized by lesson count, with cumulative lesson ticks
+    let cum = 0;
+    const segs = courses.map(c => {
+      const k = courseCounts(c, done);
+      const s = { c, k, start: cum };
+      cum += k.total;
+      return s;
+    });
+    // label a course boundary only when it sits at least 8% away from its labelled neighbours
+    const ticks = [];
+    segs.forEach(s => {
+      const left = s.start / cum * 100;
+      const prev = ticks[ticks.length - 1];
+      if((!prev || left - prev.left >= 8) && 100 - left >= 8) ticks.push({ at: s.start, left });
+    });
+    ticks.push({ at: cum, left: 100, end: true });
+
     body.innerHTML = `
-      <div class="kpis">
-        <div class="kpi">
-          <span>Lessons Completed</span>
-          <b>${st.doneCount} / ${st.totalLessons}</b>
-          <small>${pct}% overall course progress</small>
+      <section class="pm-hero">
+        <div class="pm-hero-num">
+          <b>${st.doneCount}</b><span>/ ${st.totalLessons} lessons poore</span>
+          <em>${pct < 1 && pct > 0 ? '<1' : Math.round(pct)}%</em>
         </div>
-        <div class="kpi">
-          <span>Practice Tasks</span>
-          <b>${st.tasksCount}</b>
-          <small>SQL & PL/SQL queries solved</small>
+        <div class="pm-ruler" role="img" aria-label="${st.doneCount} of ${st.totalLessons} lessons complete across ${courses.length} courses">
+          ${segs.map(s => `<div class="seg ${s.k.pct >= 100 ? 'done' : ''}" style="flex:${s.k.total} 1 0" title="${esc(s.c.name)}: ${s.k.cDone}/${s.k.total}"><i style="width:${s.k.pct.toFixed(1)}%"></i></div>`).join('')}
         </div>
-        <div class="kpi">
-          <span>Quiz Accuracy</span>
-          <b>${st.quizTotal ? Math.round((st.quizRight / st.quizTotal)*100) + '%' : '—'}</b>
-          <small>${st.quizRight} / ${st.quizTotal} tests sahi</small>
+        <div class="pm-scale" aria-hidden="true">
+          ${ticks.map(t => `<span class="${t.at === 0 ? 'first' : t.end ? 'last' : ''}" style="left:${t.left.toFixed(2)}%">${t.at}</span>`).join('')}
         </div>
-        <div class="kpi">
-          <span>Current Streak</span>
-          <b>🔥 ${st.streak.current} Din</b>
-          <small>Best: ${st.streak.best} din · Total ${st.totalMin} min</small>
-        </div>
-      </div>
+      </section>
 
-      <div class="pcard">
-        <h3><span>Aaj ka Daily Target (${todayMin} / ${goalMin} min)</span><span>${goalPct}%</span></h3>
-        <div class="cprog-bar ${goalPct>=100?'done':''}"><i style="width:${goalPct}%"></i></div>
-        <div class="heat-row">
-          ${days14.map(d => `
-            <div class="heat-cell" title="${d.k}: ${d.min} min, ${d.lessons} lessons">
-              <div class="heat-box ${d.lv}"></div>
-              <span>${d.label}</span>
-            </div>
-          `).join('')}
-        </div>
-      </div>
+      <section class="pm-stats">
+        <div class="pm-stat"><span>Practice tasks</span><b>${st.tasksCount}</b><small>queries solve ki</small></div>
+        <div class="pm-stat"><span>Quiz</span><b>${st.quizTotal ? Math.round((st.quizRight / st.quizTotal) * 100) + '%' : '0'}</b><small>${st.quizTotal ? st.quizRight + ' of ' + st.quizTotal + ' sahi' : 'abhi koi quiz nahi diya'}</small></div>
+        <div class="pm-stat"><span>Streak</span><b>${st.streak.current} din</b><small>best ${st.streak.best} din</small></div>
+        <div class="pm-stat"><span>Total padhai</span><b>${st.totalMin >= 60 ? (st.totalMin / 60).toFixed(1) + ' hr' : st.totalMin + ' min'}</b><small>active time</small></div>
+      </section>
 
-      <div class="pcard">
-        <h3><span>Course-wise Tracking</span><span>7 Courses</span></h3>
-        <div class="cprog-list">
-          ${courses.map(c => {
-            const cDone = c.lessons.filter(l => done.has(l.id)).length;
+      <section class="psec">
+        <div class="psec-hd"><h4>Aaj ka target</h4><span>Goal Account tab se badlo</span></div>
+        <div class="pm-today">
+          <div class="pm-goal">
+            <p><b>${todayMin}</b> / ${goalMin} min</p>
+            <div class="pm-meter ${goalPct >= 100 ? 'done' : ''}"><i style="width:${goalPct}%"></i></div>
+            <small>${goalPct >= 100 ? 'Aaj ka target poora ho gaya.' : (goalMin - todayMin) + ' min aur padho'}</small>
+          </div>
+          <div class="pm-days" aria-label="Pichhle 14 din ki activity">
+            ${days14.map(d => `
+              <div class="pm-day ${d.today ? 'today' : ''}" title="${d.k}: ${d.min} min, ${d.lessons} lessons">
+                <i class="${d.lv}"></i><span>${d.dn}</span>
+              </div>`).join('')}
+          </div>
+        </div>
+      </section>
+
+      <section class="psec">
+        <div class="psec-hd"><h4>Courses</h4><span>${courses.length} courses</span></div>
+        <div class="pm-list">
+          ${segs.map(({ c, k }) => {
             const cTasksTotal = c.lessons.reduce((acc, l) => acc + ((l.tasks && l.tasks.length) || 0), 0);
             const cTasksDone = c.lessons.reduce((acc, l) => acc + ((l.tasks || []).filter((_, i) => tasks.has(l.id+'#'+i)).length), 0);
-            const cQuizDone = c.lessons.filter(l => quizzes[l.id] && quizzes[l.id].ok).length;
-            const cp = c.lessons.length ? (cDone / c.lessons.length * 100) : 0;
+            const complete = k.pct >= 100;
             const nextL = c.lessons.find(l => !done.has(l.id)) || c.lessons[0];
+            const cta = complete ? 'Review karo' : k.cDone ? 'Jaari rakho' : 'Shuru karo';
             return `
-              <div class="cprog-item">
-                <div class="cprog-top">
+              <div class="pm-course">
+                <div class="pm-course-name">
                   <b>${esc(c.name)}</b>
-                  <span>${cDone}/${c.lessons.length} lessons · ${cTasksDone}/${cTasksTotal} tasks · ${cQuizDone} quizzes</span>
+                  <small>${complete ? 'Course poora ho gaya' : 'Agla: ' + esc(nextL.title)}</small>
                 </div>
-                <div class="cprog-bar ${cp>=100?'done':''}"><i style="width:${cp.toFixed(1)}%"></i></div>
-                <div style="display:flex;justify-content:space-between;align-items:center;margin-top:2px">
-                  <small style="color:var(--muted);font-size:12px">${cp>=100 ? '✅ Course Complete!' : 'Agla: ' + esc(nextL.title)}</small>
-                  <button type="button" class="lk" data-goto="${esc(nextL.id)}">${cp>=100 ? 'Review karo' : 'Continue →'}</button>
+                <div class="pm-course-prog">
+                  <div class="pm-meter ${complete ? 'done' : ''}"><i style="width:${k.pct.toFixed(1)}%"></i></div>
+                  <small>${k.cDone}/${k.total} lessons, ${cTasksDone}/${cTasksTotal} tasks</small>
                 </div>
-              </div>
-            `;
+                <button type="button" class="btn ${k.cDone && !complete ? '' : 'ghost'}" data-goto="${esc(nextL.id)}">${cta}</button>
+              </div>`;
           }).join('')}
         </div>
-      </div>
+      </section>
     `;
     body.querySelectorAll('[data-goto]').forEach(b => b.addEventListener('click', () => {
       location.hash = b.dataset.goto;
@@ -530,34 +592,37 @@ function renderModalTab(tabName){
     const noteIds = Object.keys(notes).filter(id => notes[id] && notes[id].trim() && oim.byId[id]);
 
     body.innerHTML = `
-      <div class="pcard">
-        <h3><span>★ Bookmarked Lessons (${bmArr.length})</span></h3>
-        ${bmArr.length ? `<div class="bmlist">${bmArr.map(l => `
-          <div class="bmitem">
-            <div>
+      <section class="psec">
+        <div class="psec-hd"><h4>Bookmarks</h4><span>${bmArr.length} lessons</span></div>
+        ${bmArr.length ? `<div class="pm-list">${bmArr.map(l => `
+          <div class="pm-item">
+            <div class="pm-item-txt">
               <a href="#${esc(l.id)}" data-close="1">${esc(l.title)}</a>
-              <small>${esc(l.c.name)} · ${esc(l.secName)}</small>
+              <small>${esc(l.c.name)}, ${esc(l.secName)}</small>
             </div>
             <button type="button" class="btn ghost" data-unbm="${esc(l.id)}">Hatao</button>
           </div>
-        `).join('')}</div>` : '<p class="note">Abhi koi lesson bookmark nahi kiya hai. Header mein ★ button daba kar mushkil topics save karo.</p>'}
-      </div>
+        `).join('')}</div>` : '<p class="pm-empty">Koi bookmark nahi hai. Mushkil lesson par header ka bookmark button dabao, woh yahan aa jayega.</p>'}
+      </section>
 
-      <div class="pcard">
-        <h3><span>📝 Tumhare Saved Notes (${noteIds.length})</span></h3>
-        ${noteIds.length ? `<div class="bmlist">${noteIds.map(id => {
+      <section class="psec">
+        <div class="psec-hd"><h4>Notes</h4><span>${noteIds.length} lessons</span></div>
+        ${noteIds.length ? `<div class="pm-list">${noteIds.map(id => {
           const l = oim.byId[id];
           return `
-            <div class="bmitem" style="align-items:flex-start;flex-direction:column">
-              <div style="display:flex;justify-content:space-between;width:100%;align-items:center">
-                <a href="#${esc(l.id)}" data-close="1">${esc(l.title)} <small style="display:inline">(${esc(l.c.name)})</small></a>
-                <button type="button" class="lk" data-delnote="${esc(l.id)}">Delete</button>
+            <div class="pm-item pm-note">
+              <div class="pm-item-row">
+                <div class="pm-item-txt">
+                  <a href="#${esc(l.id)}" data-close="1">${esc(l.title)}</a>
+                  <small>${esc(l.c.name)}</small>
+                </div>
+                <button type="button" class="btn ghost" data-delnote="${esc(l.id)}">Delete</button>
               </div>
-              <pre style="margin:4px 0 0;font:400 13px/1.45 var(--f-body);white-space:pre-wrap;color:var(--ink)">${esc(notes[id])}</pre>
+              <pre>${esc(notes[id])}</pre>
             </div>
           `;
-        }).join('')}</div>` : '<p class="note">Kisi bhi lesson ke "Notes" tab mein jaakar apne personal notes likho.</p>'}
-      </div>
+        }).join('')}</div>` : '<p class="pm-empty">Koi note nahi hai. Kisi bhi lesson ke Notes tab mein likho, sab notes yahan ek jagah milenge.</p>'}
+      </section>
     `;
     body.querySelectorAll('[data-close]').forEach(a => a.addEventListener('click', closeProfileModal));
     body.querySelectorAll('[data-unbm]').forEach(b => b.addEventListener('click', () => {
@@ -578,28 +643,27 @@ function renderModalTab(tabName){
 
   else if(tabName === 'certificates'){
     body.innerHTML = `
-      <div class="pcard">
-        <h3><span>Course Completion Certificates</span></h3>
-        <p class="note">Jis course ke saare lessons tum poore kar loge, uska official <b>Oracle in Motion</b> certificate apne naam (${esc(profile.name)}) ke saath download/print kar sakte ho.</p>
-        <div class="bmlist">
-          ${courses.map(c => {
-            const cDone = c.lessons.filter(l => done.has(l.id)).length;
-            const isComplete = cDone >= c.lessons.length && c.lessons.length > 0;
-            const pct = Math.round((cDone / c.lessons.length) * 100);
-            return `
-              <div class="bmitem">
-                <div>
-                  <b>${esc(c.name)}</b>
-                  <small>${cDone} / ${c.lessons.length} lessons (${pct}%)</small>
-                </div>
-                ${isComplete
-                  ? `<button type="button" class="btn" data-cert="${esc(c.id)}">🎓 Certificate Download</button>`
-                  : `<span class="pbadge">${c.lessons.length - cDone} baaki</span>`
-                }
+      <p class="pm-lead">Kisi course ke saare lessons poore karo, phir uska certificate <b>${esc(profile.name)}</b> naam ke saath print ya PDF save kar sakte ho. Naam Account tab se badlo.</p>
+      <div class="pm-list">
+        ${courses.map(c => {
+          const k = courseCounts(c, done);
+          const isComplete = k.total > 0 && k.cDone >= k.total;
+          return `
+            <div class="pm-course pm-cert">
+              <div class="pm-course-name">
+                <b>${esc(c.name)}</b>
+                <small>${isComplete ? 'Certificate taiyaar hai' : (k.total - k.cDone) + ' lessons baaki'}</small>
               </div>
-            `;
-          }).join('')}
-        </div>
+              <div class="pm-course-prog">
+                <div class="pm-meter ${isComplete ? 'done' : ''}"><i style="width:${k.pct.toFixed(1)}%"></i></div>
+                <small>${k.cDone}/${k.total} lessons</small>
+              </div>
+              ${isComplete
+                ? `<button type="button" class="btn" data-cert="${esc(c.id)}">Certificate kholo</button>`
+                : `<button type="button" class="btn ghost" disabled>Locked</button>`}
+            </div>
+          `;
+        }).join('')}
       </div>
     `;
     body.querySelectorAll('[data-cert]').forEach(b => b.addEventListener('click', () => printCertificate(b.dataset.cert)));
@@ -608,96 +672,67 @@ function renderModalTab(tabName){
   else if(tabName === 'cloud'){
     const colors = ['#B1530A','#2F55B2','#0A7367','#27803E','#6A4BAE','#B0362B'];
     body.innerHTML = `
-      <div class="pcard">
-        <h3><span>1. Tumhari Profile</span><span>Local + Cloud</span></h3>
+      <section class="psec">
+        <div class="psec-hd"><h4>Profile</h4><span>Certificate par yahi naam chhapega</span></div>
         <div class="pform">
           <div class="prow">
             <div class="pfield">
-              <label for="pfName">Tumhara Naam (Certificate ke liye)</label>
-              <input id="pfName" type="text" value="${esc(profile.name)}" placeholder="Apna naam likho">
+              <label for="pfName">Naam</label>
+              <input id="pfName" type="text" value="${esc(profile.name)}" placeholder="Apna poora naam" autocomplete="name">
             </div>
             <div class="pfield">
-              <label for="pfRole">Role / Goal</label>
+              <label for="pfRole">Role ya goal</label>
               <select id="pfRole">
                 ${['SQL & PL/SQL Developer','Oracle DBA Trainee','Forms & Reports 12c Dev','Python + Oracle Engineer','Full-Stack Student'].map(r => `<option value="${esc(r)}" ${profile.role===r?'selected':''}>${esc(r)}</option>`).join('')}
               </select>
             </div>
             <div class="pfield">
-              <label for="pfGoal">Daily Study Goal (Minutes)</label>
+              <label for="pfGoal">Roz ka target (minutes)</label>
               <input id="pfGoal" type="number" min="5" max="240" step="5" value="${profile.goalMin || 20}">
             </div>
           </div>
           <div class="pfield">
-            <label>Avatar Colour</label>
-            <div style="display:flex;gap:8px;align-items:center">
-              ${colors.map(c => `<button type="button" data-col="${c}" style="width:28px;height:28px;border-radius:50%;background:${c};border:${profile.avatarColor===c?'3px solid var(--ink)':'1px solid var(--line)'}"></button>`).join('')}
+            <span class="pfield-lb" id="pfColLb">Avatar ka rang</span>
+            <div class="pm-swatches" role="group" aria-labelledby="pfColLb">
+              ${colors.map(c => `<button type="button" class="pm-swatch" data-col="${c}" style="background:${c}" aria-label="${c}" aria-pressed="${profile.avatarColor===c}"></button>`).join('')}
             </div>
           </div>
-          <div>
-            <button type="button" class="btn" id="pfSaveBtn">Profile Save Karo</button>
-            <span id="pfSavedMsg" style="margin-left:10px;font-size:13px;color:var(--ok)" hidden>Profile save ho gaya!</span>
+          <div class="pm-actions">
+            <button type="button" class="btn" id="pfSaveBtn">Profile save karo</button>
+            <span id="pfSavedMsg" class="pm-ok" role="status" hidden>Profile save ho gaya</span>
           </div>
         </div>
-      </div>
+      </section>
 
-      <div class="pcard">
-        <h3>
-          <span>2. Cloud Account & Cross-Device Sync</span>
-          <span class="pbadge ${sbUser?'ok':''}">${sbUser ? '☁ Signed in: ' + esc(sbUser.email) : 'Guest / Local Mode'}</span>
-        </h3>
-        <p class="note">
-          Apna progress cloud par surakshit rakhne aur mobile ya laptop kahin se bhi login karke wahin se shuru karne ke liye Sign In / Sign Up karo.
-        </p>
+      <section class="psec">
+        <div class="psec-hd"><h4>Cloud sync</h4><span>${sbUser ? 'Signed in' : 'Abhi sirf is browser mein saved'}</span></div>
+        ${authSectionHtml()}
+      </section>
 
-        ${sbUser ? `
-          <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding-top:4px">
-            <button type="button" class="btn" id="sbSyncNow">☁ Abhi Cloud Sync Karo</button>
-            <button type="button" class="btn ghost" id="sbLogout">Sign Out</button>
-            <span class="note" id="sbSyncMsg">${lastSyncAt ? 'Last synced: ' + new Date(lastSyncAt).toLocaleTimeString() : ''}</span>
-          </div>
-        ` : `
-          <div class="pform" style="padding-top:4px">
-            <div class="prow">
-              <div class="pfield">
-                <label for="sbEmail">Email Address</label>
-                <input id="sbEmail" type="email" placeholder="tumhara@email.com">
-              </div>
-              <div class="pfield">
-                <label for="sbPass">Password (कम से कम 6 अक्षर)</label>
-                <input id="sbPass" type="password" placeholder="••••••••">
-              </div>
-            </div>
-            <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
-              <button type="button" class="btn" id="sbLoginPass">Sign In / Sign Up</button>
-              <button type="button" class="btn ghost" id="sbMagicLink">✉ Email Magic Link</button>
-            </div>
-            <p class="note" id="sbAuthMsg"></p>
-          </div>
-        `}
-      </div>
-
-      <div class="pcard">
-        <h3><span>3. Offline Backup (JSON Export / Import)</span></h3>
-        <p class="note">Apna poora progress JSON file mein download karke backup rakh sakte ho ya kisi doosre browser mein import kar sakte ho.</p>
-        <div style="display:flex;gap:10px;flex-wrap:wrap">
-          <button type="button" class="btn ghost" id="bExportJson">⬇ Export Progress JSON</button>
-          <label class="btn ghost" style="cursor:pointer">
-            ⬆ Import Progress JSON
-            <input type="file" id="bImportJson" accept=".json,application/json" hidden>
+      <section class="psec">
+        <div class="psec-hd"><h4>Backup</h4><span>JSON file</span></div>
+        <p class="pm-lead">Poora progress ek file mein download karo, ya kisi doosre browser ki file yahan import karo.</p>
+        <div class="pm-actions">
+          <button type="button" class="btn ghost" id="bExportJson">Backup download karo</button>
+          <label class="btn ghost pm-file">
+            Backup import karo
+            <input type="file" id="bImportJson" accept=".json,application/json">
           </label>
         </div>
-      </div>
+      </section>
     `;
 
     // Profile Save Handlers
     body.querySelectorAll('[data-col]').forEach(b => b.addEventListener('click', () => {
       profile.avatarColor = b.dataset.col;
-      renderModalTab('cloud');
+      body.querySelectorAll('[data-col]').forEach(x => x.setAttribute('aria-pressed', x === b ? 'true' : 'false'));
+      $('pmAv').style.background = profile.avatarColor;
     }));
     $('pfSaveBtn').addEventListener('click', () => {
       profile.name = $('pfName').value.trim() || 'Learner';
       profile.role = $('pfRole').value;
       profile.goalMin = Math.max(5, Math.min(240, parseInt($('pfGoal').value, 10) || 20));
+      profile.updatedAt = Date.now();
       saveAllLocal();
       updateHeaderPill();
       renderModalHeader();
@@ -706,48 +741,7 @@ function renderModalTab(tabName){
       setTimeout(() => { if($('pfSavedMsg')) $('pfSavedMsg').hidden = true; }, 2000);
     });
 
-    if(sbUser){
-      $('sbSyncNow').addEventListener('click', () => syncWithCloud(true));
-      $('sbLogout').addEventListener('click', async () => {
-        if(sbClient) await sbClient.auth.signOut();
-        sbUser = null;
-        updateHeaderPill();
-        renderModalTab('cloud');
-      });
-    } else {
-      const msg = $('sbAuthMsg');
-      $('sbLoginPass').addEventListener('click', async () => {
-        if(!sbClient){ await initSupabase(); }
-        if(!sbClient){ msg.textContent = 'Cloud server se connect nahi ho paya.'; return; }
-        const email = $('sbEmail').value.trim();
-        const password = $('sbPass').value;
-        if(!email || !password){ msg.textContent = 'Email aur password dono bharo.'; return; }
-        if(password.length < 6){ msg.textContent = 'Password kam se kam 6 characters ka hona chahiye.'; return; }
-        msg.textContent = 'Signing in...';
-        let res = await sbClient.auth.signInWithPassword({ email, password });
-        if(res.error && /Invalid login credentials/i.test(res.error.message)){
-          res = await sbClient.auth.signUp({ email, password, options: { emailRedirectTo: location.origin + location.pathname } });
-          if(!res.error){
-            if(res.data && res.data.session){
-              msg.textContent = 'Account ban gaya aur sign in ho gaya!';
-            } else {
-              msg.textContent = 'Account ban gaya! Apna email check karke verification link par click karo.';
-            }
-            return;
-          }
-        }
-        if(res.error) msg.textContent = 'Error: ' + res.error.message;
-      });
-      $('sbMagicLink').addEventListener('click', async () => {
-        if(!sbClient){ await initSupabase(); }
-        if(!sbClient){ msg.textContent = 'Cloud server se connect nahi ho paya.'; return; }
-        const email = $('sbEmail').value.trim();
-        if(!email){ msg.textContent = 'Pehle apna email address likho.'; return; }
-        msg.textContent = 'Sending magic link...';
-        const { error } = await sbClient.auth.signInWithOtp({ email, options: { emailRedirectTo: location.origin + location.pathname } });
-        msg.textContent = error ? ('Error: ' + error.message) : 'Magic link bhej diya! Apna email inbox check karo.';
-      });
-    }
+    bindAuth(body);
 
     // Export / Import JSON
     $('bExportJson').addEventListener('click', exportBackupJson);
@@ -817,7 +811,8 @@ function buildPayload(){
 
 function mergePayload(remote){
   if(!remote || typeof remote !== 'object') return;
-  if(remote.profile && remote.profile.name && profile.name === 'Learner'){
+  // Newer profile edit wins; a never-edited local profile always takes the cloud one.
+  if(remote.profile && remote.profile.name && (profile.name === 'Learner' || (remote.profile.updatedAt || 0) > (profile.updatedAt || 0))){
     profile = Object.assign({}, profile, remote.profile);
   }
   const done = getDoneSet();
@@ -852,8 +847,8 @@ function mergePayload(remote){
     });
   }
   saveAllLocal();
-  const st = oim.state();
-  if(st && st.id) oim.load(st.id);
+  if(oim.reloadProgress) oim.reloadProgress();
+  onLessonSwitched();
   updateHeaderPill();
 }
 
@@ -885,12 +880,23 @@ function importBackupJson(e){
 }
 
 /* ---------- Supabase Cloud Auth & Sync ---------- */
-let pushTimer = 0;
+// Progress lives in per-user tables (see supabase/migrations). A full pull happens on sign-in, page load and
+// "Abhi sync karo"; everything else only pushes the rows that changed since the last push.
+const authRedirect = () => location.origin + location.pathname;
+let authMode = 'signin';   // signin | signup | forgot | reset
+let authNotice = '';       // message kept across re-renders of the Account tab
+let authSettings = null;   // GET /auth/v1/settings, tells which providers are on
+let pushTimer = 0, syncing = false, syncAgain = false;
+let remoteKeys = null;     // bookmarks / notes last seen in the cloud, so local removals become deletes
+let pushedRows = {};       // table -> { rowKey: json } last pushed
+
 function scheduleCloudPush(){
   if(!sbClient || !sbUser) return;
   clearTimeout(pushTimer);
-  pushTimer = setTimeout(() => syncWithCloud(false), 2500);
+  pushTimer = setTimeout(() => syncWithCloud(false, true), 2500);
 }
+setInterval(() => { if(sbUser && !document.hidden) scheduleCloudPush(); }, 60000);
+document.addEventListener('visibilitychange', () => { if(document.hidden && sbUser) syncWithCloud(false, true); });
 
 function loadSupabaseSdk(){
   return new Promise((resolve, reject) => {
@@ -903,53 +909,399 @@ function loadSupabaseSdk(){
   });
 }
 
-async function initSupabase(){
+// Links from auth emails come back as #access_token=...&type=signup|recovery|magiclink or #error=...
+function readAuthHash(){
+  const hp = new URLSearchParams(location.hash.slice(1));
+  if(hp.get('error_description') || hp.get('error_code')){
+    const code = hp.get('error_code') || '';
+    history.replaceState(null, '', location.pathname + location.search);
+    return { error: /otp_expired/.test(code)
+      ? 'Yeh link expire ho gaya ya pehle use ho chuka hai. Sign in karo, ya naya link mangwao.'
+      : 'Login link kaam nahi kiya: ' + (hp.get('error_description') || code) };
+  }
+  return { type: hp.get('access_token') ? hp.get('type') : null };
+}
+
+let sbInitPromise = null;
+function initSupabase(){
+  if(!sbInitPromise) sbInitPromise = startSupabase();
+  return sbInitPromise;
+}
+async function startSupabase(){
   if(!SUPABASE_URL || !SUPABASE_ANON_KEY) return;
+  const link = readAuthHash();
+  if(link.error){ authNotice = link.error; openProfileModal('cloud'); }
   try{
     const sdk = await loadSupabaseSdk();
-    sbClient = sdk.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-    const { data } = await sbClient.auth.getSession();
-    sbUser = data && data.session ? data.session.user : null;
-    sbClient.auth.onAuthStateChange((_event, session) => {
+    sbClient = sdk.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, { auth: { flowType: 'implicit', detectSessionInUrl: true, persistSession: true } });
+    fetch(SUPABASE_URL + '/auth/v1/settings', { headers: { apikey: SUPABASE_ANON_KEY } })
+      .then(r => r.json()).then(j => { authSettings = j; refreshAccountTab(); }).catch(() => {});
+    sbClient.auth.onAuthStateChange((event, session) => {
+      const wasIn = !!sbUser;
       sbUser = session ? session.user : null;
+      if(event === 'PASSWORD_RECOVERY'){
+        authMode = 'reset';
+        authNotice = '';
+        openProfileModal('cloud');
+      }
+      if(sbUser && !wasIn){
+        pushedRows = {};
+        remoteKeys = null;
+        if(link.type === 'signup'){ authNotice = 'Email confirm ho gaya. Aap signed in ho, progress ab cloud mein save hoga.'; openProfileModal('cloud'); }
+        else if(link.type === 'magiclink'){ authNotice = 'Login link se sign in ho gaye.'; }
+        link.type = null;
+        // supabase-js warns against awaiting its own calls inside this callback
+        setTimeout(() => syncWithCloud(false), 0);
+      }
+      if(!sbUser && wasIn){ pushedRows = {}; remoteKeys = null; authMode = 'signin'; }
       updateHeaderPill();
-      if(sbUser) syncWithCloud(false);
-      if(!$('pModalBack').hidden && activeModalTab === 'cloud') renderModalTab('cloud');
+      refreshAccountTab();
     });
-    if(sbUser) await syncWithCloud(false);
   }catch(e){
     console.warn('Supabase init failed:', e);
   }
 }
 
-async function syncWithCloud(manual){
-  if(!sbClient || !sbUser) return;
-  const msgEl = $('sbSyncMsg');
-  if(msgEl) msgEl.textContent = 'Syncing...';
-  try{
-    const { data, error } = await sbClient
-      .from('oim_profiles')
-      .select('data')
-      .eq('user_id', sbUser.id)
-      .maybeSingle();
+function refreshAccountTab(){
+  const back = $('pModalBack');
+  if(!back || back.hidden) return;
+  if(activeModalTab === 'cloud') renderModalTab('cloud');
+  else renderModalHeader();
+}
 
-    if(!error && data && data.data){
-      mergePayload(data.data);
+async function fetchAll(table, col){
+  const out = [];
+  for(let from = 0; ; from += 1000){
+    const { data, error } = await sbClient.from(table).select('*').eq(col, sbUser.id).range(from, from + 999);
+    if(error) throw error;
+    out.push(...data);
+    if(data.length < 1000) return out;
+  }
+}
+
+async function pullFromCloud(){
+  const [prof, lessons, taskRows, quizRows, bmRows, noteRows, actRows] = await Promise.all([
+    fetchAll('profiles', 'id'), fetchAll('lesson_progress', 'user_id'), fetchAll('task_progress', 'user_id'),
+    fetchAll('quiz_attempts', 'user_id'), fetchAll('bookmarks', 'user_id'), fetchAll('notes', 'user_id'),
+    fetchAll('daily_activity', 'user_id')
+  ]);
+  const p = prof[0];
+  mergePayload({
+    profile: p ? { name: p.name, role: p.role, goalMin: p.goal_min, avatarColor: p.avatar_color, updatedAt: Date.parse(p.updated_at) } : null,
+    done: lessons.map(r => r.lesson_id),
+    tasks: taskRows.map(r => r.task_key),
+    quizzes: Object.fromEntries(quizRows.map(r => [r.lesson_id, { ans: r.answer, ok: r.correct, ts: Date.parse(r.answered_at) }])),
+    bookmarks: bmRows.map(r => r.lesson_id),
+    notes: Object.fromEntries(noteRows.map(r => [r.lesson_id, r.body])),
+    activity: Object.fromEntries(actRows.map(r => [r.day, { sec: r.seconds, lessons: r.lessons, tasks: r.tasks, quizzes: r.quizzes }]))
+  });
+  remoteKeys = { bookmarks: new Set(bmRows.map(r => r.lesson_id)), notes: new Set(noteRows.map(r => r.lesson_id)) };
+}
+
+function cloudRows(){
+  const uid = sbUser.id;
+  const noteIds = Object.keys(notes).filter(id => notes[id] && notes[id].trim());
+  return {
+    profiles: { conflict: 'id', key: r => r.id, rows: [{
+      id: uid,
+      name: String(profile.name || 'Learner').trim().slice(0, 80) || 'Learner',
+      role: String(profile.role || 'SQL & PL/SQL Developer').slice(0, 60),
+      goal_min: Math.max(5, Math.min(240, profile.goalMin || 20)),
+      avatar_color: /^#[0-9A-Fa-f]{6}$/.test(profile.avatarColor || '') ? profile.avatarColor : '#B1530A'
+    }] },
+    lesson_progress: { conflict: 'user_id,lesson_id', ignore: true, key: r => r.lesson_id,
+      rows: [...getDoneSet()].map(id => ({ user_id: uid, lesson_id: id })) },
+    task_progress: { conflict: 'user_id,task_key', ignore: true, key: r => r.task_key,
+      rows: [...getTasksSet()].map(k => ({ user_id: uid, task_key: k })) },
+    quiz_attempts: { conflict: 'user_id,lesson_id', key: r => r.lesson_id,
+      rows: Object.keys(quizzes).filter(k => quizzes[k] && Number.isInteger(quizzes[k].ans)).map(k => ({
+        user_id: uid, lesson_id: k, answer: quizzes[k].ans, correct: !!quizzes[k].ok,
+        answered_at: new Date(quizzes[k].ts || Date.now()).toISOString() })) },
+    bookmarks: { conflict: 'user_id,lesson_id', ignore: true, key: r => r.lesson_id,
+      rows: [...bookmarks].map(id => ({ user_id: uid, lesson_id: id })) },
+    notes: { conflict: 'user_id,lesson_id', key: r => r.lesson_id,
+      rows: noteIds.map(id => ({ user_id: uid, lesson_id: id, body: notes[id].slice(0, 20000), updated_at: new Date().toISOString() })) },
+    daily_activity: { conflict: 'user_id,day', key: r => r.day,
+      rows: Object.keys(activity).filter(d => /^\d{4}-\d{2}-\d{2}$/.test(d)).map(d => ({
+        user_id: uid, day: d, seconds: Math.round(activity[d].sec || 0), lessons: activity[d].lessons || 0,
+        tasks: activity[d].tasks || 0, quizzes: activity[d].quizzes || 0 })) }
+  };
+}
+
+async function pushToCloud(){
+  const uid = sbUser.id;
+  for(const [table, spec] of Object.entries(cloudRows())){
+    const seen = pushedRows[table] || (pushedRows[table] = {});
+    // updated_at is volatile, so leave it out of the change check
+    const sig = r => JSON.stringify(Object.assign({}, r, { updated_at: undefined }));
+    const changed = spec.rows.filter(r => seen[spec.key(r)] !== sig(r));
+    if(!changed.length) continue;
+    const { error } = await sbClient.from(table).upsert(changed, { onConflict: spec.conflict, ignoreDuplicates: !!spec.ignore });
+    if(error) throw error;
+    changed.forEach(r => { seen[spec.key(r)] = sig(r); });
+  }
+  if(remoteKeys){
+    const liveNotes = new Set(Object.keys(notes).filter(id => notes[id] && notes[id].trim()));
+    for(const [table, live] of [['bookmarks', bookmarks], ['notes', liveNotes]]){
+      const gone = [...remoteKeys[table]].filter(id => !live.has(id));
+      if(gone.length){
+        const { error } = await sbClient.from(table).delete().eq('user_id', uid).in('lesson_id', gone);
+        if(error) throw error;
+        gone.forEach(id => { if(pushedRows[table]) delete pushedRows[table][id]; });
+      }
+      remoteKeys[table] = new Set(live);
     }
-    const payload = buildPayload();
-    const { error: upErr } = await sbClient
-      .from('oim_profiles')
-      .upsert({ user_id: sbUser.id, data: payload, updated_at: new Date().toISOString() });
+  }
+}
 
-    if(upErr) throw upErr;
+function setSyncMsg(t){ const el = $('sbSyncMsg'); if(el) el.textContent = t; }
+
+async function syncWithCloud(manual, pushOnly){
+  if(!sbClient || !sbUser) return;
+  if(syncing){ syncAgain = true; return; }
+  syncing = true;
+  setSyncMsg('Sync ho raha hai...');
+  try{
+    if(!pushOnly || !remoteKeys) await pullFromCloud();
+    await pushToCloud();
     lastSyncAt = Date.now();
     store.set('lastSyncAt', lastSyncAt);
-    updateHeaderPill();
-    if(msgEl) msgEl.textContent = 'Synced ✓ (' + new Date(lastSyncAt).toLocaleTimeString() + ')';
-    if(manual && !$('pModalBack').hidden) renderModalHeader();
+    setSyncMsg('Last sync ' + new Date(lastSyncAt).toLocaleString());
   }catch(err){
-    if(msgEl) msgEl.textContent = 'Sync error: ' + (err.message || 'Check connection');
+    console.warn('Cloud sync failed:', err);
+    setSyncMsg('Sync nahi hua: ' + authErrorText(err));
+  }finally{
+    syncing = false;
   }
+  updateHeaderPill();
+  if(!$('pModalBack').hidden) renderModalHeader();
+  if(manual && !$('pModalBack').hidden && activeModalTab !== 'cloud') renderModalTab(activeModalTab);
+  if(syncAgain){ syncAgain = false; scheduleCloudPush(); }
+}
+
+/* ---------- Account tab: sign in, sign up, reset ---------- */
+function authErrorText(err){
+  const m = (err && err.message) || '';
+  if(/Invalid login credentials/i.test(m)) return 'Email ya password galat hai. Naye ho to "Account banao" chuno.';
+  if(/Email not confirmed/i.test(m)) return 'Email abhi confirm nahi hua. Inbox mein aaya link kholo, ya neeche se link dobara bhejo.';
+  if(/already (been )?registered|already exists/i.test(m)) return 'Is email ka account pehle se hai. Sign in karo.';
+  if(/rate limit|security purposes|too many/i.test(m)) return 'Thodi der mein bahut koshish ho gayi. Ek minute ruk kar dobara try karo.';
+  if(/should be at least|weak|pwned|leaked/i.test(m)) return 'Yeh password kamzor hai. Kam se kam 6 characters ka koi aur password rakho.';
+  if(/different from the old|same as/i.test(m)) return 'Naya password purane se alag hona chahiye.';
+  if(/Signups not allowed/i.test(m)) return 'Naye account abhi band hain.';
+  if(/Failed to fetch|NetworkError|Load failed/i.test(m)) return 'Server tak nahi pahunch paye. Internet check karo.';
+  if(/relation .* does not exist|schema cache/i.test(m)) return 'Cloud tables abhi bani nahi hain.';
+  return m || 'Kuch galat ho gaya. Dobara try karo.';
+}
+
+function authField(id, label, type, ac, extra){
+  return `<div class="pfield"><label for="${id}">${label}</label><input id="${id}" type="${type}" autocomplete="${ac}" ${extra || ''}></div>`;
+}
+
+function authSectionHtml(){
+  const notice = authNotice ? `<p class="pm-notice" role="status">${esc(authNotice)}</p>` : '';
+  if(sbUser && authMode === 'reset'){
+    return `
+      ${notice}
+      <form class="pform" id="authForm" data-mode="reset" novalidate>
+        <p class="pm-lead">Apne account <b>${esc(sbUser.email)}</b> ke liye naya password likho.</p>
+        <div class="prow">
+          ${authField('sbPass', 'Naya password', 'password', 'new-password', 'minlength="6"')}
+          ${authField('sbPass2', 'Password dobara', 'password', 'new-password', 'minlength="6"')}
+        </div>
+        <div class="pm-actions">
+          <button type="submit" class="btn">Password save karo</button>
+          <button type="button" class="btn ghost" data-mode-to="signin">Cancel</button>
+        </div>
+        <p class="pm-msg" id="sbAuthMsg" role="alert"></p>
+      </form>`;
+  }
+  if(sbUser){
+    return `
+      ${notice}
+      <div class="pm-acct">
+        <div class="pm-item-txt">
+          <b>${esc(sbUser.email)}</b>
+          <small id="sbSyncMsg" role="status">${lastSyncAt ? 'Last sync ' + new Date(lastSyncAt).toLocaleString() : 'Abhi sync nahi hua'}</small>
+        </div>
+        <div class="pm-actions">
+          <button type="button" class="btn" id="sbSyncNow">Abhi sync karo</button>
+          <button type="button" class="btn ghost" data-mode-to="reset">Password badlo</button>
+          <button type="button" class="btn ghost" id="sbLogout">Sign out</button>
+        </div>
+      </div>`;
+  }
+
+  const google = authSettings && authSettings.external && authSettings.external.google;
+  const seg = `
+    <div class="pm-seg" role="group" aria-label="Sign in ya naya account">
+      <button type="button" data-mode-to="signin" aria-pressed="${authMode !== 'signup'}">Sign in</button>
+      <button type="button" data-mode-to="signup" aria-pressed="${authMode === 'signup'}">Account banao</button>
+    </div>`;
+  const googleBtn = google ? `
+    <button type="button" class="btn ghost pm-google" id="sbGoogle">
+      <svg viewBox="0 0 18 18" aria-hidden="true"><path fill="#4285F4" d="M17.6 9.2c0-.6-.1-1.2-.2-1.7H9v3.3h4.8a4.1 4.1 0 0 1-1.8 2.7v2.2h2.9c1.7-1.6 2.7-3.9 2.7-6.5z"/><path fill="#34A853" d="M9 18c2.4 0 4.5-.8 6-2.2l-2.9-2.2c-.8.5-1.8.9-3.1.9-2.4 0-4.4-1.6-5.1-3.8H.9v2.3A9 9 0 0 0 9 18z"/><path fill="#FBBC05" d="M3.9 10.7a5.4 5.4 0 0 1 0-3.4V5H.9a9 9 0 0 0 0 8l3-2.3z"/><path fill="#EA4335" d="M9 3.6c1.3 0 2.5.5 3.5 1.4l2.6-2.6A9 9 0 0 0 .9 5l3 2.3C4.6 5.2 6.6 3.6 9 3.6z"/></svg>
+      Google se continue karo
+    </button>
+    <div class="pm-or"><span>ya email se</span></div>` : '';
+
+  if(authMode === 'forgot'){
+    return `
+      ${notice}
+      <form class="pform" id="authForm" data-mode="forgot" novalidate>
+        <p class="pm-lead">Account ka email likho. Hum us par password reset ka link bhejenge.</p>
+        ${authField('sbEmail', 'Email', 'email', 'email', 'placeholder="naam@email.com"')}
+        <div class="pm-actions">
+          <button type="submit" class="btn">Reset link bhejo</button>
+          <button type="button" class="btn ghost" data-mode-to="signin">Wapas sign in</button>
+        </div>
+        <p class="pm-msg" id="sbAuthMsg" role="alert"></p>
+      </form>`;
+  }
+  if(authMode === 'signup'){
+    return `
+      ${seg}${notice}
+      <p class="pm-lead">Account banao to progress, notes aur bookmarks cloud mein save honge, aur phone ya laptop kahin se bhi wahin se shuru kar sakoge.</p>
+      ${googleBtn}
+      <form class="pform" id="authForm" data-mode="signup" novalidate>
+        <div class="prow">
+          ${authField('sbName', 'Naam (certificate par chhapega)', 'text', 'name', `value="${esc(profile.name === 'Learner' ? '' : profile.name)}" maxlength="80"`)}
+          ${authField('sbEmail', 'Email', 'email', 'email', 'placeholder="naam@email.com"')}
+        </div>
+        <div class="prow">
+          ${authField('sbPass', 'Password (kam se kam 6 characters)', 'password', 'new-password', 'minlength="6"')}
+          ${authField('sbPass2', 'Password dobara', 'password', 'new-password', 'minlength="6"')}
+        </div>
+        <div class="pm-actions"><button type="submit" class="btn">Account banao</button></div>
+        <p class="pm-msg" id="sbAuthMsg" role="alert"></p>
+      </form>`;
+  }
+  return `
+    ${seg}${notice}
+    ${googleBtn}
+    <form class="pform" id="authForm" data-mode="signin" novalidate>
+      <div class="prow">
+        ${authField('sbEmail', 'Email', 'email', 'email', 'placeholder="naam@email.com"')}
+        ${authField('sbPass', 'Password', 'password', 'current-password')}
+      </div>
+      <div class="pm-actions">
+        <button type="submit" class="btn">Sign in</button>
+        <button type="button" class="lk" data-mode-to="forgot">Password bhool gaye?</button>
+        <button type="button" class="lk" id="sbMagicLink">Password ke bina, email par login link bhejo</button>
+      </div>
+      <p class="pm-msg" id="sbAuthMsg" role="alert"></p>
+      <button type="button" class="btn ghost" id="sbResend" hidden>Confirm link dobara bhejo</button>
+    </form>`;
+}
+
+function bindAuth(body){
+  const msg = $('sbAuthMsg');
+  const say = (t, ok) => { if(msg){ msg.textContent = t; msg.classList.toggle('ok', !!ok); } };
+  const val = id => ($(id) ? $(id).value : '');
+  const withClient = async () => { await initSupabase(); if(!sbClient) say('Cloud server se connect nahi ho paya. Internet check karo.'); return !!sbClient; };
+
+  body.querySelectorAll('[data-mode-to]').forEach(b => b.addEventListener('click', () => {
+    authMode = b.dataset.modeTo;
+    authNotice = '';
+    renderModalTab('cloud');
+    const first = $('pmBody').querySelector('#authForm input');
+    if(first) first.focus();
+  }));
+
+  if($('sbSyncNow')) $('sbSyncNow').addEventListener('click', () => syncWithCloud(true));
+  if($('sbLogout')) $('sbLogout').addEventListener('click', async () => {
+    if(sbClient) await sbClient.auth.signOut();
+    sbUser = null;
+    authNotice = 'Sign out ho gaye. Progress is browser mein abhi bhi saved hai.';
+    updateHeaderPill();
+    renderModalTab('cloud');
+  });
+
+  if($('sbGoogle')) $('sbGoogle').addEventListener('click', async () => {
+    if(!(await withClient())) return;
+    const { error } = await sbClient.auth.signInWithOAuth({ provider: 'google', options: { redirectTo: authRedirect() } });
+    if(error) say(authErrorText(error));
+  });
+
+  if($('sbMagicLink')) $('sbMagicLink').addEventListener('click', async () => {
+    const email = val('sbEmail').trim();
+    if(!email){ say('Pehle email likho.'); $('sbEmail').focus(); return; }
+    if(!(await withClient())) return;
+    say('Link bhej rahe hain...');
+    const { error } = await sbClient.auth.signInWithOtp({ email, options: { emailRedirectTo: authRedirect(), shouldCreateUser: false } });
+    say(error ? (/not found|Signups not allowed/i.test(error.message) ? 'Is email ka account nahi mila. Pehle "Account banao" se account banao.' : authErrorText(error))
+              : 'Login link ' + email + ' par bhej diya. Email kholo aur link par click karo.', !error);
+  });
+
+  if($('sbResend')) $('sbResend').addEventListener('click', async () => {
+    const email = val('sbEmail').trim();
+    if(!(await withClient())) return;
+    const { error } = await sbClient.auth.resend({ type: 'signup', email, options: { emailRedirectTo: authRedirect() } });
+    say(error ? authErrorText(error) : 'Confirm link ' + email + ' par dobara bhej diya.', !error);
+  });
+
+  const form = $('authForm');
+  if(!form) return;
+  form.addEventListener('submit', async e => {
+    e.preventDefault();
+    const mode = form.dataset.mode;
+    const email = val('sbEmail').trim();
+    const pass = val('sbPass');
+    const submit = form.querySelector('[type="submit"]');
+    const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    if(mode !== 'reset' && !emailOk){ say('Sahi email likho, jaise naam@email.com.'); $('sbEmail').focus(); return; }
+    if(mode === 'signup' && !val('sbName').trim()){ say('Apna naam likho.'); $('sbName').focus(); return; }
+    if((mode === 'signin' || mode === 'signup' || mode === 'reset') && pass.length < 6){ say('Password kam se kam 6 characters ka hona chahiye.'); $('sbPass').focus(); return; }
+    if((mode === 'signup' || mode === 'reset') && pass !== val('sbPass2')){ say('Dono password ek jaise nahi hain.'); $('sbPass2').focus(); return; }
+    if(!(await withClient())) return;
+
+    submit.disabled = true;
+    say('Ruko...');
+    try{
+      if(mode === 'signin'){
+        const { error } = await sbClient.auth.signInWithPassword({ email, password: pass });
+        if(error){
+          say(authErrorText(error));
+          if($('sbResend')) $('sbResend').hidden = !/Email not confirmed/i.test(error.message);
+        }
+        // success re-renders through onAuthStateChange
+      }
+      else if(mode === 'signup'){
+        const name = val('sbName').trim().slice(0, 80);
+        const { data, error } = await sbClient.auth.signUp({ email, password: pass, options: { data: { name }, emailRedirectTo: authRedirect() } });
+        if(error){ say(authErrorText(error)); return; }
+        if(data.user && Array.isArray(data.user.identities) && data.user.identities.length === 0){
+          say('Is email ka account pehle se hai. Sign in karo, ya "Password bhool gaye?" se reset karo.');
+          return;
+        }
+        profile.name = name;
+        profile.updatedAt = Date.now();
+        saveAllLocal();
+        updateHeaderPill();
+        if(!data.session){
+          authMode = 'signin';
+          authNotice = 'Confirm link ' + email + ' par bheja hai. Email kholo aur link par click karo, app khud sign in ho jayega.';
+          renderModalTab('cloud');
+        }
+      }
+      else if(mode === 'forgot'){
+        const { error } = await sbClient.auth.resetPasswordForEmail(email, { redirectTo: authRedirect() });
+        if(error){ say(authErrorText(error)); return; }
+        authMode = 'signin';
+        authNotice = 'Agar ' + email + ' ka account hai to reset link bhej diya hai. Link kholo, app naya password maangega.';
+        renderModalTab('cloud');
+      }
+      else if(mode === 'reset'){
+        const { error } = await sbClient.auth.updateUser({ password: pass });
+        if(error){ say(authErrorText(error)); return; }
+        authMode = 'signin';
+        authNotice = 'Password badal gaya.';
+        renderModalTab('cloud');
+      }
+    }finally{
+      if(submit.isConnected) submit.disabled = false;
+    }
+  });
 }
 
 initUI();

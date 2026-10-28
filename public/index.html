@@ -16615,7 +16615,8 @@ const h0=location.hash.slice(1);const last=store.get('last',null);
 const startId=byId[h0]?h0:(last&&byId[last]?last:(ALL[0]&&ALL[0].id));
 if(startId){loadLesson(startId,{rest:true});if(h0==='playground')setMode('play');}
 requestAnimationFrame(loop);
-window.__oim={ALL,byId,goStep:(k,a)=>goStep(k,!!a),load:id=>loadLesson(id,{rest:true}),play:id=>loadLesson(id),state:()=>({id:cur&&cur.id,step,playing,voiceWait,mode,tab}),
+window.__oim={ALL,byId,goStep:(k,a)=>goStep(k,!!a),load:id=>loadLesson(id,{rest:true}),
+  reloadProgress:()=>{done=new Set(store.get('done',[]));passed=new Set(store.get('tasks',[]));courseRows();buildNav();if(mode==='play')renderTasks();},play:id=>loadLesson(id),state:()=>({id:cur&&cur.id,step,playing,voiceWait,mode,tab}),
   setMode,run:t=>runText(t),judge:(id,i,text)=>judge(byId[id],byId[id].tasks[i],text),audio:()=>({src:player.currentSrc,t:player.currentTime,paused:player.paused,clip}),voice:on=>setVoice(!!on),begin,stage};
 })();
 
