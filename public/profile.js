@@ -1,4 +1,5 @@
-/* ===== Oracle in Motion: User Profile, Progress Tracking & Supabase Cloud Sync ===== */
+/* ===== User Profile, Progress Tracking & Supabase Cloud Sync =====
+   The same file runs on Oracle in Motion and Network in Action; only the SITE block differs. */
 (function(){
 'use strict';
 const oim = window.__oim;
@@ -8,20 +9,33 @@ const $ = id => document.getElementById(id);
 const esc = s => String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const todayKey = () => new Date().toISOString().slice(0,10);
 
+/* ---------- Site ---------- */
+const SITE = {
+  id: 'oim',                          // cloud rows are tagged with this, so one account serves both sites
+  name: 'Oracle in Motion',
+  prefix: 'oim.',                     // localStorage prefix used by index.html's store
+  slug: 'oracle-in-motion',
+  roles: ['SQL & PL/SQL Developer','Oracle DBA Trainee','Forms & Reports 12c Dev','Python + Oracle Engineer','Full-Stack Student'],
+  practice: 'SQL/PLSQL practice',
+  taskDone: 'queries solve ki',
+  noteWhat: 'SQL snippets',
+  notePlaceholder: 'Jaise: LEFT JOIN mein right table ke match na milne par NULL aata hai...'
+};
+
 /* ---------- Built-in Supabase Cloud Configuration ---------- */
 const SUPABASE_URL = 'https://hrpgjtatvyktpgkfuzpa.supabase.co';
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhycGdqdGF0dnlrdHBna2Z1enBhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTMyMDMxMzgsImV4cCI6MjEwODc3OTEzOH0.XmhoXWmn4ckRqfo0HFXK__4q9O2bKnkWmxRCoVgobOw';
 
 /* ---------- Storage helpers ---------- */
 const store = {
-  get(k, d){ try{ const v = localStorage.getItem('oim.'+k); return v==null ? d : JSON.parse(v); }catch(e){ return d; } },
-  set(k, v){ try{ localStorage.setItem('oim.'+k, JSON.stringify(v)); }catch(e){} }
+  get(k, d){ try{ const v = localStorage.getItem(SITE.prefix+k); return v==null ? d : JSON.parse(v); }catch(e){ return d; } },
+  set(k, v){ try{ localStorage.setItem(SITE.prefix+k, JSON.stringify(v)); }catch(e){} }
 };
 
 /* ---------- Profile & Tracking State ---------- */
 let profile = store.get('profile', {
   name: 'Learner',
-  role: 'SQL & PL/SQL Developer',
+  role: SITE.roles[0],
   goalMin: 20,
   avatarColor: '#B1530A',
   joinedAt: todayKey()
@@ -165,9 +179,9 @@ function initUI(){
     nPanel.innerHTML = `
       <div class="note-box">
         <h3>Is lesson par tumhara personal note</h3>
-        <p class="note">Apne key points, SQL snippets ya doubts yahan likho. Yeh tumhare profile ke saath auto-save aur cloud sync hota hai.</p>
+        <p class="note">Apne key points, ${SITE.noteWhat} ya doubts yahan likho. Yeh tumhare profile ke saath auto-save aur cloud sync hota hai.</p>
         <div class="pfield">
-          <textarea id="lessonNoteIn" placeholder="Jaise: LEFT JOIN mein right table ke match na milne par NULL aata hai..."></textarea>
+          <textarea id="lessonNoteIn" placeholder="${esc(SITE.notePlaceholder)}"></textarea>
         </div>
         <div style="display:flex;justify-content:space-between;align-items:center">
           <span class="note" id="noteSavedMsg">Auto-saved</span>
@@ -210,7 +224,7 @@ function initUI(){
           <div class="pmodal-av" id="pmAv">L</div>
           <div class="pm-id-txt">
             <h2 id="pmTitle">Learner</h2>
-            <p id="pmRole">SQL & PL/SQL Developer</p>
+            <p id="pmRole"></p>
           </div>
         </div>
         <div class="pm-level">
@@ -282,31 +296,31 @@ function initUI(){
     });
   }
 
-  // Intercept localStorage.setItem for `oim.done` and `oim.tasks` to track daily activity & trigger cloud sync
+  // Intercept localStorage.setItem for `<prefix>done` and `<prefix>tasks` to track daily activity & trigger cloud sync
   const origSetItem = localStorage.setItem.bind(localStorage);
   localStorage.setItem = function(k, v){
-    const prevDone = k === 'oim.done' ? getDoneSet().size : 0;
-    const prevTasks = k === 'oim.tasks' ? getTasksSet().size : 0;
+    const prevDone = k === SITE.prefix + 'done' ? getDoneSet().size : 0;
+    const prevTasks = k === SITE.prefix + 'tasks' ? getTasksSet().size : 0;
     origSetItem(k, v);
-    if(k === 'oim.done'){
+    if(k === SITE.prefix + 'done'){
       const nowDone = getDoneSet().size;
       if(nowDone > prevDone){
         const d = ensureDay(todayKey());
         d.lessons = (d.lessons || 0) + (nowDone - prevDone);
-        origSetItem('oim.activity', JSON.stringify(activity));
+        origSetItem(SITE.prefix + 'activity', JSON.stringify(activity));
       }
       updateHeaderPill();
       scheduleCloudPush();
-    } else if(k === 'oim.tasks'){
+    } else if(k === SITE.prefix + 'tasks'){
       const nowTasks = getTasksSet().size;
       if(nowTasks > prevTasks){
         const d = ensureDay(todayKey());
         d.tasks = (d.tasks || 0) + (nowTasks - prevTasks);
-        origSetItem('oim.activity', JSON.stringify(activity));
+        origSetItem(SITE.prefix + 'activity', JSON.stringify(activity));
       }
       updateHeaderPill();
       scheduleCloudPush();
-    } else if(k === 'oim.last'){
+    } else if(k === SITE.prefix + 'last'){
       setTimeout(onLessonSwitched, 20);
     }
   };
@@ -444,7 +458,7 @@ function renderModalHeader(){
   $('pmAv').textContent = getInitials(profile.name);
   $('pmAv').style.background = profile.avatarColor || 'var(--accent)';
   $('pmTitle').textContent = profile.name || 'Learner';
-  $('pmRole').textContent = profile.role || 'SQL & PL/SQL Developer';
+  $('pmRole').textContent = profile.role || SITE.roles[0];
   $('pmLevel').textContent = 'Level ' + st.level;
   $('pmXp').textContent = st.xp + ' / ' + lvCeil + ' XP';
   $('pmXpBar').style.width = ((st.xp - lvFloor) / 250 * 100).toFixed(1) + '%';
@@ -533,7 +547,7 @@ function renderModalTab(tabName){
       </section>
 
       <section class="pm-stats">
-        <div class="pm-stat"><span>Practice tasks</span><b>${st.tasksCount}</b><small>queries solve ki</small></div>
+        <div class="pm-stat"><span>Practice tasks</span><b>${st.tasksCount}</b><small>${SITE.taskDone}</small></div>
         <div class="pm-stat"><span>Quiz</span><b>${st.quizTotal ? Math.round((st.quizRight / st.quizTotal) * 100) + '%' : '0'}</b><small>${st.quizTotal ? st.quizRight + ' of ' + st.quizTotal + ' sahi' : 'abhi koi quiz nahi diya'}</small></div>
         <div class="pm-stat"><span>Streak</span><b>${st.streak.current} din</b><small>best ${st.streak.best} din</small></div>
         <div class="pm-stat"><span>Total padhai</span><b>${st.totalMin >= 60 ? (st.totalMin / 60).toFixed(1) + ' hr' : st.totalMin + ' min'}</b><small>active time</small></div>
@@ -683,7 +697,7 @@ function renderModalTab(tabName){
             <div class="pfield">
               <label for="pfRole">Role ya goal</label>
               <select id="pfRole">
-                ${['SQL & PL/SQL Developer','Oracle DBA Trainee','Forms & Reports 12c Dev','Python + Oracle Engineer','Full-Stack Student'].map(r => `<option value="${esc(r)}" ${profile.role===r?'selected':''}>${esc(r)}</option>`).join('')}
+                ${SITE.roles.map(r => `<option value="${esc(r)}" ${profile.role===r?'selected':''}>${esc(r)}</option>`).join('')}
               </select>
             </div>
             <div class="pfield">
@@ -772,17 +786,17 @@ function printCertificate(courseId){
   </style></head><body>
   <div>
     <div class="cert">
-      <div class="tag">Oracle in Motion · Hinglish Interactive Course</div>
+      <div class="tag">${esc(SITE.name)} · Hinglish Interactive Course</div>
       <h1>Certificate of Completion</h1>
       <p class="sub">Yeh pramanit kiya jaata hai ki</p>
       <div class="name">${esc(profile.name || 'Learner')}</div>
-      <p class="sub" style="margin-bottom:8px">ne animated lessons, quizzes aur SQL/PLSQL practice ke saath</p>
+      <p class="sub" style="margin-bottom:8px">ne animated lessons, quizzes aur ${esc(SITE.practice)} ke saath</p>
       <div class="course">${esc(c.name)} (${c.lessons.length} Lessons)</div>
       <p class="sub" style="margin-top:8px">safaltapoorvak poora kiya hai.</p>
       <div class="meta">
         <span>Date: ${esc(dt)}</span>
         <span>Role: ${esc(profile.role)}</span>
-        <span>Oracle in Motion</span>
+        <span>${esc(SITE.name)}</span>
       </div>
     </div>
     <div class="no-print" style="text-align:center;margin-top:18px">
@@ -857,7 +871,7 @@ function exportBackupJson(){
   const blob = new Blob([data], { type: 'application/json' });
   const a = document.createElement('a');
   a.href = URL.createObjectURL(blob);
-  a.download = 'oracle-in-motion-progress-' + todayKey() + '.json';
+  a.download = SITE.slug + '-progress-' + todayKey() + '.json';
   a.click();
   URL.revokeObjectURL(a.href);
 }
@@ -972,7 +986,9 @@ function refreshAccountTab(){
 async function fetchAll(table, col){
   const out = [];
   for(let from = 0; ; from += 1000){
-    const { data, error } = await sbClient.from(table).select('*').eq(col, sbUser.id).range(from, from + 999);
+    let q = sbClient.from(table).select('*').eq(col, sbUser.id);
+    if(table !== 'profiles') q = q.eq('site', SITE.id);
+    const { data, error } = await q.range(from, from + 999);
     if(error) throw error;
     out.push(...data);
     if(data.length < 1000) return out;
@@ -987,7 +1003,9 @@ async function pullFromCloud(){
   ]);
   const p = prof[0];
   mergePayload({
-    profile: p ? { name: p.name, role: p.role, goalMin: p.goal_min, avatarColor: p.avatar_color, updatedAt: Date.parse(p.updated_at) } : null,
+    // role lists differ per site, so a role saved on the other site is ignored here
+    profile: p ? Object.assign({ name: p.name, goalMin: p.goal_min, avatarColor: p.avatar_color, updatedAt: Date.parse(p.updated_at) },
+                               SITE.roles.includes(p.role) ? { role: p.role } : {}) : null,
     done: lessons.map(r => r.lesson_id),
     tasks: taskRows.map(r => r.task_key),
     quizzes: Object.fromEntries(quizRows.map(r => [r.lesson_id, { ans: r.answer, ok: r.correct, ts: Date.parse(r.answered_at) }])),
@@ -1000,30 +1018,31 @@ async function pullFromCloud(){
 
 function cloudRows(){
   const uid = sbUser.id;
+  const site = SITE.id;
   const noteIds = Object.keys(notes).filter(id => notes[id] && notes[id].trim());
   return {
     profiles: { conflict: 'id', key: r => r.id, rows: [{
       id: uid,
       name: String(profile.name || 'Learner').trim().slice(0, 80) || 'Learner',
-      role: String(profile.role || 'SQL & PL/SQL Developer').slice(0, 60),
+      role: String(profile.role || SITE.roles[0]).slice(0, 60),
       goal_min: Math.max(5, Math.min(240, profile.goalMin || 20)),
       avatar_color: /^#[0-9A-Fa-f]{6}$/.test(profile.avatarColor || '') ? profile.avatarColor : '#B1530A'
     }] },
-    lesson_progress: { conflict: 'user_id,lesson_id', ignore: true, key: r => r.lesson_id,
-      rows: [...getDoneSet()].map(id => ({ user_id: uid, lesson_id: id })) },
-    task_progress: { conflict: 'user_id,task_key', ignore: true, key: r => r.task_key,
-      rows: [...getTasksSet()].map(k => ({ user_id: uid, task_key: k })) },
-    quiz_attempts: { conflict: 'user_id,lesson_id', key: r => r.lesson_id,
+    lesson_progress: { conflict: 'user_id,site,lesson_id', ignore: true, key: r => r.lesson_id,
+      rows: [...getDoneSet()].map(id => ({ user_id: uid, site, lesson_id: id })) },
+    task_progress: { conflict: 'user_id,site,task_key', ignore: true, key: r => r.task_key,
+      rows: [...getTasksSet()].map(k => ({ user_id: uid, site, task_key: k })) },
+    quiz_attempts: { conflict: 'user_id,site,lesson_id', key: r => r.lesson_id,
       rows: Object.keys(quizzes).filter(k => quizzes[k] && Number.isInteger(quizzes[k].ans)).map(k => ({
-        user_id: uid, lesson_id: k, answer: quizzes[k].ans, correct: !!quizzes[k].ok,
+        user_id: uid, site, lesson_id: k, answer: quizzes[k].ans, correct: !!quizzes[k].ok,
         answered_at: new Date(quizzes[k].ts || Date.now()).toISOString() })) },
-    bookmarks: { conflict: 'user_id,lesson_id', ignore: true, key: r => r.lesson_id,
-      rows: [...bookmarks].map(id => ({ user_id: uid, lesson_id: id })) },
-    notes: { conflict: 'user_id,lesson_id', key: r => r.lesson_id,
-      rows: noteIds.map(id => ({ user_id: uid, lesson_id: id, body: notes[id].slice(0, 20000), updated_at: new Date().toISOString() })) },
-    daily_activity: { conflict: 'user_id,day', key: r => r.day,
+    bookmarks: { conflict: 'user_id,site,lesson_id', ignore: true, key: r => r.lesson_id,
+      rows: [...bookmarks].map(id => ({ user_id: uid, site, lesson_id: id })) },
+    notes: { conflict: 'user_id,site,lesson_id', key: r => r.lesson_id,
+      rows: noteIds.map(id => ({ user_id: uid, site, lesson_id: id, body: notes[id].slice(0, 20000), updated_at: new Date().toISOString() })) },
+    daily_activity: { conflict: 'user_id,site,day', key: r => r.day,
       rows: Object.keys(activity).filter(d => /^\d{4}-\d{2}-\d{2}$/.test(d)).map(d => ({
-        user_id: uid, day: d, seconds: Math.round(activity[d].sec || 0), lessons: activity[d].lessons || 0,
+        user_id: uid, site, day: d, seconds: Math.round(activity[d].sec || 0), lessons: activity[d].lessons || 0,
         tasks: activity[d].tasks || 0, quizzes: activity[d].quizzes || 0 })) }
   };
 }
@@ -1045,7 +1064,7 @@ async function pushToCloud(){
     for(const [table, live] of [['bookmarks', bookmarks], ['notes', liveNotes]]){
       const gone = [...remoteKeys[table]].filter(id => !live.has(id));
       if(gone.length){
-        const { error } = await sbClient.from(table).delete().eq('user_id', uid).in('lesson_id', gone);
+        const { error } = await sbClient.from(table).delete().eq('user_id', uid).eq('site', SITE.id).in('lesson_id', gone);
         if(error) throw error;
         gone.forEach(id => { if(pushedRows[table]) delete pushedRows[table][id]; });
       }
