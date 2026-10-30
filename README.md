@@ -2,7 +2,7 @@
 
 An animated Oracle Database & Enterprise Linux learning platform in Hinglish, with synced Hindi voice-over, interactive captions, full in-browser Oracle 23ai SQL/PLSQL/DBA and Linux Bash simulators, and cloud-synced learner progress.
 
-## Courses (8 Courses · 248 Lessons)
+## Courses (8 Courses · 284 Lessons)
 
 1. **SQL Basics** (62 lessons) — querying, filtering, joins, grouping, subqueries, set operators, `PIVOT`/`UNPIVOT`, DDL, data types, constraints, DML, views, indexes, synonyms, sequences.
 2. **Functions** (38 lessons) — comparison (`NVL`, `COALESCE`, `DECODE`), string & regex, date/timezone, aggregate (`LISTAGG`), analytic (`ROW_NUMBER`, `RANK`, `LAG`/`LEAD`, `NTILE`).
@@ -31,11 +31,17 @@ An animated Oracle Database & Enterprise Linux learning platform in Hinglish, wi
 
 ## Layout
 
-- `public/index.html` — self-contained app, SVG motion engine, lessons, and Oracle SQL/PLSQL/DBA simulator.
-- `public/linux.js` — in-browser stateful Linux Bash simulator engine (`LINUX_SIM`) and 36 Linux lessons.
+- `public/index.html` — lightweight 15 KB HTML shell for instant first paint.
+- `public/app.css` — core styling & responsive layout.
+- `public/motion.js` — SVG motion graphics engine (`Motion`).
+- `public/sim.js` — in-browser Oracle SQL/PLSQL/DBA simulator (`SIM`).
+- `public/lessons-oracle.js` — 248 Oracle curriculum lessons (`COURSES`, `LESSONS`).
+- `public/linux.js` — in-browser stateful Linux Bash simulator (`LINUX_SIM`) and 36 Linux lessons.
+- `public/audio-map.js` — synced voice-over sprite timestamps and sentence offsets (`AUDIO`, `AUDIO2`).
+- `public/app.js` — main player, interactive captions, audio sync, and playground controller.
 - `public/profile.js` & `public/profile.css` — learner profile, cloud sync, revision/mock quiz, notes, and certificates.
-- `public/voice/` — one MP3 voice sprite per lesson (`212` MP3 files).
-- `public/sw.js` & `public/manifest.webmanifest` — PWA offline support.
+- `public/voice/` — one MP3 voice sprite per lesson (`248` MP3 files, including `lx-*.mp3`).
+- `public/sw.js` & `public/manifest.webmanifest` — PWA offline & stale-while-revalidate caching (`oim-shell-v5`).
 - `netlify.toml` — publishes `public/` directly with no build step.
 
 ## Run locally
