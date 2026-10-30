@@ -107,8 +107,9 @@ h1{margin:2px 0 0;font:760 clamp(20px,2.1vw,27px)/1.12 var(--f-display);font-str
 /* ---------- lesson view */
 .lv{min-height:0;display:grid;grid-template-columns:minmax(0,1fr) clamp(340px,29vw,440px);gap:14px}
 .stagecol{min-width:0;min-height:0;display:flex;flex-direction:column;gap:10px}
-/* max-width keeps the 16:9 stage from eating the code panel's height on tall/wide windows: it caps the stage to whatever the column has left after subs, transport and the code-card floor below. */
-.stage-wrap{position:relative;flex:0 1 auto;width:100%;max-width:calc((100dvh - 226px - clamp(168px,21dvh,280px)) * 16 / 9);margin-inline:auto;aspect-ratio:16/9;min-height:180px;border:1px solid var(--line);border-radius:12px;background:var(--stage);overflow:hidden;display:grid}
+/* The stage owns whatever height the column has left, and .stage-wrap is then sized from that container's height — so the drawing is always exactly 16:9 instead of letterboxing or stealing rows from the code panel. */
+.stagebox{flex:1 1 0;min-width:0;min-height:180px;display:grid;place-items:center;container-type:size}
+.stage-wrap{position:relative;width:min(100%,calc(100cqh * 16 / 9));aspect-ratio:16/9;border:1px solid var(--line);border-radius:12px;background:var(--stage);overflow:hidden;display:grid}
 #stage{display:block;width:100%;height:100%;min-height:0}
 .endcard{position:absolute;right:12px;bottom:12px;display:flex;gap:10px;align-items:center;flex-wrap:wrap;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:10px 10px 10px 14px;box-shadow:0 8px 24px var(--shadow);max-width:calc(100% - 24px)}
 .endcard p{margin:0;font-size:13.5px;min-width:0}
@@ -155,7 +156,7 @@ h1{margin:2px 0 0;font:760 clamp(20px,2.1vw,27px)/1.12 var(--f-display);font-str
 
 /* right panel: code card on top, tabbed notes below */
 .rp{min-width:0;min-height:0;display:flex;flex-direction:column}
-.code-card{flex:1 1 0;min-height:clamp(168px,21dvh,280px);display:flex;flex-direction:column;background:var(--term);border:1px solid var(--term-line);border-radius:10px;overflow:hidden}
+.code-card{flex:0 0 clamp(168px,21dvh,280px);min-height:0;display:flex;flex-direction:column;background:var(--term);border:1px solid var(--term-line);border-radius:10px;overflow:hidden}
 .code-card header{flex:none;display:flex;justify-content:space-between;align-items:center;gap:8px;padding:6px 8px 6px 14px;background:var(--term-bar);border-bottom:1px solid var(--term-line);font:500 11.5px/1 var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--term-dim)}
 .code-card header div{display:flex;gap:6px}
 .code-card header button{background:transparent;border:1px solid var(--term-line);color:var(--term-fg);border-radius:6px;padding:5px 9px;font:500 12px/1 var(--f-mono);text-transform:none;letter-spacing:0}
@@ -375,7 +376,8 @@ pre.cb{margin:0;background:var(--term);color:var(--term-fg);border-radius:8px;pa
   .seg button .lbl{display:none}
   .seg button{padding:0 10px}
   .lv{grid-template-columns:minmax(0,1fr);gap:10px}
-  .stage-wrap{flex:none;min-height:0;max-width:100%}
+  .stagebox{container-type:normal;flex:none;min-height:0}
+  .stage-wrap{width:100%;height:auto}
   .code-card{flex:none;max-height:42vh}
   .rp{height:max(380px,70dvh)}
   .pv{grid-template-columns:minmax(0,1fr);gap:10px}

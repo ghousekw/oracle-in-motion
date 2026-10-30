@@ -1,5 +1,5 @@
 'use strict';
-const SHELL_CACHE = 'oim-shell-v5';
+const SHELL_CACHE = 'oim-shell-v6';
 const VOICE_CACHE = 'oim-voice-v1';
 const SHELL_FILES = [
   './',
