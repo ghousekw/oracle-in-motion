@@ -1,5 +1,5 @@
 'use strict';
-const SHELL_CACHE = 'oim-shell-v3';
+const SHELL_CACHE = 'oim-shell-v4';
 const VOICE_CACHE = 'oim-voice-v1';
 const SHELL_FILES = ['./', './index.html', './profile.css', './profile.js', './linux.js', './icon.svg', './manifest.webmanifest'];
 

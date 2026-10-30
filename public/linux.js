@@ -3062,72 +3062,76 @@ const LINUX_LESSONS = [
       [
         "hw",
         "region",
-        30,
-        40,
-        260,
-        220,
+        24,
+        24,
+        240,
+        244,
         "Hardware",
         {
           "tone": "file",
-          "sub": "CPU · RAM · Disks · NIC"
+          "sub": "Physical Server"
         }
       ],
       [
         "cpu",
         "box",
-        50,
-        80,
-        100,
-        60,
-        "CPU",
+        40,
+        62,
+        96,
+        52,
+        "CPU (4c)",
         {
-          "tone": "file"
+          "tone": "file",
+          "small": 1
         }
       ],
       [
         "ram",
         "box",
-        170,
-        80,
-        100,
-        60,
-        "RAM",
+        152,
+        62,
+        96,
+        52,
+        "RAM 16G",
         {
-          "tone": "file"
+          "tone": "file",
+          "small": 1
         }
       ],
       [
         "disk",
         "disk",
-        110,
-        160,
+        94,
+        132,
         100,
-        80,
-        "Storage",
+        74,
+        "NVMe Disk",
         {
-          "tone": "file"
+          "tone": "file",
+          "level": 0.42,
+          "sub": "/dev/sda"
         }
       ],
       [
         "kern",
         "region",
-        330,
-        40,
-        280,
-        220,
+        292,
+        24,
+        260,
+        244,
         "Linux Kernel",
         {
           "tone": "proc",
-          "sub": "OS core engine"
+          "sub": "OS Core Engine"
         }
       ],
       [
         "sched",
-        "pill",
-        350,
-        90,
-        240,
-        45,
+        "proc",
+        312,
+        66,
+        220,
+        42,
         "Process Scheduler",
         {
           "tone": "proc"
@@ -3135,11 +3139,11 @@ const LINUX_LESSONS = [
       ],
       [
         "mem",
-        "pill",
-        350,
-        150,
-        240,
-        45,
+        "proc",
+        312,
+        122,
+        220,
+        42,
         "Memory Manager",
         {
           "tone": "proc"
@@ -3147,34 +3151,36 @@ const LINUX_LESSONS = [
       ],
       [
         "drv",
-        "pill",
-        350,
-        210,
-        240,
-        40,
-        "Device Drivers",
+        "proc",
+        312,
+        178,
+        220,
+        42,
+        "VFS & Device Drivers",
         {
           "tone": "proc"
         }
       ],
       [
         "sh",
-        "box",
-        650,
-        60,
-        270,
-        85,
+        "proc",
+        584,
+        34,
+        190,
+        56,
         "Bash Shell",
         {
           "tone": "accent",
-          "sub": "Command interpreter"
+          "sub": "/bin/bash"
         }
       ],
       [
         "user",
         "user",
-        740,
-        180,
+        648,
+        128,
+        62,
+        54,
         "Tum / Admin",
         {
           "tone": "mem",
@@ -3182,12 +3188,63 @@ const LINUX_LESSONS = [
         }
       ],
       [
-        "term",
-        "term",
+        "v_who",
+        "var",
+        800,
+        38,
+        136,
+        46,
+        "USER (whoami)",
+        {
+          "v": "?",
+          "tone": "accent"
+        }
+      ],
+      [
+        "v_host",
+        "var",
+        800,
+        104,
+        136,
+        46,
+        "HOSTNAME",
+        {
+          "v": "?",
+          "tone": "mem"
+        }
+      ],
+      [
+        "v_kern",
+        "var",
+        800,
+        170,
+        136,
+        46,
+        "KERNEL",
+        {
+          "v": "?",
+          "tone": "proc"
+        }
+      ],
+      [
+        "c_up",
+        "chip",
+        584,
+        234,
+        352,
         30,
-        290,
-        890,
-        220,
+        "Uptime: checking...",
+        {
+          "tone": "ok"
+        }
+      ],
+      [
+        "term",
+        "term",
+        24,
+        286,
+        912,
+        224,
         "Terminal · oracle@prod-db01:~"
       ]
     ],
@@ -3209,14 +3266,25 @@ const LINUX_LESSONS = [
           [
             "show",
             "user",
+            "sh",
             "term"
+          ],
+          [
+            "link",
+            "user",
+            "sh",
+            {
+              "tone": "accent",
+              "label": "CLI"
+            }
           ],
           [
             "term",
             "term",
             "oracle@prod-db01:~$ "
           ]
-        ]
+        ],
+        "vo": "प्रोडक्शन में नब्बे परसेंट एंटरप्राइज डेटाबेस और क्लाउड ऐप्स लिनक्स पर चलते हैं। सर्वर पर कोई विंडोज़ जैसा जी-यू-आई नहीं होता, सिर्फ़ ब्लैक स्क्रीन टर्मिनल होता है।"
       },
       {
         "say": "Linux ke 3 main hisse hote hain: Hardware (CPU, RAM, Disks), Kernel (hardware ko manage karne wala engine), aur Shell (jo tumhari baat Kernel tak pahunchata hai).",
@@ -3230,14 +3298,32 @@ const LINUX_LESSONS = [
             "kern",
             "sched",
             "mem",
-            "drv",
-            "sh"
+            "drv"
+          ],
+          [
+            "link",
+            "sh",
+            "kern",
+            {
+              "tone": "proc",
+              "label": "syscalls"
+            }
+          ],
+          [
+            "link",
+            "kern",
+            "hw",
+            {
+              "tone": "file",
+              "label": "drivers"
+            }
           ],
           [
             "pulse",
             "kern"
           ]
-        ]
+        ],
+        "vo": "लिनक्स के तीन मेन हिस्से होते हैं: हार्डवेयर यानी सी-पी-यू, रैम और डिस्क्स, कर्नल जो हार्डवेयर को मैनेज करने वाला इंजन है, और शेल जो तुम्हारी बात कर्नल तक पहुँचाता है।"
       },
       {
         "say": "Jab tum terminal mein `whoami` type karte ho, Shell use samajhta hai aur batata hai ki tum kis user account se logged in ho.",
@@ -3246,6 +3332,10 @@ const LINUX_LESSONS = [
           1
         ],
         "ops": [
+          [
+            "show",
+            "v_who"
+          ],
           [
             "term",
             "term",
@@ -3257,16 +3347,26 @@ const LINUX_LESSONS = [
             "sh",
             "whoami",
             {
-              "tone": "accent"
+              "tone": "accent",
+              "dur": 600
             }
           ],
           [
             "flow",
             "sh",
             "kern",
-            "syscall",
+            "getuid()",
             {
-              "tone": "proc"
+              "tone": "proc",
+              "dur": 600
+            }
+          ],
+          [
+            "val",
+            "v_who",
+            "oracle",
+            {
+              "tone": "ok"
             }
           ],
           [
@@ -3274,7 +3374,8 @@ const LINUX_LESSONS = [
             "term",
             "oracle"
           ]
-        ]
+        ],
+        "vo": "जब तुम टर्मिनल में हू-एम-आई टाइप करते हो, शेल उसे समझता है और बताता है कि तुम किस यूज़र अकाउंट से लॉग्ड इन हो।"
       },
       {
         "say": "`hostname` server ka pehchaan naam dikhata hai, jaise `prod-db01`. Production mein hamesha check karo ki galti se production par kaam toh nahi kar rahe!",
@@ -3284,16 +3385,39 @@ const LINUX_LESSONS = [
         ],
         "ops": [
           [
+            "show",
+            "v_host"
+          ],
+          [
             "term",
             "term",
             "oracle@prod-db01:~$ hostname"
+          ],
+          [
+            "flow",
+            "sh",
+            "kern",
+            "gethostname",
+            {
+              "tone": "mem",
+              "dur": 600
+            }
+          ],
+          [
+            "val",
+            "v_host",
+            "prod-db01",
+            {
+              "tone": "accent"
+            }
           ],
           [
             "out",
             "term",
             "prod-db01"
           ]
-        ]
+        ],
+        "vo": "होस्टनेम सर्वर का पहचान नाम दिखाता है, जैसे प्रोड-डी-बी ज़ीरो वन। प्रोडक्शन में हमेशा चेक करो कि ग़लती से प्रोडक्शन पर काम तो नहीं कर रहे!"
       },
       {
         "say": "`uname -a` se poora Linux kernel version aur architecture (x86_64) pata chalta hai. `uptime` batata hai server kitne din se bina band huye chal raha hai.",
@@ -3305,9 +3429,32 @@ const LINUX_LESSONS = [
         ],
         "ops": [
           [
+            "show",
+            "v_kern",
+            "c_up"
+          ],
+          [
             "term",
             "term",
             "oracle@prod-db01:~$ uname -a"
+          ],
+          [
+            "flow",
+            "kern",
+            "cpu",
+            "uname",
+            {
+              "tone": "proc",
+              "dur": 550
+            }
+          ],
+          [
+            "val",
+            "v_kern",
+            "5.15.0 x86_64",
+            {
+              "tone": "proc"
+            }
           ],
           [
             "out",
@@ -3320,6 +3467,11 @@ const LINUX_LESSONS = [
             "oracle@prod-db01:~$ uptime"
           ],
           [
+            "label",
+            "c_up",
+            "up 14 days · 2 users · load: 0.28, 0.42, 0.35"
+          ],
+          [
             "out",
             "term",
             " 10:15:22 up 14 days,  3:40,  2 users,  load average: 0.28, 0.42, 0.35"
@@ -3327,8 +3479,13 @@ const LINUX_LESSONS = [
           [
             "ok",
             "user"
+          ],
+          [
+            "ok",
+            "kern"
           ]
-        ]
+        ],
+        "vo": "यू-नेम डैश ए से पूरा लिनक्स कर्नल वर्ज़न और आर्किटेक्चर पता चलता है। अपटाइम बताता है सर्वर कितने दिन से बिना बंद हुए चल रहा है।"
       }
     ],
     "points": [
@@ -3397,7 +3554,8 @@ const LINUX_LESSONS = [
         "why": "Linux commands case-sensitive hote hain. `uname -a` lowercase `a` hota hai, uppercase `A` invalid flag hai.",
         "fix": "uname -a"
       }
-    ]
+    ],
+    "intro": "कार सोचो। कार का इंजन बराबर कर्नल, जो हार्डवेयर जैसे व्हील्स और ब्रेक्स चलाता है। स्टीयरिंग व्हील और एक्सेलरेटर बराबर शेल, यानी बैश, जिससे ड्राइवर कार को कमांड देता है। और ड्राइवर की सीट बराबर टर्मिनल, जहाँ तुम बैठते हो।"
   },
   {
     "id": "lx-tree",
@@ -3441,12 +3599,12 @@ const LINUX_LESSONS = [
     "nodes": [
       [
         "root",
-        "pill",
-        430,
-        30,
-        100,
-        42,
-        "/",
+        "proc",
+        340,
+        22,
+        110,
+        40,
+        "/ (Root)",
         {
           "tone": "accent"
         }
@@ -3454,107 +3612,159 @@ const LINUX_LESSONS = [
       [
         "etc",
         "box",
-        50,
-        120,
-        140,
-        50,
-        "/etc\nconfigs",
+        30,
+        96,
+        130,
+        48,
+        "/etc",
         {
-          "tone": "file"
+          "sub": "system configs",
+          "tone": "file",
+          "small": 1
         }
       ],
       [
         "var",
         "box",
-        210,
-        120,
-        140,
-        50,
-        "/var\nlogs & spool",
+        180,
+        96,
+        130,
+        48,
+        "/var",
         {
-          "tone": "file"
+          "sub": "logs & spool",
+          "tone": "file",
+          "small": 1
         }
       ],
       [
         "home",
         "box",
-        370,
-        120,
-        140,
-        50,
-        "/home\nuser files",
+        330,
+        96,
+        130,
+        48,
+        "/home",
         {
-          "tone": "file"
+          "sub": "user homes",
+          "tone": "file",
+          "small": 1
         }
       ],
       [
         "u01",
         "box",
-        530,
-        120,
-        140,
-        50,
-        "/u01\nOracle DB",
+        480,
+        96,
+        130,
+        48,
+        "/u01",
         {
-          "tone": "file"
+          "sub": "Oracle DB base",
+          "tone": "file",
+          "small": 1
         }
       ],
       [
         "tmp",
         "box",
-        690,
-        120,
-        100,
-        50,
-        "/tmp\nscratch",
+        630,
+        96,
+        110,
+        48,
+        "/tmp",
         {
-          "tone": "file"
+          "sub": "scratchpad",
+          "tone": "muted",
+          "small": 1
         }
       ],
       [
         "vlog",
         "doc",
-        210,
-        210,
-        140,
-        60,
-        "/var/log\nsyslog, nginx",
+        180,
+        182,
+        130,
+        56,
+        "/var/log",
         {
+          "sub": "syslog, nginx",
           "tone": "mem"
         }
       ],
       [
         "ohome",
         "doc",
-        370,
-        210,
-        140,
-        60,
-        "/home/oracle\nscripts, .ssh",
+        330,
+        182,
+        130,
+        56,
+        "/home/oracle",
         {
-          "tone": "mem"
+          "sub": "~ (default home)",
+          "tone": "ok"
         }
       ],
       [
         "odata",
         "disk",
-        530,
-        210,
-        140,
-        60,
-        "/u01/.../oradata\n.dbf files",
+        480,
+        174,
+        130,
+        56,
+        "/u01/oradata",
         {
-          "tone": "mem"
+          "sub": ".dbf datafiles",
+          "tone": "accent",
+          "level": 0.55
+        }
+      ],
+      [
+        "cwd",
+        "var",
+        765,
+        42,
+        170,
+        52,
+        "Current Dir (pwd)",
+        {
+          "v": "/home/oracle",
+          "tone": "ok"
+        }
+      ],
+      [
+        "prev",
+        "var",
+        765,
+        118,
+        170,
+        52,
+        "OLDPWD (cd -)",
+        {
+          "v": "(none)",
+          "tone": "muted"
+        }
+      ],
+      [
+        "nav",
+        "chip",
+        765,
+        196,
+        170,
+        30,
+        ".. = up · ~ = home",
+        {
+          "tone": "accent"
         }
       ],
       [
         "term",
         "term",
-        30,
-        290,
-        890,
-        220,
-        "Terminal · Navigation"
+        24,
+        278,
+        912,
+        232,
+        "Terminal · Filesystem Navigation"
       ]
     ],
     "code": [
@@ -3590,8 +3800,49 @@ const LINUX_LESSONS = [
             "home",
             "u01",
             "tmp"
+          ],
+          [
+            "link",
+            "root",
+            "etc",
+            {
+              "tone": "file"
+            }
+          ],
+          [
+            "&link",
+            "root",
+            "var",
+            {
+              "tone": "file"
+            }
+          ],
+          [
+            "&link",
+            "root",
+            "home",
+            {
+              "tone": "file"
+            }
+          ],
+          [
+            "&link",
+            "root",
+            "u01",
+            {
+              "tone": "file"
+            }
+          ],
+          [
+            "&link",
+            "root",
+            "tmp",
+            {
+              "tone": "muted"
+            }
           ]
-        ]
+        ],
+        "vo": "विंडोज़ में अलग-अलग ड्राइव्स होते हैं, जैसे सी और डी। लिनक्स में सिर्फ़ एक ही रूट डायरेक्टरी होती है, जिसे फॉरवर्ड-स्लैश कहते हैं। सारी हार्ड डिस्क्स इसी पेड़ में माउंट होती हैं।"
       },
       {
         "say": "Har folder ka ek maksad hai: `/etc` mein server aur software ki settings (configs) rehti hain; `/var/log` mein running apps ke logs; `/home` mein users ka data; aur `/u01` mein Oracle Database software aur datafiles.",
@@ -3604,38 +3855,6 @@ const LINUX_LESSONS = [
           ],
           [
             "link",
-            "root",
-            "etc",
-            {
-              "tone": "file"
-            }
-          ],
-          [
-            "link",
-            "root",
-            "var",
-            {
-              "tone": "file"
-            }
-          ],
-          [
-            "link",
-            "root",
-            "home",
-            {
-              "tone": "file"
-            }
-          ],
-          [
-            "link",
-            "root",
-            "u01",
-            {
-              "tone": "file"
-            }
-          ],
-          [
-            "link",
             "var",
             "vlog",
             {
@@ -3643,22 +3862,35 @@ const LINUX_LESSONS = [
             }
           ],
           [
-            "link",
+            "&link",
             "home",
             "ohome",
             {
-              "tone": "mem"
+              "tone": "ok"
             }
           ],
           [
-            "link",
+            "&link",
             "u01",
             "odata",
             {
-              "tone": "mem"
+              "tone": "accent"
             }
+          ],
+          [
+            "pulse",
+            "ohome"
+          ],
+          [
+            "pulse",
+            "vlog"
+          ],
+          [
+            "pulse",
+            "odata"
           ]
-        ]
+        ],
+        "vo": "हर फ़ोल्डर का एक मक़सद है: स्लैश ई-टी-सी में सर्वर और सॉफ़्टवेयर की सेटिंग्स रहती हैं, स्लैश वार स्लैश लॉग में रनिंग ऐप्स के लॉग्स, स्लैश होम में यूज़र्स का डेटा, और स्लैश यू-ज़ीरो-वन में ओरेकल डेटाबेस सॉफ़्टवेयर और डेटाफ़ाइल्स।"
       },
       {
         "say": "`pwd` command batata hai ki abhi tum filesystem ke kis folder mein khade ho. `cd /var/log` se seedha logs folder mein pahunch jaate ho.",
@@ -3671,6 +3903,8 @@ const LINUX_LESSONS = [
         "ops": [
           [
             "show",
+            "cwd",
+            "prev",
             "term"
           ],
           [
@@ -3684,9 +3918,47 @@ const LINUX_LESSONS = [
             "/home/oracle"
           ],
           [
+            "ok",
+            "ohome"
+          ],
+          [
             "term",
             "term",
             "oracle@prod-db01:~$ cd /var/log"
+          ],
+          [
+            "flow",
+            "ohome",
+            "vlog",
+            "cd /var/log",
+            {
+              "tone": "accent",
+              "dur": 700
+            }
+          ],
+          [
+            "unok",
+            "ohome"
+          ],
+          [
+            "ok",
+            "vlog"
+          ],
+          [
+            "val",
+            "prev",
+            "/home/oracle",
+            {
+              "tone": "muted"
+            }
+          ],
+          [
+            "val",
+            "cwd",
+            "/var/log",
+            {
+              "tone": "accent"
+            }
           ],
           [
             "term",
@@ -3697,12 +3969,9 @@ const LINUX_LESSONS = [
             "out",
             "term",
             "/var/log"
-          ],
-          [
-            "pulse",
-            "vlog"
           ]
-        ]
+        ],
+        "vo": "पी-डब्ल्यू-डी कमांड बताता है कि अभी तुम फ़ाइलसिस्टम के किस फ़ोल्डर में खड़े हो। सी-डी स्लैश वार स्लैश लॉग से सीधा लॉग्स फ़ोल्डर में पहुँच जाते हो।"
       },
       {
         "say": "Navigation ke shortcuts: `..` ka matlab ek step upar (parent directory); `~` ka matlab apna home folder (`/home/oracle`); aur `cd -` pichhle folder par wapas le aata hai.",
@@ -3716,9 +3985,35 @@ const LINUX_LESSONS = [
         ],
         "ops": [
           [
+            "show",
+            "nav"
+          ],
+          [
             "term",
             "term",
             "oracle@prod-db01:/var/log$ cd .."
+          ],
+          [
+            "flow",
+            "vlog",
+            "var",
+            "cd ..",
+            {
+              "tone": "file",
+              "dur": 550
+            }
+          ],
+          [
+            "unok",
+            "vlog"
+          ],
+          [
+            "val",
+            "cwd",
+            "/var",
+            {
+              "tone": "file"
+            }
           ],
           [
             "term",
@@ -3726,9 +4021,53 @@ const LINUX_LESSONS = [
             "oracle@prod-db01:/var$ cd ~"
           ],
           [
+            "flow",
+            "var",
+            "ohome",
+            "cd ~",
+            {
+              "tone": "ok",
+              "dur": 600
+            }
+          ],
+          [
+            "val",
+            "prev",
+            "/var",
+            {
+              "tone": "accent"
+            }
+          ],
+          [
+            "val",
+            "cwd",
+            "/home/oracle",
+            {
+              "tone": "ok"
+            }
+          ],
+          [
             "term",
             "term",
             "oracle@prod-db01:~$ cd -"
+          ],
+          [
+            "flow",
+            "ohome",
+            "var",
+            "cd -",
+            {
+              "tone": "accent",
+              "dur": 600
+            }
+          ],
+          [
+            "val",
+            "cwd",
+            "/var",
+            {
+              "tone": "accent"
+            }
           ],
           [
             "out",
@@ -3739,7 +4078,8 @@ const LINUX_LESSONS = [
             "ok",
             "root"
           ]
-        ]
+        ],
+        "vo": "नेविगेशन के शॉर्टकट्स: डॉट-डॉट का मतलब एक स्टेप ऊपर यानी पेरेंट डायरेक्टरी, टिल्ड का मतलब अपना होम फ़ोल्डर स्लैश होम स्लैश ओरेकल, और सी-डी डैश पिछले फ़ोल्डर पर वापस ले आता है।"
       }
     ],
     "points": [
@@ -3812,7 +4152,8 @@ const LINUX_LESSONS = [
         "why": "Agar `/home/oracle` mein ho toh bina aage `/` lagaye `var/log` dhoondhne par error aayega. Absolute path ke liye shuru mein `/` zaroori hai (`/var/log`).",
         "fix": "cd /var/log"
       }
-    ]
+    ],
+    "intro": "दुकान का बड़ा अलमीरा सोचो। अलमीरा का सबसे बड़ा दरवाज़ा बराबर फॉरवर्ड-स्लैश, यानी रूट। उसके अंदर अलग-अलग खाने हैं: बिल बुक और पॉलिसी बराबर स्लैश ई-टी-सी, स्टॉक रजिस्टर बराबर स्लैश वार स्लैश लॉग, और हर स्टाफ़ का अपना पर्सनल लॉकर बराबर स्लैश होम स्लैश ओरेकल।"
   },
   {
     "id": "lx-ls",
@@ -3851,12 +4192,87 @@ const LINUX_LESSONS = [
     ],
     "nodes": [
       [
-        "term",
-        "term",
+        "f_ls",
+        "chip",
+        24,
+        24,
+        190,
         30,
-        40,
-        890,
-        460,
+        "1. ls (Names only)",
+        {
+          "tone": "muted"
+        }
+      ],
+      [
+        "f_la",
+        "chip",
+        230,
+        24,
+        220,
+        30,
+        "2. ls -la (+Hidden & Long)",
+        {
+          "tone": "accent"
+        }
+      ],
+      [
+        "f_lh",
+        "chip",
+        466,
+        24,
+        220,
+        30,
+        "3. ls -lh (Human Sizes)",
+        {
+          "tone": "ok"
+        }
+      ],
+      [
+        "f_ltr",
+        "chip",
+        702,
+        24,
+        234,
+        30,
+        "4. ls -ltr (Newest at Bottom!)",
+        {
+          "tone": "proc"
+        }
+      ],
+      [
+        "ltbl",
+        "table",
+        24,
+        78,
+        912,
+        185,
+        "/home/oracle directory listing",
+        {
+          "cols": [
+            "PERMS",
+            "OWNER",
+            "GROUP",
+            "SIZE",
+            "MODIFIED",
+            "NAME"
+          ],
+          "cw": [
+            0.18,
+            0.13,
+            0.13,
+            0.12,
+            0.18,
+            0.26
+          ]
+        }
+      ],
+      [
+        "term",
+        "term",
+        24,
+        278,
+        912,
+        232,
         "Terminal · ls in Action"
       ]
     ],
@@ -3883,7 +4299,67 @@ const LINUX_LESSONS = [
         "ops": [
           [
             "show",
+            "f_ls",
+            "ltbl",
             "term"
+          ],
+          [
+            "pulse",
+            "f_ls"
+          ],
+          [
+            "rows",
+            "ltbl",
+            [
+              [
+                "-",
+                "oracle",
+                "oinstall",
+                "-",
+                "-",
+                "app/"
+              ],
+              [
+                "-",
+                "oracle",
+                "oinstall",
+                "-",
+                "-",
+                "notes.txt"
+              ],
+              [
+                "-",
+                "oracle",
+                "oinstall",
+                "-",
+                "-",
+                "scripts/"
+              ],
+              [
+                "-",
+                "oracle",
+                "oinstall",
+                "-",
+                "-",
+                "servers.csv"
+              ],
+              [
+                "-",
+                "oracle",
+                "oinstall",
+                "-",
+                "-",
+                "todo.txt"
+              ]
+            ]
+          ],
+          [
+            "colhl",
+            "ltbl",
+            [
+              5
+            ],
+            "accent"
           ],
           [
             "term",
@@ -3895,7 +4371,8 @@ const LINUX_LESSONS = [
             "term",
             "app  employees.csv  notes.txt  releases  scripts  servers.csv  todo.txt"
           ]
-        ]
+        ],
+        "vo": "खाली एल-एस चलाने पर फ़ाइल्स और फ़ोल्डर्स के सिर्फ़ नाम आते हैं। डॉट से शुरू होने वाली हिडन फ़ाइल्स, जैसे डॉट बैश-आर-सी और डॉट एस-एस-एच, नज़र नहीं आतीं।"
       },
       {
         "say": "Har Linux professional `ls -la` use karta hai. `-a` se hidden files bhi dikhti hain aur `-l` se poora record: permissions (`drwxr-xr-x`), owner (`oracle`), size aur timestamp.",
@@ -3904,6 +4381,79 @@ const LINUX_LESSONS = [
           3
         ],
         "ops": [
+          [
+            "show",
+            "f_la"
+          ],
+          [
+            "pulse",
+            "f_la"
+          ],
+          [
+            "rows",
+            "ltbl",
+            [
+              [
+                "-rw-r--r--",
+                "oracle",
+                "oinstall",
+                "148",
+                "Oct 29 10:00",
+                ".bashrc (hidden)"
+              ],
+              [
+                "drwx------",
+                "oracle",
+                "oinstall",
+                "4096",
+                "Oct 29 10:00",
+                ".ssh/ (hidden)"
+              ],
+              [
+                "-rw-r--r--",
+                "oracle",
+                "oinstall",
+                "340",
+                "Oct 29 10:00",
+                "notes.txt"
+              ],
+              [
+                "-rw-r--r--",
+                "oracle",
+                "oinstall",
+                "482",
+                "Oct 29 10:00",
+                "servers.csv"
+              ],
+              [
+                "drwxr-xr-x",
+                "oracle",
+                "oinstall",
+                "4096",
+                "Oct 29 10:00",
+                "scripts/"
+              ]
+            ]
+          ],
+          [
+            "mark",
+            "ltbl",
+            [
+              0,
+              1
+            ],
+            "accent"
+          ],
+          [
+            "colhl",
+            "ltbl",
+            [
+              0,
+              1,
+              5
+            ],
+            "accent"
+          ],
           [
             "term",
             "term",
@@ -3921,7 +4471,8 @@ const LINUX_LESSONS = [
             "-rw-r--r-- 1 oracle oinstall  340 Oct 29 10:00 notes.txt",
             "-rw-r--r-- 1 oracle oinstall  482 Oct 29 10:00 servers.csv"
           ]
-        ]
+        ],
+        "vo": "हर लिनक्स प्रोफ़ेशनल एल-एस डैश एल-ए यूज़ करता है। डैश ए से हिडन फ़ाइल्स भी दिखती हैं और डैश एल से पूरा रिकॉर्ड: परमिशन्स, ओनर, साइज़ और टाइमस्टैम्प।"
       },
       {
         "say": "Raw bytes padhna mushkil hota hai (`4294967296` bytes!). `-h` flag lagane se size 4K, 12M, 4G mein dikhta hai, jise human-readable kehte hain.",
@@ -3930,6 +4481,65 @@ const LINUX_LESSONS = [
           5
         ],
         "ops": [
+          [
+            "show",
+            "f_lh"
+          ],
+          [
+            "unmark",
+            "ltbl"
+          ],
+          [
+            "colhl",
+            "ltbl",
+            [
+              3
+            ],
+            "ok"
+          ],
+          [
+            "cell",
+            "ltbl",
+            0,
+            3,
+            "148B"
+          ],
+          [
+            "cell",
+            "ltbl",
+            1,
+            3,
+            "4.0K"
+          ],
+          [
+            "cell",
+            "ltbl",
+            2,
+            3,
+            "340B"
+          ],
+          [
+            "cell",
+            "ltbl",
+            3,
+            3,
+            "482B"
+          ],
+          [
+            "cell",
+            "ltbl",
+            4,
+            3,
+            "4.0K"
+          ],
+          [
+            "mark",
+            "ltbl",
+            [
+              3
+            ],
+            "ok"
+          ],
           [
             "term",
             "term",
@@ -3940,7 +4550,8 @@ const LINUX_LESSONS = [
             "term",
             "-rw-r--r-- 1 oracle oinstall 482B Oct 29 10:00 servers.csv"
           ]
-        ]
+        ],
+        "vo": "रॉ बाइट्स पढ़ना मुश्किल होता है। डैश एच फ़्लैग लगाने से साइज़ फोर के, ट्वेल्व एम, फोर जी में दिखता है, जिसे ह्यूमन-रीडेबल कहते हैं।"
       },
       {
         "say": "Production incident mein sabse kaam aane wala command hai `ls -ltr`. `-t` time se sort karta hai aur `-r` use reverse karta hai, jisse sabse latest change aakhri line par dikhta hai!",
@@ -3949,6 +4560,70 @@ const LINUX_LESSONS = [
           7
         ],
         "ops": [
+          [
+            "show",
+            "f_ltr"
+          ],
+          [
+            "label",
+            "ltbl",
+            "/var/log (ls -ltr · Oldest -> Newest)"
+          ],
+          [
+            "rows",
+            "ltbl",
+            [
+              [
+                "-rw-r-----",
+                "root",
+                "root",
+                "2.1K",
+                "Oct 29 06:15",
+                "syslog"
+              ],
+              [
+                "-rw-r--r--",
+                "root",
+                "root",
+                "1.4K",
+                "Oct 29 08:00",
+                "auth.log"
+              ],
+              [
+                "drwxr-xr-x",
+                "root",
+                "root",
+                "4.0K",
+                "Oct 29 10:14",
+                "nginx/"
+              ],
+              [
+                "drwxr-xr-x",
+                "root",
+                "root",
+                "4.0K",
+                "Oct 29 10:15",
+                "app/ (LATEST!)"
+              ]
+            ]
+          ],
+          [
+            "colhl",
+            "ltbl",
+            [
+              4,
+              5
+            ],
+            "proc"
+          ],
+          [
+            "mark",
+            "ltbl",
+            [
+              3
+            ],
+            "ok"
+          ],
           [
             "term",
             "term",
@@ -3961,8 +4636,13 @@ const LINUX_LESSONS = [
             "-rw-r--r-- 1 root root  1.4K Oct 29 08:00 auth.log",
             "drwxr-xr-x 2 root root  4.0K Oct 29 10:14 nginx",
             "drwxr-xr-x 2 root root  4.0K Oct 29 10:15 app"
+          ],
+          [
+            "ok",
+            "f_ltr"
           ]
-        ]
+        ],
+        "vo": "प्रोडक्शन इंसिडेंट में सबसे काम आने वाला कमांड है एल-एस डैश एल-टी-आर। डैश टी टाइम से सॉर्ट करता है और डैश आर उसे रिवर्स करता है, जिससे सबसे लेटेस्ट चेंज आख़िरी लाइन पर दिखता है!"
       }
     ],
     "points": [
@@ -4039,7 +4719,8 @@ const LINUX_LESSONS = [
         "why": "Flags aage peeche chalte hain (`-ltr` ya `-lrt`), par `-ltr` industry standard habit hai jo bolne mein aasaan hai.",
         "fix": "ls -ltr"
       }
-    ]
+    ],
+    "intro": "दुकान के गोडाउन की इन्वेंटरी लिस्ट सोचो। नॉर्मल एल-एस सिर्फ़ डब्बों के नाम बताता है। एल-एस डैश एल-ए छुपे हुए डब्बे, जैसे डॉट बैश-आर-सी, भी दिखाता है। और एल-एस डैश एल-टी-आर सबसे नया आया माल सबसे आख़िरी लाइन पर दिखाता है ताकि तुरंत नज़र पड़े।"
   },
   {
     "id": "lx-files",
@@ -4078,56 +4759,117 @@ const LINUX_LESSONS = [
     ],
     "nodes": [
       [
+        "dir",
+        "region",
+        24,
+        24,
+        300,
+        118,
+        "mkdir -p (Nested Tree)",
+        {
+          "tone": "accent",
+          "sub": "auto-parents"
+        }
+      ],
+      [
+        "b1",
+        "box",
+        40,
+        64,
+        76,
+        56,
+        "backup/",
+        {
+          "tone": "accent",
+          "small": 1
+        }
+      ],
+      [
+        "b2",
+        "box",
+        136,
+        64,
+        76,
+        56,
+        "2026/",
+        {
+          "tone": "accent",
+          "small": 1
+        }
+      ],
+      [
+        "b3",
+        "box",
+        232,
+        64,
+        76,
+        56,
+        "oct/",
+        {
+          "tone": "ok",
+          "small": 1
+        }
+      ],
+      [
+        "chk",
+        "doc",
+        350,
+        38,
+        145,
+        76,
+        "health.check",
+        {
+          "sub": "0B · touch",
+          "tone": "proc"
+        }
+      ],
+      [
         "src",
         "doc",
-        60,
-        60,
-        150,
-        70,
-        "config.env\noriginal",
+        525,
+        38,
+        155,
+        76,
+        "config.env",
         {
+          "sub": "original (600)",
           "tone": "mem"
         }
       ],
       [
         "bak",
         "doc",
-        280,
-        60,
-        150,
-        70,
-        "config.env.bak\nbackup copy",
+        735,
+        38,
+        175,
+        76,
+        "config.env.bak",
         {
+          "sub": "cp -p (safe backup)",
           "tone": "ok"
         }
       ],
       [
-        "dir",
+        "rmbox",
         "box",
-        500,
-        60,
-        200,
-        70,
-        "backup/2026/oct\nmkdir -p",
+        24,
+        162,
+        912,
+        64,
+        "DANGER ZONE: rm -rf /  (No Recycle Bin in Linux!)",
         {
-          "tone": "accent"
+          "tone": "danger",
+          "dash": 1,
+          "sub": "Always verify path & backup with cp -p before deleting"
         }
       ],
       [
-        "danger",
-        "err",
-        540,
-        200,
-        "rm -rf / : PRODUCTION TABAHI!",
-        "middle"
-      ],
-      [
         "term",
         "term",
-        30,
-        260,
-        890,
-        250,
+        24,
+        244,
+        912,
+        266,
         "Terminal · Safe File Operations"
       ]
     ],
@@ -4155,6 +4897,7 @@ const LINUX_LESSONS = [
           [
             "show",
             "dir",
+            "b1",
             "term"
           ],
           [
@@ -4163,10 +4906,35 @@ const LINUX_LESSONS = [
             "oracle@prod-db01:~$ mkdir -p backup/2026/oct"
           ],
           [
-            "pulse",
-            "dir"
+            "show",
+            "b2"
+          ],
+          [
+            "link",
+            "b1",
+            "b2",
+            {
+              "tone": "accent"
+            }
+          ],
+          [
+            "show",
+            "b3"
+          ],
+          [
+            "link",
+            "b2",
+            "b3",
+            {
+              "tone": "ok"
+            }
+          ],
+          [
+            "ok",
+            "b3"
           ]
-        ]
+        ],
+        "vo": "प्रोडक्शन में अक्सर नेस्टेड फ़ोल्डर्स बनाने होते हैं, जैसे बैकअप स्लैश ट्वेंटी-ट्वेंटी-सिक्स स्लैश ऑक्ट। अगर बिना डैश पी के बनाओगे तो लिनक्स बोलेगा फ़ोल्डर नहीं मिला। डैश पी फ़्लैग बीच के सारे पेरेंट्स ख़ुद बना देता है।"
       },
       {
         "say": "`touch` command se turant khaali file ban jaati hai. Agar file pehle se ho, toh uska data nahi chhidta, sirf last modified time abhi ka ho jaata hai.",
@@ -4176,11 +4944,24 @@ const LINUX_LESSONS = [
         ],
         "ops": [
           [
+            "show",
+            "chk"
+          ],
+          [
+            "pulse",
+            "chk"
+          ],
+          [
             "term",
             "term",
             "oracle@prod-db01:~$ touch app/health.check"
+          ],
+          [
+            "ok",
+            "chk"
           ]
-        ]
+        ],
+        "vo": "टच कमांड से तुरंत खाली फ़ाइल बन जाती है। अगर फ़ाइल पहले से हो, तो उसका डेटा नहीं छिड़ता, सिर्फ़ लास्ट मॉडिफ़ाइड टाइम अभी का हो जाता है।"
       },
       {
         "say": "Real Job Rule #1: Production config file ko chhoone se pehle hamesha `cp -p file file.bak` chalao! `-p` flag se original file ki permissions aur timestamp safe rehte hain.",
@@ -4195,6 +4976,21 @@ const LINUX_LESSONS = [
             "bak"
           ],
           [
+            "term",
+            "term",
+            "oracle@prod-db01:~$ cp -p app/config.env app/config.env.bak"
+          ],
+          [
+            "flow",
+            "src",
+            "bak",
+            "cp -p",
+            {
+              "tone": "ok",
+              "dur": 650
+            }
+          ],
+          [
             "link",
             "src",
             "bak",
@@ -4204,15 +5000,11 @@ const LINUX_LESSONS = [
             }
           ],
           [
-            "term",
-            "term",
-            "oracle@prod-db01:~$ cp -p app/config.env app/config.env.bak"
-          ],
-          [
             "ok",
             "bak"
           ]
-        ]
+        ],
+        "vo": "रियल जॉब रूल नंबर वन: प्रोडक्शन कॉन्फ़िग फ़ाइल को छूने से पहले हमेशा सी-पी डैश पी फ़ाइल फ़ाइल डॉट बैक चलाओ! डैश पी फ़्लैग से ओरिजिनल फ़ाइल की परमिशन्स और टाइमस्टैम्प सेफ़ रहते हैं।"
       },
       {
         "say": "`mv` file ko doosri jagah bhejta hai ya uska naam badalta hai. `rm` file delete karta hai.",
@@ -4229,24 +5021,45 @@ const LINUX_LESSONS = [
             "oracle@prod-db01:~$ mv app/health.check app/health.ok"
           ],
           [
+            "label",
+            "chk",
+            "health.ok",
+            "renamed via mv"
+          ],
+          [
+            "tone",
+            "chk",
+            "accent"
+          ],
+          [
             "term",
             "term",
             "oracle@prod-db01:~$ rm app/health.ok"
+          ],
+          [
+            "drop",
+            "chk"
           ]
-        ]
+        ],
+        "vo": "एम-वी फ़ाइल को दूसरी जगह भेजता है या उसका नाम बदलता है। आर-एम फ़ाइल डिलीट करता है।"
       },
       {
         "say": "Cheshtawani: `rm -rf` bina confirm kiye folder aur uske andar sab kuch mita deta hai. Linux mein koi \"Recycle Bin\" nahi hota! Kabhi bhi `rm -rf /` ya galat space wala path mat chalana.",
         "ops": [
           [
             "show",
-            "danger"
+            "rmbox"
+          ],
+          [
+            "x",
+            "rmbox"
           ],
           [
             "pulse",
-            "danger"
+            "rmbox"
           ]
-        ]
+        ],
+        "vo": "चेतावनी: आर-एम डैश आर-एफ़ बिना कन्फ़र्म किए फ़ोल्डर और उसके अंदर सब कुछ मिटा देता है। लिनक्स में कोई रीसायकल बिन नहीं होता! कभी भी आर-एम डैश आर-एफ़ स्लैश या ग़लत स्पेस वाला पाथ मत चलाना।"
       }
     ],
     "points": [
@@ -4323,7 +5136,8 @@ const LINUX_LESSONS = [
         "why": "`/` aur `home` ke beech ek space aane se command pehle poore system root `/` ko delete karne lagti hai!",
         "fix": "rm -rf /home/oracle/tmp"
       }
-    ]
+    ],
+    "intro": "ऑफ़िस में नया फ़ोल्डर फ़ाइल रखना है। एम-के-डी-आई-आर डैश पी पूरी फ़ाइल कैबिनेट का सेक्शन बना देता है। पुरानी पॉलिसी बदलने से पहले ज़ेरॉक्स कॉपी निकाल के रखना बराबर सी-पी डैश पी कॉन्फ़िग डॉट कॉन्फ़ कॉन्फ़िग डॉट कॉन्फ़ डॉट बैक। और रद्दी फेंकना बराबर आर-एम।"
   },
   {
     "id": "lx-view",
@@ -4363,66 +5177,95 @@ const LINUX_LESSONS = [
     "nodes": [
       [
         "log",
-        "doc",
-        60,
-        50,
-        160,
-        80,
-        "syslog\n10,000 lines",
+        "table",
+        24,
+        42,
+        520,
+        172,
+        "/var/log/syslog (12 lines)",
         {
-          "tone": "file"
+          "cols": [
+            "#",
+            "TIME",
+            "SERVICE & MESSAGE"
+          ],
+          "cw": [
+            0.12,
+            0.22,
+            0.66
+          ]
+        }
+      ],
+      [
+        "wc",
+        "var",
+        572,
+        42,
+        160,
+        50,
+        "wc -l (Line Count)",
+        {
+          "v": "?",
+          "tone": "accent"
+        }
+      ],
+      [
+        "warn",
+        "chip",
+        748,
+        48,
+        188,
+        30,
+        "5GB Log: NO cat!",
+        {
+          "tone": "danger"
         }
       ],
       [
         "head",
-        "box",
-        270,
-        40,
-        160,
-        45,
-        "head -n 5\nTop 5 lines",
+        "proc",
+        572,
+        108,
+        170,
+        44,
+        "head -n 5",
         {
+          "sub": "Top 5 lines",
           "tone": "accent"
         }
       ],
       [
         "tail",
-        "box",
-        270,
-        95,
-        160,
-        45,
-        "tail -n 10\nLast 10 lines",
+        "proc",
+        762,
+        108,
+        174,
+        44,
+        "tail -n 5",
         {
-          "tone": "accent"
+          "sub": "Last 5 lines",
+          "tone": "danger"
         }
       ],
       [
         "live",
         "box",
-        470,
-        60,
-        200,
-        70,
-        "tail -f\nLive follow stream",
+        572,
+        164,
+        364,
+        50,
+        "tail -f /var/log/nginx/access.log",
         {
+          "sub": "Real-time live stream · Ctrl+C to stop",
           "tone": "ok"
         }
       ],
       [
-        "warn",
-        "err",
-        730,
-        70,
-        "KABHI BHI 5GB LOG\nPAR CAT MAT KARO!",
-        "middle"
-      ],
-      [
         "term",
         "term",
-        30,
+        24,
         230,
-        890,
+        912,
         280,
         "Terminal · Log Inspection"
       ]
@@ -4449,10 +5292,46 @@ const LINUX_LESSONS = [
             "term"
           ],
           [
+            "rows",
+            "log",
+            [
+              [
+                "1",
+                "06:15:01",
+                "CRON: logrotate /etc/logrotate.conf"
+              ],
+              [
+                "2",
+                "07:00:12",
+                "systemd: Starting Daily apt activities"
+              ],
+              [
+                "5",
+                "09:14:55",
+                "sshd: Accepted publickey for oracle"
+              ],
+              [
+                "10",
+                "12:01:10",
+                "kernel: Out of memory: Kill java_worker"
+              ],
+              [
+                "12",
+                "12:05:01",
+                "systemd: payapi.service Failed (ERROR)"
+              ]
+            ]
+          ],
+          [
+            "x",
+            "warn"
+          ],
+          [
             "pulse",
             "warn"
           ]
-        ]
+        ],
+        "vo": "प्रोडक्शन सर्वर पर लॉग फ़ाइल्स हज़ारों एम-बीज़ की होती हैं। ग़लती से कैट प्रोडक्शन डॉट लॉग चला दिया तो टर्मिनल फ़्रीज़ हो जाएगा और सी-पी-यू हंड्रेड परसेंट हो सकता है!"
       },
       {
         "say": "Pehle dekho file kitni lambi hai. `wc -l /var/log/syslog` se total line count milta hai.",
@@ -4462,16 +5341,39 @@ const LINUX_LESSONS = [
         ],
         "ops": [
           [
+            "show",
+            "wc"
+          ],
+          [
             "term",
             "term",
             "oracle@prod-db01:~$ wc -l /var/log/syslog"
+          ],
+          [
+            "flow",
+            "log",
+            "wc",
+            "count",
+            {
+              "tone": "accent",
+              "dur": 550
+            }
+          ],
+          [
+            "val",
+            "wc",
+            "12 lines",
+            {
+              "tone": "ok"
+            }
           ],
           [
             "out",
             "term",
             "12 /var/log/syslog"
           ]
-        ]
+        ],
+        "vo": "पहले देखो फ़ाइल कितनी लंबी है। डब्ल्यू-सी डैश एल स्लैश वार स्लैश लॉग स्लैश सिसलॉग से टोटल लाइन काउंट मिलता है।"
       },
       {
         "say": "File ke shuruaati hisse ko dekhne ke liye `head -n 5` use karo.",
@@ -4483,6 +5385,34 @@ const LINUX_LESSONS = [
           [
             "show",
             "head"
+          ],
+          [
+            "mark",
+            "log",
+            [
+              0,
+              1,
+              2
+            ],
+            "accent"
+          ],
+          [
+            "fade",
+            "log",
+            [
+              3,
+              4
+            ]
+          ],
+          [
+            "flow",
+            "log#0",
+            "head",
+            "top 5",
+            {
+              "tone": "accent",
+              "dur": 600
+            }
           ],
           [
             "term",
@@ -4498,7 +5428,8 @@ const LINUX_LESSONS = [
             "Oct 29 08:30:22 prod-db01 kernel: [ 4521.120] e1000e 0000:00:1f.6 eth0: NIC Link is Up 1000 Mbps Full Duplex",
             "Oct 29 09:14:55 prod-db01 sshd[15402]: Accepted publickey for oracle from 10.0.1.25 port 54112 ssh2: ED25519"
           ]
-        ]
+        ],
+        "vo": "फ़ाइल के शुरुआती हिस्से को देखने के लिए हेड डैश एन फाइव यूज़ करो।"
       },
       {
         "say": "Sabse zaroori information hamesha aakhri lines mein hoti hai. `tail -n 5` se abhi abhi huye latest events dikhte hain.",
@@ -4510,6 +5441,42 @@ const LINUX_LESSONS = [
           [
             "show",
             "tail"
+          ],
+          [
+            "unfade",
+            "log"
+          ],
+          [
+            "unmark",
+            "log"
+          ],
+          [
+            "fade",
+            "log",
+            [
+              0,
+              1,
+              2
+            ]
+          ],
+          [
+            "mark",
+            "log",
+            [
+              3,
+              4
+            ],
+            "danger"
+          ],
+          [
+            "flow",
+            "log#4",
+            "tail",
+            "last 5",
+            {
+              "tone": "danger",
+              "dur": 600
+            }
           ],
           [
             "term",
@@ -4525,7 +5492,8 @@ const LINUX_LESSONS = [
             "Oct 29 12:05:00 prod-db01 systemd[1]: payapi.service: Main process exited, code=exited, status=1/FAILURE",
             "Oct 29 12:05:01 prod-db01 systemd[1]: payapi.service: Failed with result \"exit-code\", ERROR state logged."
           ]
-        ]
+        ],
+        "vo": "सबसे ज़रूरी इन्फ़ॉर्मेशन हमेशा आख़िरी लाइन्स में होती है। टेल डैश एन फाइव से अभी-अभी हुए लेटेस्ट इवेंट्स दिखते हैं।"
       },
       {
         "say": "Jab QA ya customer testing kar raha ho, `tail -f /var/log/nginx/access.log` chala ke screen khol do — har request aate hi terminal par live dikhegi!",
@@ -4539,9 +5507,23 @@ const LINUX_LESSONS = [
             "live"
           ],
           [
+            "unfade",
+            "log"
+          ],
+          [
             "term",
             "term",
             "oracle@prod-db01:~$ tail -f /var/log/nginx/access.log"
+          ],
+          [
+            "flow",
+            "log",
+            "live",
+            "live follow (-f)",
+            {
+              "tone": "ok",
+              "dur": 650
+            }
           ],
           [
             "out",
@@ -4554,7 +5536,8 @@ const LINUX_LESSONS = [
             "ok",
             "live"
           ]
-        ]
+        ],
+        "vo": "जब क्यू-ए या कस्टमर टेस्टिंग कर रहा हो, टेल डैश एफ़ स्लैश वार स्लैश लॉग स्लैश इंजन-एक्स स्लैश एक्सेस डॉट लॉग चला के स्क्रीन खोल दो, हर रिक्वेस्ट आते ही टर्मिनल पर लाइव दिखेगी!"
       }
     ],
     "points": [
@@ -4628,7 +5611,8 @@ const LINUX_LESSONS = [
         "why": "`cat` laga ke pipe karna zaroori nahi hai; `head -n 5 /var/log/syslog` seedha file padhta hai aur 100x fast hai.",
         "fix": "head -n 5 /var/log/syslog"
       }
-    ]
+    ],
+    "intro": "बड़ी किताब सोचो। पूरी एक हज़ार पन्नों की किताब एक सेकंड में हवा में फेंकना बराबर कैट। एक-एक पन्ना आराम से आगे-पीछे पढ़ना बराबर लेस। पहला चैप्टर देखना बराबर हेड। और अभी लाइव लिखी जा रही नई लाइन पर नज़र रखना बराबर टेल डैश एफ़।"
   },
   {
     "id": "lx-find",
@@ -4671,85 +5655,76 @@ const LINUX_LESSONS = [
     ],
     "nodes": [
       [
-        "tree",
-        "region",
-        40,
+        "wbox",
+        "var",
+        24,
+        36,
+        230,
         50,
-        300,
-        200,
-        "Search Space",
+        "which nginx (Binary Path)",
         {
-          "tone": "file",
-          "sub": "/var/log/app"
-        }
-      ],
-      [
-        "f1",
-        "doc",
-        60,
-        95,
-        110,
-        55,
-        "app.log\n10MB",
-        {
-          "tone": "mem"
-        }
-      ],
-      [
-        "f2",
-        "doc",
-        200,
-        95,
-        120,
-        55,
-        "old_2025.tmp\n450MB · >7d",
-        {
-          "tone": "accent"
-        }
-      ],
-      [
-        "f3",
-        "doc",
-        130,
-        170,
-        130,
-        60,
-        "crashdump.tmp\n800MB · >7d",
-        {
+          "v": "/usr/bin/nginx",
           "tone": "accent"
         }
       ],
       [
         "filter",
-        "box",
-        380,
-        70,
-        240,
-        80,
-        "find /var/log/app\n-name \"*.tmp\" -size +100M",
+        "proc",
+        24,
+        104,
+        230,
+        54,
+        "find /var/log",
         {
+          "sub": "-name · -size · -mtime",
           "tone": "proc"
         }
       ],
       [
         "res",
         "box",
-        660,
-        70,
-        240,
-        80,
-        "Matched for Cleanup:\nold_2025.tmp (450M)\ncrashdump.tmp (800M)",
+        24,
+        174,
+        230,
+        58,
+        "Cleanup Action",
         {
+          "sub": "-delete (1.25 GB freed!)",
           "tone": "ok"
+        }
+      ],
+      [
+        "ftbl",
+        "table",
+        278,
+        36,
+        658,
+        196,
+        "/var/log file tree scan",
+        {
+          "cols": [
+            "PATH",
+            "TYPE",
+            "SIZE",
+            "AGE",
+            "STATUS"
+          ],
+          "cw": [
+            0.38,
+            0.12,
+            0.14,
+            0.14,
+            0.22
+          ]
         }
       ],
       [
         "term",
         "term",
-        30,
-        270,
-        890,
-        240,
+        24,
+        248,
+        912,
+        262,
         "Terminal · find in Action"
       ]
     ],
@@ -4776,6 +5751,7 @@ const LINUX_LESSONS = [
         "ops": [
           [
             "show",
+            "wbox",
             "term"
           ],
           [
@@ -4784,11 +5760,20 @@ const LINUX_LESSONS = [
             "oracle@prod-db01:~$ which nginx"
           ],
           [
+            "pulse",
+            "wbox"
+          ],
+          [
+            "ok",
+            "wbox"
+          ],
+          [
             "out",
             "term",
             "/usr/bin/nginx"
           ]
-        ]
+        ],
+        "vo": "दो अलग ढूँढने के टूल्स हैं: विच बताता है कि कोई कमांड, जैसे इंजन-एक्स या पाइथन, किस पाथ से चल रही है। और फ़ाइंड पूरे फ़ोल्डर ट्री को छानता है।"
       },
       {
         "say": "Kisi bhi folder mein specific pattern dhoondhne ke liye `find <path> -name \"<pattern>\"` use karte hain. Wildcard pattern ko hamesha quotes mein rakho!",
@@ -4799,10 +5784,73 @@ const LINUX_LESSONS = [
         "ops": [
           [
             "show",
-            "tree",
-            "f1",
-            "f2",
-            "f3"
+            "ftbl",
+            "filter"
+          ],
+          [
+            "rows",
+            "ftbl",
+            [
+              [
+                "/var/log/syslog",
+                "file",
+                "2.1K",
+                "1d",
+                "Active log"
+              ],
+              [
+                "/var/log/auth.log",
+                "file",
+                "1.4K",
+                "1d",
+                "Security log"
+              ],
+              [
+                "/var/log/app/app.log",
+                "file",
+                "10M",
+                "1d",
+                "App log"
+              ],
+              [
+                "/var/log/app/old_2025.tmp",
+                "file",
+                "450M",
+                "14d",
+                "Stale temp"
+              ],
+              [
+                "/var/log/app/crashdump.tmp",
+                "file",
+                "800M",
+                "10d",
+                "Huge dump"
+              ]
+            ]
+          ],
+          [
+            "mark",
+            "ftbl",
+            [
+              0,
+              1,
+              2
+            ],
+            "accent"
+          ],
+          [
+            "fade",
+            "ftbl",
+            [
+              3,
+              4
+            ]
+          ],
+          [
+            "label",
+            "filter",
+            "find /var/log",
+            "-name \"*.log\""
           ],
           [
             "term",
@@ -4819,7 +5867,8 @@ const LINUX_LESSONS = [
             "/var/log/oracle/alert_FREE.log",
             "/var/log/app/app.log"
           ]
-        ]
+        ],
+        "vo": "किसी भी फ़ोल्डर में स्पेसिफ़िक पैटर्न ढूँढने के लिए फ़ाइंड पाथ डैश नेम पैटर्न यूज़ करते हैं। वाइल्डकार्ड पैटर्न को हमेशा कोट्स में रखो!"
       },
       {
         "say": "Disk space bachaane ke liye sabse badi files pakadna: `-size +100M` ka matlab 100MB se badi files. `-type f` folders ko chhod kar sirf files dekhta hai.",
@@ -4829,12 +5878,54 @@ const LINUX_LESSONS = [
         ],
         "ops": [
           [
-            "show",
-            "filter"
+            "unfade",
+            "ftbl"
           ],
           [
-            "pulse",
-            "filter"
+            "unmark",
+            "ftbl"
+          ],
+          [
+            "label",
+            "filter",
+            "find /var/log",
+            "-type f -size +100M"
+          ],
+          [
+            "colhl",
+            "ftbl",
+            [
+              2
+            ],
+            "danger"
+          ],
+          [
+            "fade",
+            "ftbl",
+            [
+              0,
+              1,
+              2
+            ]
+          ],
+          [
+            "mark",
+            "ftbl",
+            [
+              3,
+              4
+            ],
+            "danger"
+          ],
+          [
+            "flow",
+            "filter",
+            "ftbl",
+            "size > 100M",
+            {
+              "tone": "danger",
+              "dur": 600
+            }
           ],
           [
             "term",
@@ -4847,7 +5938,8 @@ const LINUX_LESSONS = [
             "/var/log/app/old_2025.tmp",
             "/var/log/app/crashdump.tmp"
           ]
-        ]
+        ],
+        "vo": "डिस्क स्पेस बचाने के लिए सबसे बड़ी फ़ाइल्स पकड़ना: डैश साइज़ प्लस हंड्रेड एम का मतलब सौ एम-बी से बड़ी फ़ाइल्स। डैश टाइप एफ़ फ़ोल्डर्स को छोड़ कर सिर्फ़ फ़ाइल्स देखता है।"
       },
       {
         "say": "Incident Cleanup Rule: Pehle `find` chala ke files ki list dekho. Jab pakka ho jaye ki yahi delete karni hai, tab aakhir mein `-delete` lagao.",
@@ -4861,6 +5953,15 @@ const LINUX_LESSONS = [
           [
             "show",
             "res"
+          ],
+          [
+            "colhl",
+            "ftbl",
+            [
+              2,
+              3
+            ],
+            "danger"
           ],
           [
             "term",
@@ -4879,10 +5980,38 @@ const LINUX_LESSONS = [
             "oracle@prod-db01:~$ find /var/log/app -name \"*.tmp\" -mtime +7 -delete"
           ],
           [
+            "flow",
+            "ftbl",
+            "res",
+            "-delete",
+            {
+              "tone": "ok",
+              "dur": 600
+            }
+          ],
+          [
+            "delrow",
+            "ftbl",
+            [
+              3,
+              4
+            ]
+          ],
+          [
+            "unfade",
+            "ftbl"
+          ],
+          [
+            "colhl",
+            "ftbl",
+            []
+          ],
+          [
             "ok",
             "res"
           ]
-        ]
+        ],
+        "vo": "इंसिडेंट क्लीनअप रूल: पहले फ़ाइंड चला के फ़ाइल्स की लिस्ट देखो। जब पक्का हो जाए कि यही डिलीट करनी हैं, तब आख़िर में डैश डिलीट लगाओ।"
       }
     ],
     "points": [
@@ -4960,7 +6089,8 @@ const LINUX_LESSONS = [
         "why": "Size ke aage unit batana zaroori hai (`k` = KB, `M` = MB, `G` = GB). Sirf `100` ka matlab 512-byte blocks hota hai.",
         "fix": "find / -size +100M"
       }
-    ]
+    ],
+    "intro": "पूरे गोडाउन में ढूँढना: हर वो लंबा डब्बा जिसका वज़न पचास किलो से ज़्यादा है और जो पिछले महीने से पड़ा है। फ़ाइंड पूरे फ़ोल्डर स्ट्रक्चर को छान कर ऐसी फ़ाइल्स की लिस्ट देता है।"
   },
   {
     "id": "lx-links",
@@ -4995,61 +6125,119 @@ const LINUX_LESSONS = [
     ],
     "nodes": [
       [
+        "r_hard",
+        "region",
+        24,
+        24,
+        430,
+        190,
+        "Hard Links (Same Inode)",
+        {
+          "tone": "accent",
+          "sub": "ln file hardlink"
+        }
+      ],
+      [
+        "n1",
+        "doc",
+        44,
+        66,
+        145,
+        52,
+        "notes.txt",
+        {
+          "sub": "Dir Entry #1",
+          "tone": "file"
+        }
+      ],
+      [
+        "n2",
+        "doc",
+        44,
+        136,
+        145,
+        52,
+        "notes_hard.txt",
+        {
+          "sub": "Dir Entry #2",
+          "tone": "accent"
+        }
+      ],
+      [
         "inode",
         "disk",
-        380,
-        50,
-        160,
-        90,
-        "Inode #98201\nData Blocks",
+        270,
+        68,
+        150,
+        86,
+        "Inode #101",
         {
-          "tone": "accent"
+          "sub": "340B · Links: 1",
+          "inside": "Data Blocks",
+          "tone": "accent",
+          "level": 0.6
+        }
+      ],
+      [
+        "r_soft",
+        "region",
+        480,
+        24,
+        456,
+        190,
+        "Soft Link / Symlink (Zero-Downtime)",
+        {
+          "tone": "proc",
+          "sub": "ln -sfn target link"
+        }
+      ],
+      [
+        "sym",
+        "proc",
+        504,
+        92,
+        175,
+        54,
+        "releases/current",
+        {
+          "sub": "lrwxrwxrwx (Symlink)",
+          "tone": "proc"
         }
       ],
       [
         "f1",
         "box",
-        140,
-        50,
-        160,
-        45,
-        "app-v1.0\n(Old Version)",
+        740,
+        56,
+        172,
+        54,
+        "releases/app-v1.0",
         {
+          "sub": "Previous Stable",
           "tone": "muted"
         }
       ],
       [
         "f2",
         "box",
-        140,
-        115,
-        160,
-        45,
-        "app-v1.1\n(New Version)",
+        740,
+        134,
+        172,
+        54,
+        "releases/app-v1.1",
         {
+          "sub": "New Release",
           "tone": "ok"
         }
       ],
       [
-        "sym",
-        "pill",
-        640,
-        80,
-        240,
-        50,
-        "releases/current\n(Symlink)",
-        {
-          "tone": "proc"
-        }
-      ],
-      [
         "term",
         "term",
-        30,
+        24,
         230,
-        890,
+        912,
         280,
-        "Terminal · ln -s in Production"
+        "Terminal · ln & ln -s in Production"
       ]
     ],
     "code": [
@@ -5072,13 +6260,25 @@ const LINUX_LESSONS = [
         "ops": [
           [
             "show",
+            "r_hard",
+            "n1",
             "inode"
+          ],
+          [
+            "link",
+            "n1",
+            "inode",
+            {
+              "label": "Inode #101",
+              "tone": "accent"
+            }
           ],
           [
             "pulse",
             "inode"
           ]
-        ]
+        ],
+        "vo": "लिनक्स में फ़ाइल का नाम डिस्क ब्लॉक्स पर नहीं होता! डेटा आई-नोड में रहता है, और फ़ाइल का नाम सिर्फ़ एक लेबल है जो उस आई-नोड को पॉइंट करता है।"
       },
       {
         "say": "Hard Link banane par ek hi Inode ko doosra naam mil jata hai (`ln file hardlink`). Dono ka inode number bilkul same hota hai (`ls -li`).",
@@ -5109,6 +6309,38 @@ const LINUX_LESSONS = [
             "oracle@prod-db01:~$ ln notes.txt notes_hard.txt"
           ],
           [
+            "show",
+            "n2"
+          ],
+          [
+            "link",
+            "n2",
+            "inode",
+            {
+              "label": "Inode #101",
+              "tone": "ok"
+            }
+          ],
+          [
+            "flow",
+            "n2",
+            "inode",
+            "link +1",
+            {
+              "tone": "ok",
+              "dur": 600
+            }
+          ],
+          [
+            "sub",
+            "inode",
+            "340B · Links: 2"
+          ],
+          [
+            "ok",
+            "inode"
+          ],
+          [
             "term",
             "term",
             "oracle@prod-db01:~$ ls -li notes.txt notes_hard.txt"
@@ -5119,7 +6351,8 @@ const LINUX_LESSONS = [
             "101 -rw-r--r-- 2 oracle oinstall 340 Oct 29 10:00 notes.txt",
             "101 -rw-r--r-- 2 oracle oinstall 340 Oct 29 10:00 notes_hard.txt"
           ]
-        ]
+        ],
+        "vo": "हार्ड लिंक बनाने पर एक ही आई-नोड को दूसरा नाम मिल जाता है, एल-एन फ़ाइल हार्डलिंक। दोनों का आई-नोड नंबर बिल्कुल सेम होता है।"
       },
       {
         "say": "Symbolic Link (Soft Link) Windows ke shortcut jaisa hota hai (`ln -s target linkname`). Yeh ek chhoti file hoti hai jo target ka path store karti hai.",
@@ -5132,18 +6365,33 @@ const LINUX_LESSONS = [
         "ops": [
           [
             "show",
+            "r_soft",
+            "sym",
             "f1",
-            "f2",
-            "sym"
+            "f2"
           ],
           [
             "link",
             "sym",
             "f2",
             {
-              "label": "points to",
+              "label": "points to v1.1",
               "tone": "ok"
             }
+          ],
+          [
+            "flow",
+            "sym",
+            "f2",
+            "active",
+            {
+              "tone": "ok",
+              "dur": 600
+            }
+          ],
+          [
+            "ok",
+            "f2"
           ],
           [
             "term",
@@ -5155,7 +6403,8 @@ const LINUX_LESSONS = [
             "term",
             "lrwxrwxrwx 1 oracle oinstall 28 Oct 29 10:00 releases/current -> /home/oracle/releases/app-v1.1"
           ]
-        ]
+        ],
+        "vo": "सिम्बॉलिक लिंक, यानी सॉफ़्ट लिंक, विंडोज़ के शॉर्टकट जैसा होता है, एल-एन डैश एस टार्गेट लिंकनेम। ये एक छोटी फ़ाइल होती है जो टार्गेट का पाथ स्टोर करती है।"
       },
       {
         "say": "Real Job Superpower: Zero-Downtime Deployment! Naya code `releases/app-v1.1` mein upload karo, aur `ln -sfn` se 1 millisecond mein `current` symlink badal do. Rollback karna ho toh turant `app-v1.0` par wapas link point kar do!",
@@ -5170,23 +6419,47 @@ const LINUX_LESSONS = [
             "f2"
           ],
           [
+            "unok",
+            "f2"
+          ],
+          [
+            "dim",
+            "f2"
+          ],
+          [
+            "tone",
+            "f1",
+            "accent"
+          ],
+          [
             "link",
             "sym",
             "f1",
             {
-              "label": "rollback",
+              "label": "rollback -> v1.0",
               "tone": "accent"
             }
           ],
           [
-            "pulse",
-            "sym"
+            "flow",
+            "sym",
+            "f1",
+            "instant switch",
+            {
+              "tone": "accent",
+              "dur": 600
+            }
+          ],
+          [
+            "ok",
+            "f1"
           ],
           [
             "ok",
             "sym"
           ]
-        ]
+        ],
+        "vo": "रियल जॉब सुपरपावर: ज़ीरो-डाउनटाइम डिप्लॉयमेंट! नया कोड रिलीज़ेस स्लैश ऐप वी-वन-पॉइंट-वन में अपलोड करो, और एल-एन डैश एस-एफ़-एन से एक मिलीसेकंड में करंट सिमलिंक बदल दो। रोलबैक करना हो तो तुरंत ऐप वी-वन-पॉइंट-ज़ीरो पर वापस लिंक पॉइंट कर दो!"
       }
     ],
     "points": [
@@ -5255,7 +6528,8 @@ const LINUX_LESSONS = [
         "why": "Symlink banate waqt agar target ka relative path galat ho toh link toot jata hai. Hamesha absolute path (`/home/oracle/...`) use karna sabse safe hai.",
         "fix": "ln -s /home/oracle/releases/app-v1.1 releases/current"
       }
-    ]
+    ],
+    "intro": "घर का पता सोचो। आई-नोड बराबर असली ज़मीन का प्लॉट नंबर। हार्ड लिंक बराबर एक ही घर के दो अलग नाम, दोनों सीधा ज़मीन को पॉइंट करते हैं, एक नेमबोर्ड हटाने से घर नहीं गिरता। सॉफ़्ट या सिमलिंक बराबर एक साइनपोस्ट जिस पर लिखा है प्लॉट नंबर फोर्टी-टू पर जाओ, अगर ज़मीन बिक गई तो साइनपोस्ट टूट जाता है।"
   },
   {
     "id": "lx-vim",
@@ -5298,48 +6572,82 @@ const LINUX_LESSONS = [
     ],
     "nodes": [
       [
+        "vst",
+        "stages",
+        24,
+        34,
+        912,
+        36,
+        "VI / VIM WORKFLOW CYCLE",
+        {
+          "items": [
+            "1. Normal Mode",
+            "2. Insert Mode (i)",
+            "3. Esc -> Normal",
+            "4. Save & Quit (:wq)"
+          ],
+          "tone": "accent",
+          "at": 0
+        }
+      ],
+      [
         "norm",
         "box",
-        60,
-        60,
-        220,
-        90,
-        "Normal Mode (Default)\nNavigation · dd · yy · /search",
+        24,
+        92,
+        260,
+        82,
+        "Normal Mode (Default)",
         {
+          "sub": "Arrows · dd (delete) · u (undo) · /find",
           "tone": "accent"
         }
       ],
       [
         "ins",
         "box",
-        360,
-        60,
-        220,
-        90,
-        "Insert Mode\nText typing (Type text here)",
+        350,
+        92,
+        260,
+        82,
+        "Insert Mode (Press i)",
         {
+          "sub": "Type & edit config text freely",
           "tone": "ok"
         }
       ],
       [
         "cmd",
         "box",
-        660,
-        60,
-        220,
-        90,
-        "Command Mode (:)\n:wq (save) · :q! (abort)",
+        676,
+        92,
+        260,
+        82,
+        "Command Mode (Type :)",
         {
+          "sub": ":wq (Save & Exit) · :q! (Abort)",
           "tone": "proc"
+        }
+      ],
+      [
+        "stbar",
+        "chip",
+        24,
+        188,
+        912,
+        30,
+        "STATUS BAR: \"app/config.env\" [Normal Mode]",
+        {
+          "tone": "accent"
         }
       ],
       [
         "term",
         "term",
-        30,
-        230,
-        890,
-        280,
+        24,
+        232,
+        912,
+        278,
         "Terminal · vi Editor Simulation"
       ]
     ],
@@ -5361,16 +6669,29 @@ const LINUX_LESSONS = [
         "ops": [
           [
             "show",
+            "vst",
             "norm",
             "ins",
             "cmd",
+            "stbar",
             "term"
+          ],
+          [
+            "at",
+            "vst",
+            0
+          ],
+          [
+            "dim",
+            "ins",
+            "cmd"
           ],
           [
             "pulse",
             "norm"
           ]
-        ]
+        ],
+        "vo": "सर्वर पर वी-एस कोड या नोटपैड नहीं होता। हर लिनक्स एडमिन और डी-बी-ए को वी-आई आना ज़रूरी है। इसके तीन मोड्स होते हैं: नॉर्मल, इन्सर्ट, और कमांड मोड।"
       },
       {
         "say": "Jaise hi file kholte ho, tum Normal Mode mein hote ho. Yahan seedha type nahi kar sakte. Likhne ke liye keyboard par `i` dabao — neeche `-- INSERT --` likha aayega.",
@@ -5382,6 +6703,19 @@ const LINUX_LESSONS = [
         ],
         "ops": [
           [
+            "at",
+            "vst",
+            1
+          ],
+          [
+            "undim",
+            "ins"
+          ],
+          [
+            "dim",
+            "norm"
+          ],
+          [
             "link",
             "norm",
             "ins",
@@ -5391,8 +6725,24 @@ const LINUX_LESSONS = [
             }
           ],
           [
-            "pulse",
-            "ins"
+            "flow",
+            "norm",
+            "ins",
+            "i",
+            {
+              "tone": "ok",
+              "dur": 550
+            }
+          ],
+          [
+            "label",
+            "stbar",
+            "STATUS BAR: -- INSERT -- (Typing enabled)"
+          ],
+          [
+            "tone",
+            "stbar",
+            "ok"
           ],
           [
             "term",
@@ -5407,7 +6757,8 @@ const LINUX_LESSONS = [
             "DB_HOST=127.0.0.1",
             "-- INSERT --"
           ]
-        ]
+        ],
+        "vo": "जैसे ही फ़ाइल खोलते हो, तुम नॉर्मल मोड में होते हो। यहाँ सीधा टाइप नहीं कर सकते। लिखने के लिए कीबोर्ड पर आई दबाओ, नीचे इन्सर्ट लिखा आएगा।"
       },
       {
         "say": "Likhne ke baad hamesha `Esc` button dabao taaki wapas Normal Mode mein aa sako. Yahan `dd` dabane se poori line delete hoti hai aur `u` dabane se Undo hota hai.",
@@ -5416,19 +6767,55 @@ const LINUX_LESSONS = [
         ],
         "ops": [
           [
+            "at",
+            "vst",
+            2
+          ],
+          [
+            "undim",
+            "norm"
+          ],
+          [
+            "dim",
+            "ins"
+          ],
+          [
             "link",
             "ins",
             "norm",
             {
               "label": "press Esc",
-              "tone": "accent"
+              "tone": "accent",
+              "bend": -32
             }
+          ],
+          [
+            "flow",
+            "ins",
+            "norm",
+            "Esc",
+            {
+              "tone": "accent",
+              "bend": -32,
+              "dur": 550
+            }
+          ],
+          [
+            "label",
+            "stbar",
+            "STATUS BAR: Normal Mode (dd = delete line, u = undo)"
+          ],
+          [
+            "tone",
+            "stbar",
+            "accent"
           ],
           [
             "pulse",
             "norm"
           ]
-        ]
+        ],
+        "vo": "लिखने के बाद हमेशा एस्केप बटन दबाओ ताकि वापस नॉर्मल मोड में आ सको। यहाँ डी-डी दबाने से पूरी लाइन डिलीट होती है और यू दबाने से अनडू होता है।"
       },
       {
         "say": "Sabse mashhoor sawaal: \"vi se bahar kaise niklein?\". `:` dabao, phir `wq` likh kar Enter dabao (Write and Quit). Agar galti ho gayi aur bina save kiye nikalna hai toh `:q!` dabao!",
@@ -5440,12 +6827,33 @@ const LINUX_LESSONS = [
         ],
         "ops": [
           [
+            "at",
+            "vst",
+            3
+          ],
+          [
+            "undim",
+            "cmd"
+          ],
+          [
             "link",
             "norm",
             "cmd",
             {
-              "label": "type :",
-              "tone": "proc"
+              "label": "type :wq",
+              "tone": "proc",
+              "bend": 28
+            }
+          ],
+          [
+            "flow",
+            "norm",
+            "cmd",
+            ":wq",
+            {
+              "tone": "proc",
+              "bend": 28,
+              "dur": 600
             }
           ],
           [
@@ -5459,10 +6867,21 @@ const LINUX_LESSONS = [
             "\"app/config.env\" 6L, 114B written"
           ],
           [
+            "label",
+            "stbar",
+            "SAVED: \"app/config.env\" 6L, 114B written"
+          ],
+          [
+            "tone",
+            "stbar",
+            "ok"
+          ],
+          [
             "ok",
             "cmd"
           ]
-        ]
+        ],
+        "vo": "सबसे मशहूर सवाल: वी-आई से बाहर कैसे निकलें? कोलन दबाओ, फिर डब्ल्यू-क्यू लिख कर एंटर दबाओ, यानी राइट एंड क्विट। अगर ग़लती हो गई और बिना सेव किए निकलना है तो कोलन क्यू एक्सक्लेमेशन दबाओ!"
       }
     ],
     "points": [
@@ -5540,7 +6959,8 @@ const LINUX_LESSONS = [
         "why": "Agar file mein changes kiye hain toh akela `:q` rok deta hai. Save ke liye `:wq` ya discard ke liye `:q!` chahiye.",
         "fix": ":wq  or  :q!"
       }
-    ]
+    ],
+    "intro": "पेंसिल और इरेज़र का केस सोचो। नॉर्मल मोड बराबर रीडिंग और नेविगेशन। आई दबाया तो पेंसिल हाथ में आ गई, यानी इन्सर्ट मोड जहाँ लिख सकते हो। एस्केप दबाया तो पेंसिल वापस पॉकेट में। फिर कोलन डब्ल्यू-क्यू लिखा तो कॉपी बंद और रजिस्टर अलमीरा में सेव!"
   },
   {
     "id": "lx-redir",
@@ -5583,84 +7003,103 @@ const LINUX_LESSONS = [
     ],
     "nodes": [
       [
-        "cmd",
-        "box",
-        60,
-        80,
-        160,
-        60,
-        "Command\n(ls, backup.sh)",
+        "stdin",
+        "chip",
+        24,
+        92,
+        110,
+        30,
+        "0: stdin",
         {
+          "tone": "muted"
+        }
+      ],
+      [
+        "cmd",
+        "proc",
+        164,
+        72,
+        165,
+        68,
+        "Command / Job",
+        {
+          "sub": "ls, backup_db.sh",
           "tone": "accent"
         }
       ],
       [
         "fd1",
-        "pill",
-        300,
-        50,
+        "proc",
+        376,
+        36,
         150,
-        42,
+        44,
         "1: stdout",
         {
+          "sub": "Normal output",
           "tone": "ok"
         }
       ],
       [
         "fd2",
-        "pill",
-        300,
-        130,
+        "proc",
+        376,
+        128,
         150,
-        42,
+        44,
         "2: stderr",
         {
+          "sub": "Error stream",
           "tone": "danger"
         }
       ],
       [
         "outf",
         "doc",
-        540,
-        40,
-        150,
-        60,
-        "output.log\n(success)",
+        590,
+        26,
+        165,
+        66,
+        "app/test.env",
         {
+          "sub": "> overwrite / >> append",
           "tone": "ok"
         }
       ],
       [
         "errf",
         "doc",
-        540,
-        120,
-        150,
-        60,
-        "error.log\n(failures)",
+        590,
+        118,
+        165,
+        66,
+        "error.log",
         {
+          "sub": "2> error capture",
           "tone": "danger"
         }
       ],
       [
         "null",
         "disk",
-        760,
-        80,
-        130,
-        70,
-        "/dev/null\n(black hole)",
+        790,
+        68,
+        136,
+        72,
+        "/dev/null",
         {
+          "sub": "Black hole (silence)",
+          "inside": "0 bytes",
           "tone": "muted"
         }
       ],
       [
         "term",
         "term",
-        30,
-        230,
-        890,
-        280,
+        24,
+        224,
+        912,
+        286,
         "Terminal · Redirection Streams"
       ]
     ],
@@ -5684,9 +7123,18 @@ const LINUX_LESSONS = [
         "ops": [
           [
             "show",
+            "stdin",
             "cmd",
             "fd1",
             "fd2"
+          ],
+          [
+            "link",
+            "stdin",
+            "cmd",
+            {
+              "tone": "muted"
+            }
           ],
           [
             "link",
@@ -5703,8 +7151,29 @@ const LINUX_LESSONS = [
             {
               "tone": "danger"
             }
+          ],
+          [
+            "flow",
+            "cmd",
+            "fd1",
+            "stdout (1)",
+            {
+              "tone": "ok",
+              "dur": 600
+            }
+          ],
+          [
+            "&flow",
+            "cmd",
+            "fd2",
+            "stderr (2)",
+            {
+              "tone": "danger",
+              "dur": 600
+            }
           ]
-        ]
+        ],
+        "vo": "हर लिनक्स कमांड के तीन दरवाज़े होते हैं: स्टैंडर्ड इन यानी इनपुट, स्टैंडर्ड आउट यानी नॉर्मल रिज़ल्ट, और स्टैंडर्ड एरर यानी एरर। दोनों आउटपुट स्क्रीन पर आते हैं पर अलग-अलग चैनल्स पर होते हैं।"
       },
       {
         "say": "`>` aur `>>` ka farq samjho: `>` purani file ko truncate (khaali) karke likhta hai. `>>` purani file ke neeche nayi line jodta hai (append). Logs ke liye hamesha `>>` use hota hai.",
@@ -5726,7 +7195,7 @@ const LINUX_LESSONS = [
             "fd1",
             "outf",
             {
-              "label": ">>",
+              "label": "> / >>",
               "tone": "ok"
             }
           ],
@@ -5736,9 +7205,39 @@ const LINUX_LESSONS = [
             "oracle@prod-db01:~$ echo \"APP_ENV=production\" > app/test.env"
           ],
           [
+            "flow",
+            "cmd",
+            "fd1",
+            "echo",
+            {
+              "tone": "ok",
+              "dur": 450
+            }
+          ],
+          [
+            "flow",
+            "fd1",
+            "outf",
+            "> write",
+            {
+              "tone": "ok",
+              "dur": 500
+            }
+          ],
+          [
             "term",
             "term",
             "oracle@prod-db01:~$ echo \"PORT=8080\" >> app/test.env"
+          ],
+          [
+            "flow",
+            "fd1",
+            "outf",
+            ">> append",
+            {
+              "tone": "ok",
+              "dur": 500
+            }
           ],
           [
             "term",
@@ -5750,8 +7249,13 @@ const LINUX_LESSONS = [
             "term",
             "APP_ENV=production",
             "PORT=8080"
+          ],
+          [
+            "ok",
+            "outf"
           ]
-        ]
+        ],
+        "vo": "सिंगल ग्रेटर-दैन और डबल ग्रेटर-दैन का फ़र्क़ समझो: सिंगल ग्रेटर-दैन पुरानी फ़ाइल को खाली करके लिखता है। डबल ग्रेटर-दैन पुरानी फ़ाइल के नीचे नई लाइन जोड़ता है, यानी अपेंड। लॉग्स के लिए हमेशा डबल ग्रेटर-दैन यूज़ होता है।"
       },
       {
         "say": "Agar command fail ho, toh error ko alag file mein bhejne ke liye `2>` use karte hain (file descriptor 2 = stderr).",
@@ -5779,6 +7283,26 @@ const LINUX_LESSONS = [
             "oracle@prod-db01:~$ ls /var/log/missing 2> error.log"
           ],
           [
+            "flow",
+            "cmd",
+            "fd2",
+            "error!",
+            {
+              "tone": "danger",
+              "dur": 450
+            }
+          ],
+          [
+            "flow",
+            "fd2",
+            "errf",
+            "2> error.log",
+            {
+              "tone": "danger",
+              "dur": 500
+            }
+          ],
+          [
             "term",
             "term",
             "oracle@prod-db01:~$ cat error.log"
@@ -5787,8 +7311,13 @@ const LINUX_LESSONS = [
             "out",
             "term",
             "ls: cannot access '/var/log/missing': No such file or directory"
+          ],
+          [
+            "x",
+            "errf"
           ]
-        ]
+        ],
+        "vo": "अगर कमांड फ़ेल हो, तो एरर को अलग फ़ाइल में भेजने के लिए टू ग्रेटर-दैन यूज़ करते हैं, क्योंकि फ़ाइल डिस्क्रिप्टर टू स्टैंडर्ड एरर होता है।"
       },
       {
         "say": "Production ka sabse famous pattern: `> file.log 2>&1`. Iska matlab hai: \"Success aur Error dono ko ek hi log file mein daalo\". Cron jobs mein yeh 100% zaroori hai.",
@@ -5797,6 +7326,21 @@ const LINUX_LESSONS = [
           8
         ],
         "ops": [
+          [
+            "unlink",
+            "fd2",
+            "errf"
+          ],
+          [
+            "dim",
+            "errf"
+          ],
+          [
+            "label",
+            "outf",
+            "backup.log",
+            "Combined (1 + 2>&1)"
+          ],
           [
             "link",
             "fd2",
@@ -5812,10 +7356,31 @@ const LINUX_LESSONS = [
             "oracle@prod-db01:~$ ./scripts/backup_db.sh > /var/log/oracle/backup.log 2>&1"
           ],
           [
+            "flow",
+            "fd1",
+            "outf",
+            "stdout",
+            {
+              "tone": "ok",
+              "dur": 600
+            }
+          ],
+          [
+            "&flow",
+            "fd2",
+            "outf",
+            "stderr (2>&1)",
+            {
+              "tone": "accent",
+              "dur": 600
+            }
+          ],
+          [
             "pulse",
             "outf"
           ]
-        ]
+        ],
+        "vo": "प्रोडक्शन का सबसे फ़ेमस पैटर्न: ग्रेटर-दैन फ़ाइल डॉट लॉग टू ग्रेटर-दैन एम्परसैंड वन। इसका मतलब है: सक्सेस और एरर दोनों को एक ही लॉग फ़ाइल में डालो। क्रॉन जॉब्स में ये हंड्रेड परसेंट ज़रूरी है।"
       },
       {
         "say": "Agar kisi command ka output screen par nahi chahiye (jaise periodic health ping), toh use `/dev/null` par redirect kar do. Yeh Linux ka black hole hai.",
@@ -5834,7 +7399,8 @@ const LINUX_LESSONS = [
             "null",
             {
               "label": "> /dev/null",
-              "tone": "muted"
+              "tone": "muted",
+              "bend": -25
             }
           ],
           [
@@ -5843,10 +7409,22 @@ const LINUX_LESSONS = [
             "oracle@prod-db01:~$ curl -s http://localhost:8080/health > /dev/null"
           ],
           [
+            "flow",
+            "cmd",
+            "null",
+            "discarded",
+            {
+              "tone": "muted",
+              "bend": -25,
+              "dur": 600
+            }
+          ],
+          [
             "ok",
             "cmd"
           ]
-        ]
+        ],
+        "vo": "अगर किसी कमांड का आउटपुट स्क्रीन पर नहीं चाहिए, जैसे पीरियोडिक हेल्थ पिंग, तो उसे स्लैश डेव स्लैश नल पर रीडायरेक्ट कर दो। ये लिनक्स का ब्लैक होल है।"
       }
     ],
     "points": [
@@ -5919,7 +7497,8 @@ const LINUX_LESSONS = [
         "why": "Redirection left to right evaluate hota hai. `2>&1` pehle chalega toh stderr screen par hi reh jayega. Sahi order `> file.log 2>&1` hai.",
         "fix": "cmd > file.log 2>&1"
       }
-    ]
+    ],
+    "intro": "पानी के तीन पाइप्स सोचो। पाइप वन, साफ़ पानी बराबर नॉर्मल आउटपुट यानी स्टैंडर्ड आउट। पाइप टू, गंदा पानी बराबर एरर अलर्ट्स यानी स्टैंडर्ड एरर। सिंगल ग्रेटर-दैन नए बर्तन में भेजता है, पुराना फेंक कर। डबल ग्रेटर-दैन उसी बर्तन में जोड़ता रहता है। और स्लैश डेव स्लैश नल बराबर नाली जहाँ जो गिरा ग़ायब।"
   },
   {
     "id": "lx-pipes",
@@ -5956,22 +7535,23 @@ const LINUX_LESSONS = [
       [
         "c1",
         "box",
-        40,
-        70,
-        160,
-        55,
-        "cat todo.txt\nRaw lines",
+        24,
+        42,
+        165,
+        58,
+        "Producer Cmd",
         {
+          "sub": "cat / df / find",
           "tone": "file"
         }
       ],
       [
         "p1",
-        "pill",
-        220,
-        75,
-        50,
-        40,
+        "proc",
+        214,
+        48,
+        52,
+        46,
         "|",
         {
           "tone": "accent"
@@ -5980,46 +7560,49 @@ const LINUX_LESSONS = [
       [
         "c2",
         "box",
-        290,
-        70,
-        160,
-        55,
-        "sort\nAlphabetical",
+        292,
+        42,
+        175,
+        58,
+        "Filter / Sort",
         {
+          "sub": "sort / grep",
           "tone": "proc"
         }
       ],
       [
-        "p2",
-        "pill",
-        470,
-        75,
-        50,
-        40,
-        "|",
+        "tee",
+        "proc",
+        494,
+        42,
+        165,
+        58,
+        "tee -a",
         {
+          "sub": "T-Splitter",
           "tone": "accent"
         }
       ],
       [
-        "c3",
-        "box",
-        540,
-        70,
-        160,
-        55,
-        "uniq -c\nFrequency count",
+        "tlog",
+        "doc",
+        504,
+        128,
+        145,
+        54,
+        "/tmp/health.log",
         {
-          "tone": "proc"
+          "sub": "Saved to disk",
+          "tone": "file"
         }
       ],
       [
-        "p3",
-        "pill",
-        720,
-        75,
-        50,
-        40,
+        "p2",
+        "proc",
+        684,
+        48,
+        52,
+        46,
         "|",
         {
           "tone": "accent"
@@ -6028,22 +7611,23 @@ const LINUX_LESSONS = [
       [
         "c4",
         "box",
-        790,
-        70,
-        130,
-        55,
-        "sort -nr\nTop counts",
+        760,
+        42,
+        176,
+        58,
+        "xargs ls -l",
         {
+          "sub": "Batch executor",
           "tone": "ok"
         }
       ],
       [
         "term",
         "term",
-        30,
-        210,
-        890,
-        300,
+        24,
+        212,
+        912,
+        298,
         "Terminal · The Unix Pipeline"
       ]
     ],
@@ -6085,8 +7669,29 @@ const LINUX_LESSONS = [
             {
               "tone": "accent"
             }
+          ],
+          [
+            "flow",
+            "c1",
+            "p1",
+            "stdout",
+            {
+              "tone": "accent",
+              "dur": 500
+            }
+          ],
+          [
+            "flow",
+            "p1",
+            "c2",
+            "stdin",
+            {
+              "tone": "proc",
+              "dur": 500
+            }
           ]
-        ]
+        ],
+        "vo": "लिनक्स का सबसे बड़ा पावर टूल है पाइप। ये दो प्रोग्राम्स को आपस में जोड़ देता है: पहले का आउटपुट दूसरे का इनपुट बन जाता है।"
       },
       {
         "say": "`cat todo.txt | sort` chalao: unorganized lines `sort` ke andar chali jaati hain aur sorted order mein screen par aati hain.",
@@ -6096,9 +7701,31 @@ const LINUX_LESSONS = [
         ],
         "ops": [
           [
+            "label",
+            "c1",
+            "cat todo.txt",
+            "7 raw lines"
+          ],
+          [
+            "label",
+            "c2",
+            "sort",
+            "A-Z ordered"
+          ],
+          [
             "term",
             "term",
             "oracle@prod-db01:~$ cat todo.txt | sort"
+          ],
+          [
+            "flow",
+            "c1",
+            "c2",
+            "7 lines",
+            {
+              "tone": "accent",
+              "dur": 600
+            }
           ],
           [
             "out",
@@ -6110,8 +7737,13 @@ const LINUX_LESSONS = [
             "review slow queries",
             "rotate logs",
             "rotate logs"
+          ],
+          [
+            "ok",
+            "c2"
           ]
-        ]
+        ],
+        "vo": "कैट टूडू डॉट टी-एक्स-टी पाइप सॉर्ट चलाओ: अनऑर्गनाइज़्ड लाइन्स सॉर्ट के अंदर चली जाती हैं और सॉर्टेड ऑर्डर में स्क्रीन पर आती हैं।"
       },
       {
         "say": "Hazaaron files ya processes mein filter lagana: `df -h | grep \"/var/log\"` se sirf wahi disk line dikhegi jisme `/var/log` ho.",
@@ -6121,16 +7753,43 @@ const LINUX_LESSONS = [
         ],
         "ops": [
           [
+            "label",
+            "c1",
+            "df -h",
+            "All partitions"
+          ],
+          [
+            "label",
+            "c2",
+            "grep \"/var/log\"",
+            "1 matching row"
+          ],
+          [
             "term",
             "term",
             "oracle@prod-db01:~$ df -h | grep \"/var/log\""
           ],
           [
+            "flow",
+            "c1",
+            "c2",
+            "filter /var/log",
+            {
+              "tone": "ok",
+              "dur": 600
+            }
+          ],
+          [
             "out",
             "term",
             "/dev/sda3        20G   17G  2.1G  89% /var/log"
+          ],
+          [
+            "pulse",
+            "c2"
           ]
-        ]
+        ],
+        "vo": "हज़ारों फ़ाइल्स या प्रोसेसेज़ में फ़िल्टर लगाना: डी-एफ़ डैश एच पाइप ग्रेप स्लैश वार स्लैश लॉग से सिर्फ़ वही डिस्क लाइन दिखेगी जिसमें स्लैश वार स्लैश लॉग हो।"
       },
       {
         "say": "Aksar hum chahte hain ki output terminal par bhi dikhe aur file mein bhi save ho jaye. Iske liye `tee` (ya append ke liye `tee -a`) use hota hai.",
@@ -6141,9 +7800,51 @@ const LINUX_LESSONS = [
         ],
         "ops": [
           [
+            "show",
+            "tee",
+            "tlog"
+          ],
+          [
+            "link",
+            "c2",
+            "tee",
+            {
+              "tone": "accent"
+            }
+          ],
+          [
+            "link",
+            "tee",
+            "tlog",
+            {
+              "label": "file copy",
+              "tone": "file"
+            }
+          ],
+          [
             "term",
             "term",
             "oracle@prod-db01:~$ uptime | tee -a /tmp/health.log"
+          ],
+          [
+            "flow",
+            "c2",
+            "tee",
+            "uptime",
+            {
+              "tone": "accent",
+              "dur": 500
+            }
+          ],
+          [
+            "flow",
+            "tee",
+            "tlog",
+            "save",
+            {
+              "tone": "file",
+              "dur": 550
+            }
           ],
           [
             "out",
@@ -6159,8 +7860,13 @@ const LINUX_LESSONS = [
             "out",
             "term",
             " 10:15:22 up 14 days,  3:40,  2 users,  load average: 0.28, 0.42, 0.35"
+          ],
+          [
+            "ok",
+            "tlog"
           ]
-        ]
+        ],
+        "vo": "अक्सर हम चाहते हैं कि आउटपुट टर्मिनल पर भी दिखे और फ़ाइल में भी सेव हो जाए। इसके लिए टी, या अपेंड के लिए टी डैश ए, यूज़ होता है।"
       },
       {
         "say": "Jab `find` 50 files dhoondhta hai aur un par koi command chalani ho, `xargs` unhe ek line mein saja kar agle program ko deta hai (`find ... | xargs ls -l`).",
@@ -6172,13 +7878,11 @@ const LINUX_LESSONS = [
           [
             "show",
             "p2",
-            "c3",
-            "p3",
             "c4"
           ],
           [
             "link",
-            "c2",
+            "tee",
             "p2",
             {
               "tone": "accent"
@@ -6187,31 +7891,31 @@ const LINUX_LESSONS = [
           [
             "link",
             "p2",
-            "c3",
-            {
-              "tone": "accent"
-            }
-          ],
-          [
-            "link",
-            "c3",
-            "p3",
-            {
-              "tone": "accent"
-            }
-          ],
-          [
-            "link",
-            "p3",
             "c4",
             {
               "tone": "ok"
             }
           ],
           [
+            "label",
+            "c1",
+            "find . -name \"*.tmp\"",
+            "file paths"
+          ],
+          [
             "term",
             "term",
             "oracle@prod-db01:~$ find . -name \"*.tmp\" | xargs ls -l"
+          ],
+          [
+            "flow",
+            "p2",
+            "c4",
+            "xargs args",
+            {
+              "tone": "ok",
+              "dur": 600
+            }
           ],
           [
             "out",
@@ -6222,7 +7926,8 @@ const LINUX_LESSONS = [
             "ok",
             "c4"
           ]
-        ]
+        ],
+        "vo": "जब फ़ाइंड पचास फ़ाइल्स ढूँढता है और उन पर कोई कमांड चलानी हो, एक्स-आर्ग्स उन्हें एक लाइन में सजा कर अगले प्रोग्राम को देता है।"
       }
     ],
     "points": [
@@ -6291,7 +7996,8 @@ const LINUX_LESSONS = [
         "why": "`rm` standard input nahi padhta; use arguments chahiye hote hain. Isliye beech mein `xargs` lagana zaroori hai (`| xargs rm`).",
         "fix": "find . -name \"*.tmp\" | xargs rm"
       }
-    ]
+    ],
+    "intro": "फ़ैक्ट्री असेंबली लाइन सोचो। पाइप वन रॉ डेटा लाता है। पहला वर्कर ग्रेप ख़राब माल निकालता है। अगला वर्कर सॉर्ट उसे लाइन में लगाता है। आख़िरी वर्कर हेड टॉप फाइव बॉक्सेज़ पैक करता है। पूरा काम बिना इंटरमीडिएट फ़ाइल्स के एक फ़्लो में होता है।"
   },
   {
     "id": "lx-grep",
@@ -6334,48 +8040,72 @@ const LINUX_LESSONS = [
     ],
     "nodes": [
       [
-        "syslog",
-        "doc",
-        50,
-        60,
-        180,
-        80,
-        "/var/log/syslog\n(10,000 lines)",
+        "ltbl",
+        "table",
+        24,
+        38,
+        540,
+        162,
+        "/var/log/syslog & access.log",
         {
-          "tone": "file"
+          "cols": [
+            "LINE",
+            "LEVEL / CODE",
+            "LOG ENTRY"
+          ],
+          "cw": [
+            0.12,
+            0.22,
+            0.66
+          ]
         }
       ],
       [
         "grep",
-        "pill",
-        320,
-        75,
-        180,
-        50,
-        "grep -i \"ERROR\"",
+        "proc",
+        596,
+        38,
+        175,
+        52,
+        "grep -i \"error\"",
         {
+          "sub": "Case-insensitive",
           "tone": "accent"
+        }
+      ],
+      [
+        "cnt",
+        "var",
+        790,
+        38,
+        146,
+        52,
+        "grep -c (Count)",
+        {
+          "v": "?",
+          "tone": "proc"
         }
       ],
       [
         "res",
         "box",
-        580,
-        60,
-        320,
-        80,
-        "Matched Lines Only:\n[1420] ERROR: Connection refused\nFailed with result: ERROR",
+        596,
+        114,
+        340,
+        86,
+        "Filtered Matches",
         {
+          "sub": "Only actionable lines pass through",
           "tone": "ok"
         }
       ],
       [
         "term",
         "term",
-        30,
-        210,
-        890,
-        300,
+        24,
+        216,
+        912,
+        294,
         "Terminal · grep in Action"
       ]
     ],
@@ -6398,14 +8128,40 @@ const LINUX_LESSONS = [
         "ops": [
           [
             "show",
-            "syslog",
+            "ltbl",
             "grep",
             "res",
             "term"
           ],
           [
+            "rows",
+            "ltbl",
+            [
+              [
+                "1",
+                "INFO",
+                "systemd: Reloaded NGINX reverse proxy"
+              ],
+              [
+                "2",
+                "ERROR",
+                "payapi[1420]: Connection refused"
+              ],
+              [
+                "3",
+                "INFO",
+                "sshd: Accepted publickey for oracle"
+              ],
+              [
+                "4",
+                "ERROR",
+                "payapi.service: Failed with exit-code"
+              ]
+            ]
+          ],
+          [
             "link",
-            "syslog",
+            "ltbl",
             "grep",
             {
               "tone": "accent"
@@ -6419,7 +8175,8 @@ const LINUX_LESSONS = [
               "tone": "ok"
             }
           ]
-        ]
+        ],
+        "vo": "प्रोडक्शन इंसिडेंट में लॉग फ़ाइल खोल कर आँखों से एरर ढूँढना नामुमकिन है। ग्रेप एक सेकंड में सिर्फ़ वही लाइन्स निकालता है जिनमें टार्गेट शब्द हो।"
       },
       {
         "say": "Logs mein kabhi `ERROR`, kabhi `error`, kabhi `Error` likha hota hai. Isliye hamesha `-i` (ignore case) lagana achhi aadat hai.",
@@ -6428,6 +8185,49 @@ const LINUX_LESSONS = [
           1
         ],
         "ops": [
+          [
+            "fade",
+            "ltbl",
+            [
+              0,
+              2
+            ]
+          ],
+          [
+            "mark",
+            "ltbl",
+            [
+              1,
+              3
+            ],
+            "danger"
+          ],
+          [
+            "flow",
+            "ltbl",
+            "grep",
+            "scan 4 lines",
+            {
+              "tone": "accent",
+              "dur": 550
+            }
+          ],
+          [
+            "flow",
+            "grep",
+            "res",
+            "2 ERROR lines",
+            {
+              "tone": "danger",
+              "dur": 550
+            }
+          ],
+          [
+            "label",
+            "res",
+            "2 Error Lines Matched",
+            "payapi[1420] + systemd exit-code"
+          ],
           [
             "term",
             "term",
@@ -6439,7 +8239,8 @@ const LINUX_LESSONS = [
             "Oct 29 09:20:14 prod-db01 payapi[1420]: ERROR org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Connection refused",
             "Oct 29 12:05:01 prod-db01 systemd[1]: payapi.service: Failed with result \"exit-code\", ERROR state logged."
           ]
-        ]
+        ],
+        "vo": "लॉग्स में कभी कैपिटल एरर, कभी स्मॉल एरर लिखा होता है। इसलिए हमेशा डैश आई, यानी इग्नोर केस, लगाना अच्छी आदत है।"
       },
       {
         "say": "Agar poori lines nahi dekhni, sirf yeh dekhna hai ki error kitni baar aaya, toh `-c` (count) flag lagao.",
@@ -6449,16 +8250,39 @@ const LINUX_LESSONS = [
         ],
         "ops": [
           [
+            "show",
+            "cnt"
+          ],
+          [
             "term",
             "term",
             "oracle@prod-db01:~$ grep -i -c \"error\" /var/log/syslog"
+          ],
+          [
+            "flow",
+            "grep",
+            "cnt",
+            "-c",
+            {
+              "tone": "proc",
+              "dur": 500
+            }
+          ],
+          [
+            "val",
+            "cnt",
+            "2 matches",
+            {
+              "tone": "danger"
+            }
           ],
           [
             "out",
             "term",
             "2"
           ]
-        ]
+        ],
+        "vo": "अगर पूरी लाइन्स नहीं देखनी, सिर्फ़ ये देखना है कि एरर कितनी बार आया, तो डैश सी यानी काउंट फ़्लैग लगाओ।"
       },
       {
         "say": "Job Trick #1: `-v` (invert match) se shor (noise) hataya jata hai. Nginx access log mein 99% requests `200 OK` hoti hain. `grep -v \"200\"` chalane se sirf failed requests (404, 500) samne aati hain!",
@@ -6467,6 +8291,60 @@ const LINUX_LESSONS = [
           5
         ],
         "ops": [
+          [
+            "label",
+            "ltbl",
+            "/var/log/nginx/access.log (grep -v \"200\")"
+          ],
+          [
+            "label",
+            "grep",
+            "grep -v \"200\"",
+            "Invert match (Hide 200 OK)"
+          ],
+          [
+            "rows",
+            "ltbl",
+            [
+              [
+                "1",
+                "200 OK",
+                "GET /api/orders (10.0.1.12)"
+              ],
+              [
+                "2",
+                "500 ERR",
+                "POST /api/checkout (203.0.113.9)"
+              ],
+              [
+                "3",
+                "200 OK",
+                "GET /health (192.168.1.50)"
+              ],
+              [
+                "4",
+                "404 NOT",
+                "GET /wp-login.php (198.51.100.7)"
+              ]
+            ]
+          ],
+          [
+            "fade",
+            "ltbl",
+            [
+              0,
+              2
+            ]
+          ],
+          [
+            "mark",
+            "ltbl",
+            [
+              1,
+              3
+            ],
+            "danger"
+          ],
           [
             "term",
             "term",
@@ -6480,7 +8358,8 @@ const LINUX_LESSONS = [
             "198.51.100.7 - - [29/Oct/2026:10:14:22] \"GET /wp-login.php HTTP/1.1\" 404 162",
             "203.0.113.9 - - [29/Oct/2026:10:14:41] \"POST /api/checkout HTTP/1.1\" 500 284"
           ]
-        ]
+        ],
+        "vo": "जॉब ट्रिक नंबर वन: डैश वी, यानी इन्वर्ट मैच, से शोर हटाया जाता है। इंजन-एक्स एक्सेस लॉग में नाइंटी-नाइन परसेंट रिक्वेस्ट्स टू हंड्रेड ओके होती हैं। ग्रेप डैश वी टू हंड्रेड चलाने से सिर्फ़ फ़ेल्ड रिक्वेस्ट्स सामने आती हैं!"
       },
       {
         "say": "`-E` se pipe `|` laga kar ek saath kai patterns search kar sakte ho, jaise `500|502|Connection refused`. Har DBA aur Sysadmin ka yeh daily habit hai.",
@@ -6489,6 +8368,22 @@ const LINUX_LESSONS = [
           7
         ],
         "ops": [
+          [
+            "label",
+            "grep",
+            "grep -E \"500|502\"",
+            "Extended Regex (OR)"
+          ],
+          [
+            "flow",
+            "grep",
+            "res",
+            "upstream errors",
+            {
+              "tone": "danger",
+              "dur": 550
+            }
+          ],
           [
             "term",
             "term",
@@ -6504,7 +8399,8 @@ const LINUX_LESSONS = [
             "ok",
             "res"
           ]
-        ]
+        ],
+        "vo": "डैश ई से पाइप लगा कर एक साथ कई पैटर्न्स सर्च कर सकते हो, जैसे फाइव हंड्रेड या फाइव ओ टू या कनेक्शन रिफ़्यूज़्ड। हर डी-बी-ए और सिस-एडमिन की ये डेली हैबिट है।"
       }
     ],
     "points": [
@@ -6582,7 +8478,8 @@ const LINUX_LESSONS = [
         "why": "Normal grep mein pipe literal character ban jata hai. Multiple OR patterns ke liye `-E` flag zaroori hai (`grep -E \"500|502\"`).",
         "fix": "grep -E \"500|502\" access.log"
       }
-    ]
+    ],
+    "intro": "दस हज़ार पन्नों का फ़ोन डायरेक्टरी रजिस्टर सोचो। तुम बोलते हो मुझे सिर्फ़ शर्मा नाम वाले दिखाओ बराबर ग्रेप शर्मा। केस का फ़र्क़ मत करो बराबर डैश आई। शर्मा के अलावा सब दिखाओ बराबर डैश वी। गिनती बताओ कितने हैं बराबर डैश सी।"
   },
   {
     "id": "lx-sort-uniq",
@@ -6625,72 +8522,65 @@ const LINUX_LESSONS = [
     ],
     "nodes": [
       [
-        "raw",
-        "doc",
-        40,
-        60,
-        170,
-        70,
-        "access.log\nRaw Web Traffic",
+        "pst",
+        "stages",
+        24,
+        32,
+        912,
+        34,
+        "GOLDEN LOG ANALYSIS PIPELINE",
         {
-          "tone": "file"
+          "items": [
+            "1. Raw access.log",
+            "2. cut -d\" \" -f1",
+            "3. sort | uniq -c",
+            "4. sort -nr (Top IP)"
+          ],
+          "tone": "accent",
+          "at": 0
         }
       ],
       [
-        "cut",
-        "box",
-        250,
-        65,
-        140,
-        55,
-        "cut -d\" \" -f1\nExtract IPs",
+        "iptbl",
+        "table",
+        24,
+        86,
+        620,
+        120,
+        "IP Traffic Aggregation Table",
         {
-          "tone": "accent"
+          "cols": [
+            "HITS",
+            "IP ADDRESS (FIELD 1)",
+            "REQUEST / VERDICT"
+          ],
+          "cw": [
+            0.16,
+            0.34,
+            0.5
+          ]
         }
       ],
       [
-        "sort1",
+        "culprit",
         "box",
-        420,
-        65,
-        110,
-        55,
-        "sort\nGroup IPs",
+        668,
+        86,
+        268,
+        120,
+        "Top Spammer Identified",
         {
-          "tone": "proc"
-        }
-      ],
-      [
-        "uniq",
-        "box",
-        560,
-        65,
-        130,
-        55,
-        "uniq -c\nCount counts",
-        {
-          "tone": "proc"
-        }
-      ],
-      [
-        "sort2",
-        "box",
-        720,
-        65,
-        140,
-        55,
-        "sort -nr\nTop Spammers",
-        {
-          "tone": "danger"
+          "sub": "Ready for firewall block",
+          "tone": "muted"
         }
       ],
       [
         "term",
         "term",
-        30,
-        210,
-        890,
-        300,
+        24,
+        220,
+        912,
+        290,
         "Terminal · Golden Log Pipeline"
       ]
     ],
@@ -6711,46 +8601,39 @@ const LINUX_LESSONS = [
         "ops": [
           [
             "show",
-            "raw",
-            "cut",
-            "sort1",
-            "uniq",
-            "sort2",
+            "pst",
+            "iptbl",
+            "culprit",
             "term"
           ],
           [
-            "link",
-            "raw",
-            "cut",
-            {
-              "tone": "accent"
-            }
+            "at",
+            "pst",
+            0
           ],
           [
-            "link",
-            "cut",
-            "sort1",
-            {
-              "tone": "accent"
-            }
-          ],
-          [
-            "link",
-            "sort1",
-            "uniq",
-            {
-              "tone": "accent"
-            }
-          ],
-          [
-            "link",
-            "uniq",
-            "sort2",
-            {
-              "tone": "danger"
-            }
+            "rows",
+            "iptbl",
+            [
+              [
+                "-",
+                "192.168.1.50",
+                "GET /health 200"
+              ],
+              [
+                "-",
+                "203.0.113.9",
+                "POST /api/checkout 500"
+              ],
+              [
+                "-",
+                "198.51.100.7",
+                "GET /wp-login.php 404"
+              ]
+            ]
           ]
-        ]
+        ],
+        "vo": "वेब सर्वर क्रैश होने पर सबसे पहला सवाल: कौनसा आई-पी सर्वर को बॉम्ब कर रहा है? इस पाइपलाइन को लिनक्स इंजीनियर का गोल्डन नाइफ़ बोला जाता है।"
       },
       {
         "say": "Pehle `cut -d\" \" -f1` lagao. Delimiter space hai, aur humein pehla column (IP) chahiye.",
@@ -6759,6 +8642,19 @@ const LINUX_LESSONS = [
           1
         ],
         "ops": [
+          [
+            "at",
+            "pst",
+            1
+          ],
+          [
+            "colhl",
+            "iptbl",
+            [
+              1
+            ],
+            "accent"
+          ],
           [
             "term",
             "term",
@@ -6774,7 +8670,8 @@ const LINUX_LESSONS = [
             "198.51.100.7",
             "203.0.113.9"
           ]
-        ]
+        ],
+        "vo": "पहले कट डैश डी स्पेस डैश एफ़ वन लगाओ। डिलिमिटर स्पेस है, और हमें पहला कॉलम यानी आई-पी चाहिए।"
       },
       {
         "say": "Important: `uniq` sirf sath judi hui (adjacent) duplicates pehchanta hai! Isliye `uniq` lagane se pehle `sort` lagana compulsory hai.",
@@ -6783,6 +8680,49 @@ const LINUX_LESSONS = [
           3
         ],
         "ops": [
+          [
+            "at",
+            "pst",
+            2
+          ],
+          [
+            "colhl",
+            "iptbl",
+            [
+              0,
+              1
+            ],
+            "proc"
+          ],
+          [
+            "rows",
+            "iptbl",
+            [
+              [
+                "2",
+                "192.168.1.50",
+                "Internal healthcheck"
+              ],
+              [
+                "1",
+                "198.51.100.7",
+                "Bot scanner"
+              ],
+              [
+                "3",
+                "203.0.113.9",
+                "Checkout flooder!"
+              ]
+            ]
+          ],
+          [
+            "mark",
+            "iptbl",
+            [
+              2
+            ],
+            "danger"
+          ],
           [
             "term",
             "term",
@@ -6795,7 +8735,8 @@ const LINUX_LESSONS = [
             "   1 198.51.100.7",
             "   3 203.0.113.9"
           ]
-        ]
+        ],
+        "vo": "इम्पॉर्टेंट: यूनीक सिर्फ़ साथ जुड़ी हुई डुप्लिकेट्स पहचानता है! इसलिए यूनीक लगाने से पहले सॉर्ट लगाना कंपल्सरी है।"
       },
       {
         "say": "Ab aakhri step: sabse zyada hit karne wale IP ko top par lane ke liye `sort -nr` (numeric + reverse) lagao.",
@@ -6804,6 +8745,53 @@ const LINUX_LESSONS = [
           5
         ],
         "ops": [
+          [
+            "at",
+            "pst",
+            3
+          ],
+          [
+            "sort",
+            "iptbl",
+            [
+              2,
+              0,
+              1
+            ]
+          ],
+          [
+            "mark",
+            "iptbl",
+            [
+              0
+            ],
+            "danger"
+          ],
+          [
+            "flow",
+            "iptbl#0",
+            "culprit",
+            "3 hits (#1)",
+            {
+              "tone": "danger",
+              "dur": 600
+            }
+          ],
+          [
+            "label",
+            "culprit",
+            "203.0.113.9 (3 Hits)",
+            "Top Offending IP!"
+          ],
+          [
+            "tone",
+            "culprit",
+            "danger"
+          ],
+          [
+            "x",
+            "culprit"
+          ],
           [
             "term",
             "term",
@@ -6815,12 +8803,9 @@ const LINUX_LESSONS = [
             "   3 203.0.113.9",
             "   2 192.168.1.50",
             "   1 198.51.100.7"
-          ],
-          [
-            "danger",
-            "sort2"
           ]
-        ]
+        ],
+        "vo": "अब आख़िरी स्टेप: सबसे ज़्यादा हिट करने वाले आई-पी को टॉप पर लाने के लिए सॉर्ट डैश एन-आर, यानी न्यूमेरिक और रिवर्स, लगाओ।"
       },
       {
         "say": "`cut` delimiter badal kar kisi bhi structured file par chal sakta hai, jaise `/etc/passwd` mein colon `:` delimiter hota hai.",
@@ -6829,6 +8814,11 @@ const LINUX_LESSONS = [
           7
         ],
         "ops": [
+          [
+            "colhl",
+            "iptbl",
+            []
+          ],
           [
             "term",
             "term",
@@ -6844,9 +8834,10 @@ const LINUX_LESSONS = [
           ],
           [
             "ok",
-            "cut"
+            "iptbl"
           ]
-        ]
+        ],
+        "vo": "कट डिलिमिटर बदल कर किसी भी स्ट्रक्चर्ड फ़ाइल पर चल सकता है, जैसे स्लैश ई-टी-सी स्लैश पास-डब्ल्यू-डी में कोलन डिलिमिटर होता है।"
       }
     ],
     "points": [
@@ -6919,7 +8910,8 @@ const LINUX_LESSONS = [
         "why": "Normal sort alphabetical hota hai. Numbers ko sahi sort karne ke liye `-n` flag zaroori hai (`sort -nr`).",
         "fix": "sort -nr numbers.txt"
       }
-    ]
+    ],
+    "intro": "वेब सर्वर पर अचानक ट्रैफ़िक स्पाइक आया। हर रिक्वेस्ट लाइन में आई-पी होता है। कट से सिर्फ़ आई-पी चुनते हैं। सॉर्ट उन्हें एक जैसा जमा देता है। यूनीक डैश सी गिनता है किस आई-पी ने कितनी बार हिट किया। टॉप काउंट देख कर रोग आई-पी को फ़ायरवॉल से ब्लॉक कर दिया जाता है।"
   },
   {
     "id": "lx-awk",
@@ -6966,48 +8958,63 @@ const LINUX_LESSONS = [
     ],
     "nodes": [
       [
-        "raw",
-        "doc",
-        50,
-        70,
-        220,
-        80,
-        "access.log\n203.0.113.9 - - [date] \"POST /api\" 500 284",
+        "atbl",
+        "table",
+        24,
+        38,
+        600,
+        162,
+        "access.log (Space-Separated Columns)",
         {
-          "tone": "file"
+          "cols": [
+            "$1 (IP)",
+            "$6 (VERB)",
+            "$7 (URL)",
+            "$9 (STATUS)",
+            "$NF (BYTES)"
+          ],
+          "cw": [
+            0.24,
+            0.16,
+            0.26,
+            0.17,
+            0.17
+          ]
         }
       ],
       [
         "awk",
-        "box",
-        340,
-        75,
-        200,
-        70,
-        "awk '$9 == \"500\" {\n  print $1, $7, $9\n}'",
+        "proc",
+        652,
+        38,
+        284,
+        58,
+        "awk Column Engine",
         {
+          "sub": "Splits whitespace automatically",
           "tone": "accent"
         }
       ],
       [
         "res",
         "box",
-        620,
-        70,
-        260,
-        80,
-        "Filtered Output:\n203.0.113.9 /api/checkout 500",
+        652,
+        114,
+        284,
+        86,
+        "Extracted Output",
         {
-          "tone": "danger"
+          "sub": "Waiting for awk rule...",
+          "tone": "proc"
         }
       ],
       [
         "term",
         "term",
-        30,
-        220,
-        890,
-        290,
+        24,
+        218,
+        912,
+        292,
         "Terminal · awk Column Processor"
       ]
     ],
@@ -7028,14 +9035,48 @@ const LINUX_LESSONS = [
         "ops": [
           [
             "show",
-            "raw",
+            "atbl",
             "awk",
             "res",
             "term"
           ],
           [
+            "rows",
+            "atbl",
+            [
+              [
+                "192.168.1.50",
+                "\"GET",
+                "/health",
+                "200",
+                "45"
+              ],
+              [
+                "203.0.113.9",
+                "\"POST",
+                "/api/checkout",
+                "500",
+                "284"
+              ],
+              [
+                "10.0.1.14",
+                "\"GET",
+                "/api/products",
+                "200",
+                "9840"
+              ],
+              [
+                "198.51.100.7",
+                "\"GET",
+                "/wp-login.php",
+                "404",
+                "162"
+              ]
+            ]
+          ],
+          [
             "link",
-            "raw",
+            "atbl",
             "awk",
             {
               "tone": "accent"
@@ -7046,10 +9087,11 @@ const LINUX_LESSONS = [
             "awk",
             "res",
             {
-              "tone": "danger"
+              "tone": "proc"
             }
           ]
-        ]
+        ],
+        "vo": "जब लॉग लाइन्स में मल्टिपल स्पेसेज़ या कॉम्प्लेक्स कॉलम्स हों, कट फ़ेल हो जाता है। वहाँ ऑक आता है: ये मल्टिपल स्पेसेज़ को एक डिलिमिटर मानता है और कॉलम्स को डॉलर वन, डॉलर टू बना देता है।"
       },
       {
         "say": "Nginx log se IP ($1) aur HTTP status ($9) print karo. Simple `{print $1, $9}` syntax.",
@@ -7058,6 +9100,37 @@ const LINUX_LESSONS = [
           1
         ],
         "ops": [
+          [
+            "colhl",
+            "atbl",
+            [
+              0,
+              3
+            ],
+            "accent"
+          ],
+          [
+            "label",
+            "awk",
+            "awk '{print $1, $9}'",
+            "Extract IP & Status Code"
+          ],
+          [
+            "flow",
+            "atbl",
+            "awk",
+            "$1, $9",
+            {
+              "tone": "accent",
+              "dur": 550
+            }
+          ],
+          [
+            "label",
+            "res",
+            "IP + Status ($1, $9)",
+            "192.168.1.50 200 · 203.0.113.9 500"
+          ],
           [
             "term",
             "term",
@@ -7073,7 +9146,8 @@ const LINUX_LESSONS = [
             "198.51.100.7 404",
             "203.0.113.9 500"
           ]
-        ]
+        ],
+        "vo": "इंजन-एक्स लॉग से आई-पी यानी डॉलर वन और एच-टी-टी-पी स्टेटस यानी डॉलर नाइन प्रिंट करो। सिंपल प्रिंट डॉलर वन कॉमा डॉलर नाइन सिंटैक्स।"
       },
       {
         "say": "Ab condition lagao: Humein sirf wahi records chahiye jahan status code ($9) 500 ho, aur sath mein URL ($7) bhi dekhna hai.",
@@ -7082,6 +9156,60 @@ const LINUX_LESSONS = [
           3
         ],
         "ops": [
+          [
+            "colhl",
+            "atbl",
+            [
+              0,
+              2,
+              3
+            ],
+            "danger"
+          ],
+          [
+            "fade",
+            "atbl",
+            [
+              0,
+              2,
+              3
+            ]
+          ],
+          [
+            "mark",
+            "atbl",
+            [
+              1
+            ],
+            "danger"
+          ],
+          [
+            "label",
+            "awk",
+            "awk '$9 == \"500\"'",
+            "Filter row where col 9 is 500"
+          ],
+          [
+            "flow",
+            "awk",
+            "res",
+            "500 matches",
+            {
+              "tone": "danger",
+              "dur": 550
+            }
+          ],
+          [
+            "label",
+            "res",
+            "203.0.113.9 /api/checkout 500",
+            "Only HTTP 500 failures!"
+          ],
+          [
+            "tone",
+            "res",
+            "danger"
+          ],
           [
             "term",
             "term",
@@ -7093,12 +9221,9 @@ const LINUX_LESSONS = [
             "203.0.113.9 /api/checkout 500",
             "203.0.113.9 /api/checkout 500",
             "203.0.113.9 /api/checkout 500"
-          ],
-          [
-            "danger",
-            "res"
           ]
-        ]
+        ],
+        "vo": "अब कंडीशन लगाओ: हमें सिर्फ़ वही रिकॉर्ड्स चाहिए जहाँ स्टेटस कोड डॉलर नाइन बराबर फाइव हंड्रेड हो, और साथ में यू-आर-एल यानी डॉलर सेवन भी देखना है।"
       },
       {
         "say": "Trick: Agar pata na ho ki line mein kitne columns hain par hamesha aakhri column chahiye, toh `$NF` use karo (`NF` = Number of Fields).",
@@ -7107,6 +9232,39 @@ const LINUX_LESSONS = [
           5
         ],
         "ops": [
+          [
+            "unfade",
+            "atbl"
+          ],
+          [
+            "unmark",
+            "atbl"
+          ],
+          [
+            "colhl",
+            "atbl",
+            [
+              4
+            ],
+            "proc"
+          ],
+          [
+            "label",
+            "awk",
+            "awk '{print $NF}'",
+            "NF = Last Column (Response Bytes)"
+          ],
+          [
+            "label",
+            "res",
+            "$NF Response Sizes",
+            "45, 284, 9840, 162 bytes"
+          ],
+          [
+            "tone",
+            "res",
+            "proc"
+          ],
           [
             "term",
             "term",
@@ -7122,7 +9280,8 @@ const LINUX_LESSONS = [
             "162",
             "284"
           ]
-        ]
+        ],
+        "vo": "ट्रिक: अगर पता न हो कि लाइन में कितने कॉलम्स हैं पर हमेशा आख़िरी कॉलम चाहिए, तो डॉलर एन-एफ़ यूज़ करो, यानी नंबर ऑफ़ फ़ील्ड्स।"
       },
       {
         "say": "Delimiter colon `:` karne ke liye `-F\":\"` lagao. `/etc/passwd` se username ($1) aur shell ($7) ek jhatke mein print ho jayenge.",
@@ -7131,6 +9290,28 @@ const LINUX_LESSONS = [
           7
         ],
         "ops": [
+          [
+            "colhl",
+            "atbl",
+            []
+          ],
+          [
+            "label",
+            "awk",
+            "awk -F\":\" '{print $1, $7}'",
+            "Custom delimiter \":\" on /etc/passwd"
+          ],
+          [
+            "tone",
+            "res",
+            "ok"
+          ],
+          [
+            "label",
+            "res",
+            "User -> Login Shell",
+            "oracle -> /bin/bash"
+          ],
           [
             "term",
             "term",
@@ -7147,8 +9328,13 @@ const LINUX_LESSONS = [
           [
             "ok",
             "awk"
+          ],
+          [
+            "ok",
+            "res"
           ]
-        ]
+        ],
+        "vo": "डिलिमिटर कोलन करने के लिए डैश कैपिटल एफ़ कोलन लगाओ। स्लैश ई-टी-सी स्लैश पास-डब्ल्यू-डी से यूज़रनेम डॉलर वन और शेल डॉलर सेवन एक झटके में प्रिंट हो जाएँगे।"
       }
     ],
     "points": [
@@ -7221,7 +9407,8 @@ const LINUX_LESSONS = [
         "why": "`-F\":\"` aur `'{print $1}'` dono ko quote karna safe practice hai.",
         "fix": "awk -F\":\" '{print $1}' /etc/passwd"
       }
-    ]
+    ],
+    "intro": "एक्सेल शीट सोचो बिना माउस के। ऑक प्रिंट डॉलर वन कॉमा डॉलर फोर बोलता है शीट का कॉलम ए और कॉलम डी प्रिंट करो। ऑक डॉलर नाइन ग्रेटर-दैन इक्वल फाइव हंड्रेड प्रिंट डॉलर वन कॉमा डॉलर सेवन बोलता है जहाँ स्टेटस कोड फाइव हंड्रेड या ऊपर हो, सिर्फ़ वही आई-पी और यू-आर-एल दिखाओ।"
   },
   {
     "id": "lx-sed",
@@ -7264,48 +9451,73 @@ const LINUX_LESSONS = [
     ],
     "nodes": [
       [
-        "orig",
-        "doc",
-        60,
-        70,
-        200,
-        75,
-        "app.env\nPORT=3000\nENV=dev",
+        "ftbl",
+        "table",
+        24,
+        42,
+        420,
+        150,
+        "app/app.env (Config File)",
         {
-          "tone": "file"
+          "cols": [
+            "LINE",
+            "KEY",
+            "VALUE",
+            "STATE"
+          ],
+          "cw": [
+            0.14,
+            0.28,
+            0.28,
+            0.3
+          ]
         }
       ],
       [
         "sed",
-        "box",
-        340,
-        75,
-        200,
-        65,
-        "sed -i\n's/3000/8080/g'",
+        "proc",
+        474,
+        52,
+        210,
+        62,
+        "sed 's/3000/8080/g'",
+        {
+          "sub": "Preview mode (stdout)",
+          "tone": "accent"
+        }
+      ],
+      [
+        "mode",
+        "chip",
+        474,
+        134,
+        210,
+        30,
+        "Mode: Dry-Run Preview",
         {
           "tone": "accent"
         }
       ],
       [
-        "mod",
+        "bak",
         "doc",
-        620,
-        70,
-        200,
-        75,
-        "app.env\nPORT=8080\nENV=dev",
+        720,
+        52,
+        216,
+        86,
+        "app.env.bak",
         {
-          "tone": "ok"
+          "sub": "Created by sed -i.bak",
+          "tone": "file"
         }
       ],
       [
         "term",
         "term",
-        30,
-        215,
-        890,
-        295,
+        24,
+        214,
+        912,
+        296,
         "Terminal · sed in Action"
       ]
     ],
@@ -7328,28 +9540,51 @@ const LINUX_LESSONS = [
         "ops": [
           [
             "show",
-            "orig",
+            "ftbl",
             "sed",
-            "mod",
+            "mode",
             "term"
           ],
           [
+            "rows",
+            "ftbl",
+            [
+              [
+                "1",
+                "PORT",
+                "3000",
+                "Original"
+              ],
+              [
+                "2",
+                "APP_ENV",
+                "dev",
+                "Original"
+              ],
+              [
+                "3",
+                "DB_HOST",
+                "localhost",
+                "Original"
+              ],
+              [
+                "4",
+                "DB_PORT",
+                "1521",
+                "Original"
+              ]
+            ]
+          ],
+          [
             "link",
-            "orig",
+            "ftbl",
             "sed",
             {
               "tone": "accent"
             }
-          ],
-          [
-            "link",
-            "sed",
-            "mod",
-            {
-              "tone": "ok"
-            }
           ]
-        ]
+        ],
+        "vo": "पचास सर्वर्स पर इंजन-एक्स पोर्ट थ्री थाउज़ंड से बदल कर एटी-एटी करना हो, तो हर सर्वर पर विम खोल कर एडिट नहीं किया जाता। सेड एक कमांड में पूरी फ़ाइल अपडेट कर देता है।"
       },
       {
         "say": "Safety Rule: Hamesha pehle bina `-i` ke chala kar screen par output verify karo. Dekho ki replacement sahi ho raha hai ya nahi.",
@@ -7358,6 +9593,24 @@ const LINUX_LESSONS = [
           1
         ],
         "ops": [
+          [
+            "mark",
+            "ftbl",
+            [
+              0
+            ],
+            "accent"
+          ],
+          [
+            "flow",
+            "ftbl#0",
+            "sed",
+            "PORT=3000",
+            {
+              "tone": "accent",
+              "dur": 550
+            }
+          ],
           [
             "term",
             "term",
@@ -7371,7 +9624,8 @@ const LINUX_LESSONS = [
             "DB_HOST=localhost",
             "DB_PORT=1521"
           ]
-        ]
+        ],
+        "vo": "सेफ़्टी रूल: हमेशा पहले बिना डैश आई के चला कर स्क्रीन पर आउटपुट वेरिफ़ाई करो। देखो कि रिप्लेसमेंट सही हो रहा है या नहीं।"
       },
       {
         "say": "Jab tasalli ho jaye ki replacement bilkul sahi hai, tab `-i` (in-place) flag lagao. Ab file ke andar changes permanently save ho jayenge.",
@@ -7381,6 +9635,54 @@ const LINUX_LESSONS = [
           4
         ],
         "ops": [
+          [
+            "label",
+            "sed",
+            "sed -i 's/3000/8080/g'",
+            "In-place file update"
+          ],
+          [
+            "label",
+            "mode",
+            "Mode: Saved In-Place (-i)"
+          ],
+          [
+            "tone",
+            "mode",
+            "ok"
+          ],
+          [
+            "flow",
+            "sed",
+            "ftbl#0",
+            "write 8080",
+            {
+              "tone": "ok",
+              "dur": 550
+            }
+          ],
+          [
+            "cell",
+            "ftbl",
+            0,
+            2,
+            "8080"
+          ],
+          [
+            "cell",
+            "ftbl",
+            0,
+            3,
+            "Updated (-i)"
+          ],
+          [
+            "mark",
+            "ftbl",
+            [
+              0
+            ],
+            "ok"
+          ],
           [
             "term",
             "term",
@@ -7398,12 +9700,9 @@ const LINUX_LESSONS = [
             "APP_ENV=dev",
             "DB_HOST=localhost",
             "DB_PORT=1521"
-          ],
-          [
-            "ok",
-            "mod"
           ]
-        ]
+        ],
+        "vo": "जब तसल्ली हो जाए कि रिप्लेसमेंट बिल्कुल सही है, तब डैश आई यानी इन-प्लेस फ़्लैग लगाओ। अब फ़ाइल के अंदर चेंजेस पर्मनेंटली सेव हो जाएँगे।"
       },
       {
         "say": "Senior DevOps Pro Tip: Production mein `-i.bak` lagao. Yeh change karne se pehle automatic backup file `app.env.bak` bana dega.",
@@ -7413,6 +9712,57 @@ const LINUX_LESSONS = [
           7
         ],
         "ops": [
+          [
+            "show",
+            "bak"
+          ],
+          [
+            "link",
+            "ftbl",
+            "bak",
+            {
+              "label": "-i.bak",
+              "tone": "file",
+              "bend": -25
+            }
+          ],
+          [
+            "flow",
+            "ftbl",
+            "bak",
+            "backup copy",
+            {
+              "tone": "file",
+              "bend": -25,
+              "dur": 550
+            }
+          ],
+          [
+            "cell",
+            "ftbl",
+            1,
+            2,
+            "prod"
+          ],
+          [
+            "cell",
+            "ftbl",
+            1,
+            3,
+            "Updated + .bak"
+          ],
+          [
+            "mark",
+            "ftbl",
+            [
+              1
+            ],
+            "ok"
+          ],
+          [
+            "ok",
+            "bak"
+          ],
           [
             "term",
             "term",
@@ -7429,7 +9779,8 @@ const LINUX_LESSONS = [
             "-rw-r--r-- 1 oracle oinstall 80 Oct 29 10:15 app.env",
             "-rw-r--r-- 1 oracle oinstall 80 Oct 29 10:15 app.env.bak"
           ]
-        ]
+        ],
+        "vo": "सीनियर डेव-ऑप्स प्रो टिप: प्रोडक्शन में डैश आई डॉट बैक लगाओ। ये चेंज करने से पहले ऑटोमैटिक बैकअप फ़ाइल ऐप डॉट ई-एन-वी डॉट बैक बना देगा।"
       },
       {
         "say": "`sed '/^#/d'` se config files mein se saare faltu comments `#` delete ho jaate hain aur sirf kaam ki lines dikhti hain.",
@@ -7438,6 +9789,12 @@ const LINUX_LESSONS = [
           9
         ],
         "ops": [
+          [
+            "label",
+            "sed",
+            "sed '/^#/d' /etc/hosts",
+            "Strip comment lines (#)"
+          ],
           [
             "term",
             "term",
@@ -7449,8 +9806,13 @@ const LINUX_LESSONS = [
             "127.0.0.1 localhost",
             "::1 localhost ip6-localhost ip6-loopback",
             "192.168.1.10 prod-db01.local prod-db01"
+          ],
+          [
+            "ok",
+            "sed"
           ]
-        ]
+        ],
+        "vo": "सेड कैरेट हैश डी से कॉन्फ़िग फ़ाइल्स में से सारे फ़ालतू कमेंट्स डिलीट हो जाते हैं और सिर्फ़ काम की लाइन्स दिखती हैं।"
       }
     ],
     "points": [
@@ -7527,7 +9889,8 @@ const LINUX_LESSONS = [
         "why": "Jab path mein slashes `/` hon, sed confuse ho jata hai. Slashes ke bajaye koi doosra delimiter use karo jaise pipe `s|/var/log|/tmp/log|g`.",
         "fix": "sed -i 's|/var/log|/tmp/log|g' file.txt"
       }
-    ]
+    ],
+    "intro": "वर्ड प्रोसेसर का फ़ाइंड एंड रिप्लेस ऑल फ़ीचर सोचो, पर बिना फ़ाइल खोले कमांड लाइन से। सेड एस स्लैश डीबग बराबर ट्रू स्लैश डीबग बराबर फ़ॉल्स स्क्रीन पर रिप्लेस करके दिखाता है। और डैश आई लगाने से फ़ाइल के अंदर सीधा सेव हो जाता है।"
   },
   {
     "id": "lx-users",
@@ -7575,71 +9938,92 @@ const LINUX_LESSONS = [
     "nodes": [
       [
         "root",
-        "pill",
-        60,
-        60,
-        160,
-        48,
-        "root (UID: 0)\nSuperuser",
+        "proc",
+        24,
+        32,
+        185,
+        46,
+        "root (UID: 0)",
         {
+          "sub": "Superuser",
           "tone": "danger"
         }
       ],
       [
         "ora",
-        "pill",
-        60,
-        120,
-        160,
-        48,
-        "oracle (UID: 1000)\nDatabase Admin",
+        "proc",
+        24,
+        90,
+        185,
+        46,
+        "oracle (UID: 1001)",
         {
+          "sub": "Groups: oinstall, dba",
           "tone": "accent"
         }
       ],
       [
         "app",
-        "pill",
-        60,
-        180,
-        160,
-        48,
-        "appuser (UID: 1001)\nService Account",
+        "proc",
+        24,
+        148,
+        185,
+        46,
+        "appuser (UID: 1002)",
         {
+          "sub": "Microservice user",
           "tone": "ok"
         }
       ],
       [
-        "pwd",
-        "doc",
-        320,
-        90,
-        240,
-        100,
-        "/etc/passwd\nuser:x:UID:GID:info:home:shell",
+        "ptbl",
+        "table",
+        235,
+        38,
+        495,
+        156,
+        "/etc/passwd (7 Colon-Separated Fields)",
         {
-          "tone": "file"
+          "cols": [
+            "USER",
+            "PW",
+            "UID",
+            "GID",
+            "HOME",
+            "SHELL"
+          ],
+          "cw": [
+            0.16,
+            0.08,
+            0.12,
+            0.12,
+            0.28,
+            0.24
+          ]
         }
       ],
       [
         "shd",
         "disk",
-        640,
-        90,
-        220,
-        100,
-        "/etc/shadow\nEncrypted hashes (root only)",
+        760,
+        48,
+        172,
+        92,
+        "/etc/shadow",
         {
-          "tone": "muted"
+          "sub": "Root-only (0400)",
+          "inside": "SHA-512 Hashes",
+          "tone": "danger",
+          "level": 0.75
         }
       ],
       [
         "term",
         "term",
-        30,
-        230,
-        890,
-        280,
+        24,
+        218,
+        912,
+        292,
         "Terminal · Identity & Users"
       ]
     ],
@@ -7665,27 +10049,49 @@ const LINUX_LESSONS = [
             "root",
             "ora",
             "app",
-            "pwd",
-            "shd",
+            "ptbl",
             "term"
           ],
           [
-            "link",
-            "ora",
-            "pwd",
-            {
-              "tone": "accent"
-            }
-          ],
-          [
-            "link",
-            "pwd",
-            "shd",
-            {
-              "tone": "muted"
-            }
+            "rows",
+            "ptbl",
+            [
+              [
+                "root",
+                "x",
+                "0",
+                "0",
+                "/root",
+                "/bin/bash"
+              ],
+              [
+                "oracle",
+                "x",
+                "1001",
+                "1001",
+                "/home/oracle",
+                "/bin/bash"
+              ],
+              [
+                "appuser",
+                "x",
+                "1002",
+                "1002",
+                "/home/appuser",
+                "/bin/bash"
+              ],
+              [
+                "nginx",
+                "x",
+                "998",
+                "998",
+                "/var/cache/nginx",
+                "/sbin/nologin"
+              ]
+            ]
           ]
-        ]
+        ],
+        "vo": "लिनक्स एक मल्टी-यूज़र ऑपरेटिंग सिस्टम है। एक ही वक़्त पर डेटाबेस एडमिन, ऐप डिप्लॉयमेंट और ऑटोमेटेड सर्विसेज़ आपस में आइसोलेट होकर काम करते हैं।"
       },
       {
         "say": "Terminal par baith kar pehla sawal: \"Main kaun hoon aur mere paas kya haq hain?\". `whoami` username batata hai aur `id` poori kundli nikaalta hai.",
@@ -7696,6 +10102,22 @@ const LINUX_LESSONS = [
           3
         ],
         "ops": [
+          [
+            "pulse",
+            "ora"
+          ],
+          [
+            "ok",
+            "ora"
+          ],
+          [
+            "mark",
+            "ptbl",
+            [
+              1
+            ],
+            "accent"
+          ],
           [
             "term",
             "term",
@@ -7715,12 +10137,9 @@ const LINUX_LESSONS = [
             "out",
             "term",
             "uid=1000(oracle) gid=1000(oinstall) groups=1000(oinstall),1001(dba),27(sudo)"
-          ],
-          [
-            "ok",
-            "ora"
           ]
-        ]
+        ],
+        "vo": "टर्मिनल पर बैठ कर पहला सवाल: मैं कौन हूँ और मेरे पास क्या हक़ हैं? हू-एम-आई यूज़रनेम बताता है और आई-डी पूरी कुंडली निकालता है।"
       },
       {
         "say": "`/etc/passwd` file ke har record mein 7 columns hote hain: `username:password_flag:UID:GID:GECOS:home_dir:shell`.",
@@ -7729,6 +10148,27 @@ const LINUX_LESSONS = [
           5
         ],
         "ops": [
+          [
+            "fade",
+            "ptbl",
+            [
+              0,
+              2,
+              3
+            ]
+          ],
+          [
+            "colhl",
+            "ptbl",
+            [
+              0,
+              2,
+              3,
+              4,
+              5
+            ],
+            "accent"
+          ],
           [
             "term",
             "term",
@@ -7739,7 +10179,8 @@ const LINUX_LESSONS = [
             "term",
             "oracle:x:1000:1000:Oracle DB Admin:/home/oracle:/bin/bash"
           ]
-        ]
+        ],
+        "vo": "स्लैश ई-टी-सी स्लैश पास-डब्ल्यू-डी फ़ाइल के हर रिकॉर्ड में सात कॉलम्स होते हैं: यूज़रनेम, पासवर्ड फ़्लैग, यू-आई-डी, जी-आई-डी, डिस्क्रिप्शन, होम डायरेक्टरी और शेल।"
       },
       {
         "say": "Notice karo password column mein `x` likha hai. Security ke liye real password hashes `/etc/shadow` mein hote hain, jo sirf root padh sakta hai.",
@@ -7748,6 +10189,45 @@ const LINUX_LESSONS = [
           7
         ],
         "ops": [
+          [
+            "unfade",
+            "ptbl"
+          ],
+          [
+            "colhl",
+            "ptbl",
+            [
+              1
+            ],
+            "danger"
+          ],
+          [
+            "show",
+            "shd"
+          ],
+          [
+            "lock",
+            "shd"
+          ],
+          [
+            "link",
+            "ptbl",
+            "shd",
+            {
+              "label": "x -> hash",
+              "tone": "danger"
+            }
+          ],
+          [
+            "flow",
+            "ptbl",
+            "shd",
+            "encrypted",
+            {
+              "tone": "danger",
+              "dur": 550
+            }
+          ],
           [
             "term",
             "term",
@@ -7758,7 +10238,8 @@ const LINUX_LESSONS = [
             "term",
             "oinstall dba sudo"
           ]
-        ]
+        ],
+        "vo": "नोटिस करो पासवर्ड कॉलम में एक्स लिखा है। सिक्योरिटी के लिए रियल पासवर्ड हैशेज़ स्लैश ई-टी-सी स्लैश शैडो में होते हैं, जो सिर्फ़ रूट पढ़ सकता है।"
       },
       {
         "say": "Command `w` ya `who` se pata chalta hai ki server par is waqt kaun kaun log SSH session lekar baithe hain.",
@@ -7767,6 +10248,11 @@ const LINUX_LESSONS = [
           9
         ],
         "ops": [
+          [
+            "colhl",
+            "ptbl",
+            []
+          ],
           [
             "term",
             "term",
@@ -7778,8 +10264,13 @@ const LINUX_LESSONS = [
             " 10:20:01 up 14 days,  2 users,  load average: 0.28, 0.42, 0.35",
             "USER     TTY      FROM             LOGIN@   IDLE   JCPU   PCPU WHAT",
             "oracle   pts/0    192.168.1.50     09:15    0.00s  0.12s  0.02s w"
+          ],
+          [
+            "ok",
+            "ptbl"
           ]
-        ]
+        ],
+        "vo": "कमांड डब्ल्यू या हू से पता चलता है कि सर्वर पर इस वक़्त कौन-कौन लोग एस-एस-एच सेशन लेकर बैठे हैं।"
       }
     ],
     "points": [
@@ -7856,7 +10347,8 @@ const LINUX_LESSONS = [
         "why": "`/etc/shadow` mein encrypted passwords hote hain. Normal user use nahi padh sakta; sirf root ya `sudo` ke zariye access milta hai.",
         "fix": "sudo cat /etc/shadow"
       }
-    ]
+    ],
+    "intro": "ऑफ़िस बिल्डिंग का आई-डी कार्ड सिस्टम सोचो। हर एम्प्लॉई का एक बैज नंबर यानी यू-आई-डी होता है और एक डिपार्टमेंट यानी जी-आई-डी। रूट बराबर बिल्डिंग ओनर जिसके पास मास्टर की है। नॉर्मल एम्प्लॉई सिर्फ़ अपना केबिन खोल सकता है। और स्लैश ई-टी-सी स्लैश पास-डब्ल्यू-डी बराबर सिक्योरिटी गार्ड का मास्टर अटेंडेंस रजिस्टर।"
   },
   {
     "id": "lx-chmod",
@@ -7899,60 +10391,87 @@ const LINUX_LESSONS = [
     ],
     "nodes": [
       [
-        "u",
-        "box",
-        60,
-        60,
-        180,
-        85,
-        "User (Owner)\nr w x = 4+2+1\nScore: 7",
+        "vu",
+        "var",
+        24,
+        38,
+        145,
+        52,
+        "User / Owner (u)",
         {
+          "v": "rw- (4+2+0 = 6)",
           "tone": "ok"
         }
       ],
       [
-        "g",
-        "box",
-        270,
-        60,
-        180,
-        85,
-        "Group (Team)\nr - x = 4+0+1\nScore: 5",
+        "vg",
+        "var",
+        184,
+        38,
+        145,
+        52,
+        "Group (g)",
         {
+          "v": "r-- (4+0+0 = 4)",
           "tone": "accent"
         }
       ],
       [
-        "o",
-        "box",
-        480,
-        60,
-        180,
-        85,
-        "Others (World)\nr - x = 4+0+1\nScore: 5",
+        "vo",
+        "var",
+        344,
+        38,
+        145,
+        52,
+        "Others (o)",
         {
+          "v": "r-- (4+0+0 = 4)",
           "tone": "muted"
         }
       ],
       [
         "res",
-        "pill",
-        690,
-        75,
-        200,
-        55,
-        "755 (rwxr-xr-x)\nStandard Executable",
+        "proc",
+        24,
+        112,
+        465,
+        56,
+        "644 (-rw-r--r--) · Not Executable",
         {
-          "tone": "proc"
+          "sub": "r=4, w=2, x=1",
+          "tone": "accent"
+        }
+      ],
+      [
+        "ftbl",
+        "table",
+        514,
+        38,
+        422,
+        134,
+        "Production Permission Standards",
+        {
+          "cols": [
+            "FILE",
+            "OCTAL",
+            "SYMBOLIC",
+            "PURPOSE"
+          ],
+          "cw": [
+            0.3,
+            0.14,
+            0.26,
+            0.3
+          ]
         }
       ],
       [
         "term",
         "term",
-        30,
-        210,
-        890,
-        305,
+        24,
+        194,
+        912,
+        316,
         "Terminal · Permissions Calculation"
       ]
     ],
@@ -7976,37 +10495,39 @@ const LINUX_LESSONS = [
         "ops": [
           [
             "show",
-            "u",
-            "g",
-            "o",
+            "vu",
+            "vg",
+            "vo",
             "res",
+            "ftbl",
             "term"
           ],
           [
-            "link",
-            "u",
-            "res",
-            {
-              "tone": "ok"
-            }
-          ],
-          [
-            "link",
-            "g",
-            "res",
-            {
-              "tone": "accent"
-            }
-          ],
-          [
-            "link",
-            "o",
-            "res",
-            {
-              "tone": "muted"
-            }
+            "rows",
+            "ftbl",
+            [
+              [
+                "backup_db.sh",
+                "644",
+                "-rw-r--r--",
+                "Missing +x!"
+              ],
+              [
+                "app/app.env",
+                "644",
+                "-rw-r--r--",
+                "Secret exposed!"
+              ],
+              [
+                "todo.txt",
+                "644",
+                "-rw-r--r--",
+                "Normal doc"
+              ]
+            ]
           ]
-        ]
+        ],
+        "vo": "लिनक्स में कोई भी फ़ाइल बिना परमिशन के रन नहीं हो सकती। एल-एस डैश एल चलाने पर पहले दस कैरेक्टर्स फ़ाइल की परमिशन होती हैं, जैसे डैश आर-डब्ल्यू-एक्स आर-डैश-एक्स आर-डैश-एक्स।"
       },
       {
         "say": "Check karo `scripts/backup_db.sh`. Agar execute bit missing ho (`-rw-r--r--`), toh `./backup_db.sh` chalane par `Permission denied` error aayega.",
@@ -8015,6 +10536,18 @@ const LINUX_LESSONS = [
           1
         ],
         "ops": [
+          [
+            "mark",
+            "ftbl",
+            [
+              0
+            ],
+            "danger"
+          ],
+          [
+            "x",
+            "res"
+          ],
           [
             "term",
             "term",
@@ -8025,7 +10558,8 @@ const LINUX_LESSONS = [
             "term",
             "-rw-r--r-- 1 oracle oinstall 320 Oct 29 09:30 scripts/backup_db.sh"
           ]
-        ]
+        ],
+        "vo": "चेक करो स्क्रिप्ट्स स्लैश बैकअप डी-बी डॉट एस-एच। अगर एग्ज़ीक्यूट बिट मिसिंग हो, तो डॉट स्लैश बैकअप डी-बी डॉट एस-एच चलाने पर परमिशन डिनाइड एरर आएगा।"
       },
       {
         "say": "Is script ko runnable banane ke liye `chmod +x` chalao. Ab permission `-rwxr-xr-x` ban jayegi aur script run ho sakegi.",
@@ -8035,6 +10569,78 @@ const LINUX_LESSONS = [
           4
         ],
         "ops": [
+          [
+            "unx",
+            "res"
+          ],
+          [
+            "val",
+            "vu",
+            "rwx (4+2+1 = 7)",
+            {
+              "tone": "ok"
+            }
+          ],
+          [
+            "val",
+            "vg",
+            "r-x (4+0+1 = 5)",
+            {
+              "tone": "accent"
+            }
+          ],
+          [
+            "val",
+            "vo",
+            "r-x (4+0+1 = 5)",
+            {
+              "tone": "accent"
+            }
+          ],
+          [
+            "label",
+            "res",
+            "755 (-rwxr-xr-x) · Executable Script",
+            "Owner: rwx (7) · Group: r-x (5) · Others: r-x (5)"
+          ],
+          [
+            "tone",
+            "res",
+            "ok"
+          ],
+          [
+            "ok",
+            "res"
+          ],
+          [
+            "cell",
+            "ftbl",
+            0,
+            1,
+            "755"
+          ],
+          [
+            "cell",
+            "ftbl",
+            0,
+            2,
+            "-rwxr-xr-x"
+          ],
+          [
+            "cell",
+            "ftbl",
+            0,
+            3,
+            "Runnable script"
+          ],
+          [
+            "mark",
+            "ftbl",
+            [
+              0
+            ],
+            "ok"
+          ],
           [
             "term",
             "term",
@@ -8049,12 +10655,9 @@ const LINUX_LESSONS = [
             "out",
             "term",
             "-rwxr-xr-x 1 oracle oinstall 320 Oct 29 09:30 scripts/backup_db.sh"
-          ],
-          [
-            "ok",
-            "res"
           ]
-        ]
+        ],
+        "vo": "इस स्क्रिप्ट को रनेबल बनाने के लिए सी-एच-मॉड प्लस एक्स चलाओ। अब परमिशन आर-डब्ल्यू-एक्स बन जाएगी और स्क्रिप्ट रन हो सकेगी।"
       },
       {
         "say": "Job Rule: Passwords, API keys aur SSH private keys par kabhi 777 ya 644 mat chhodna! Unhe `chmod 600` (rw-------) karo taaki server par koi doosra user na padh sake.",
@@ -8064,6 +10667,78 @@ const LINUX_LESSONS = [
           7
         ],
         "ops": [
+          [
+            "unok",
+            "res"
+          ],
+          [
+            "val",
+            "vu",
+            "rw- (4+2+0 = 6)",
+            {
+              "tone": "ok"
+            }
+          ],
+          [
+            "val",
+            "vg",
+            "--- (0)",
+            {
+              "tone": "danger"
+            }
+          ],
+          [
+            "val",
+            "vo",
+            "--- (0)",
+            {
+              "tone": "danger"
+            }
+          ],
+          [
+            "label",
+            "res",
+            "600 (-rw-------) · Strictly Private",
+            "Secrets, .env, SSH keys (Group & Others = 0)"
+          ],
+          [
+            "tone",
+            "res",
+            "proc"
+          ],
+          [
+            "lock",
+            "res"
+          ],
+          [
+            "cell",
+            "ftbl",
+            1,
+            1,
+            "600"
+          ],
+          [
+            "cell",
+            "ftbl",
+            1,
+            2,
+            "-rw-------"
+          ],
+          [
+            "cell",
+            "ftbl",
+            1,
+            3,
+            "Locked secret"
+          ],
+          [
+            "mark",
+            "ftbl",
+            [
+              1
+            ],
+            "accent"
+          ],
           [
             "term",
             "term",
@@ -8079,7 +10754,8 @@ const LINUX_LESSONS = [
             "term",
             "-rw------- 1 oracle oinstall 80 Oct 29 10:15 app/app.env"
           ]
-        ]
+        ],
+        "vo": "जॉब रूल: पासवर्ड्स, ए-पी-आई कीज़ और एस-एस-एच प्राइवेट कीज़ पर कभी सेवन-सेवन-सेवन या सिक्स-फोर-फोर मत छोड़ना! उन्हें सी-एच-मॉड सिक्स हंड्रेड करो ताकि सर्वर पर कोई दूसरा यूज़र न पढ़ सके।"
       },
       {
         "say": "Normal documentation, logs aur web static files ke liye standard permission `644` (rw-r--r--) hoti hai.",
@@ -8089,6 +10765,49 @@ const LINUX_LESSONS = [
           10
         ],
         "ops": [
+          [
+            "unlock",
+            "res"
+          ],
+          [
+            "val",
+            "vg",
+            "r-- (4)",
+            {
+              "tone": "accent"
+            }
+          ],
+          [
+            "val",
+            "vo",
+            "r-- (4)",
+            {
+              "tone": "muted"
+            }
+          ],
+          [
+            "label",
+            "res",
+            "644 (-rw-r--r--) · Standard Text File",
+            "Owner writes (6), everyone else reads (4)"
+          ],
+          [
+            "tone",
+            "res",
+            "ok"
+          ],
+          [
+            "ok",
+            "res"
+          ],
+          [
+            "mark",
+            "ftbl",
+            [
+              2
+            ],
+            "ok"
+          ],
           [
             "term",
             "term",
@@ -8104,7 +10823,8 @@ const LINUX_LESSONS = [
             "term",
             "-rw-r--r-- 1 oracle oinstall 150 Oct 29 10:00 todo.txt"
           ]
-        ]
+        ],
+        "vo": "नॉर्मल डॉक्यूमेंटेशन, लॉग्स और वेब स्टैटिक फ़ाइल्स के लिए स्टैंडर्ड परमिशन सिक्स-फोर-फोर होती है।"
       }
     ],
     "points": [
@@ -8178,7 +10898,8 @@ const LINUX_LESSONS = [
         "why": "Agar `/etc/sudoers` ya `/usr/bin/sudo` par 777 ho jaye, toh Linux security safeguard ke tahat sudo command chalna band kar deta hai!",
         "fix": "chmod 440 /etc/sudoers"
       }
-    ]
+    ],
+    "intro": "तीन लॉकर सोचो: पहला ओनर यानी तुम, दूसरा फ़ैमिली यानी ग्रुप, तीसरा दुनिया यानी अदर्स। हर एक के पास तीन राइट्स हो सकते हैं: पढ़ना यानी रीड बराबर फोर, लिखना यानी राइट बराबर टू, चलाना यानी एग्ज़ीक्यूट बराबर वन। टोटल सेवन बराबर सब कुछ। फाइव बराबर पढ़ो और चलाओ। फोर बराबर सिर्फ़ पढ़ो। ज़ीरो बराबर बिल्कुल मना।"
   },
   {
     "id": "lx-chown-sudo",
@@ -8218,59 +10939,76 @@ const LINUX_LESSONS = [
     "nodes": [
       [
         "usr",
-        "box",
-        60,
-        60,
-        160,
-        60,
-        "oracle user\n(normal privileges)",
+        "user",
+        36,
+        48,
+        62,
+        54,
+        "oracle",
         {
+          "sub": "Admin user",
           "tone": "accent"
         }
       ],
       [
-        "sudo",
-        "pill",
-        280,
-        65,
-        140,
-        50,
-        "sudo gate\n/etc/sudoers",
+        "fenv",
+        "doc",
+        150,
+        42,
+        180,
+        74,
+        "app/app.env",
         {
+          "sub": "owner: oracle:oinstall",
+          "tone": "file"
+        }
+      ],
+      [
+        "sudo",
+        "proc",
+        385,
+        52,
+        165,
+        56,
+        "sudo Gate",
+        {
+          "sub": "/etc/sudoers policy",
           "tone": "proc"
         }
       ],
       [
         "rootcmd",
         "box",
-        480,
-        60,
-        180,
-        60,
-        "Root Command\n(systemctl, chown)",
+        600,
+        48,
+        165,
+        64,
+        "systemctl restart",
         {
-          "tone": "danger"
+          "sub": "Runs as UID 0 (root)",
+          "tone": "accent"
         }
       ],
       [
         "audit",
         "doc",
-        720,
-        60,
-        180,
-        60,
-        "auth.log\nAudited timestamp",
+        805,
+        42,
+        130,
+        74,
+        "auth.log",
         {
+          "sub": "COMMAND audited",
           "tone": "ok"
         }
       ],
       [
         "term",
         "term",
-        30,
-        210,
-        890,
-        305,
+        24,
+        194,
+        912,
+        316,
         "Terminal · sudo & Ownership"
       ]
     ],
@@ -8293,10 +11031,15 @@ const LINUX_LESSONS = [
           [
             "show",
             "usr",
+            "fenv",
             "sudo",
             "rootcmd",
             "audit",
             "term"
+          ],
+          [
+            "lock",
+            "sudo"
           ],
           [
             "link",
@@ -8311,7 +11054,7 @@ const LINUX_LESSONS = [
             "sudo",
             "rootcmd",
             {
-              "tone": "danger"
+              "tone": "proc"
             }
           ],
           [
@@ -8322,7 +11065,8 @@ const LINUX_LESSONS = [
               "tone": "ok"
             }
           ]
-        ]
+        ],
+        "vo": "प्रोडक्शन स्टैंडर्ड: रूट अकाउंट से एस-एस-एच लॉगिन हमेशा डिसेबल होता है। हर इंजीनियर अपने पर्सनल अकाउंट से आकर सूडो यूज़ करता है।"
       },
       {
         "say": "`ls -l` mein permissions ke baad do naam hote hain: pehla `owner` (user), doosra `group`. Yahan `app/app.env` ka owner check karo.",
@@ -8331,6 +11075,10 @@ const LINUX_LESSONS = [
           1
         ],
         "ops": [
+          [
+            "pulse",
+            "fenv"
+          ],
           [
             "term",
             "term",
@@ -8341,7 +11089,8 @@ const LINUX_LESSONS = [
             "term",
             "-rw------- 1 oracle oinstall 80 Oct 29 10:15 app/app.env"
           ]
-        ]
+        ],
+        "vo": "एल-एस डैश एल में परमिशन्स के बाद दो नाम होते हैं: पहला ओनर यानी यूज़र, दूसरा ग्रुप। यहाँ ऐप स्लैश ऐप डॉट ई-एन-वी का ओनर चेक करो।"
       },
       {
         "say": "Agar ownership badalni ho toh `chown user:group filename` use kiya jata hai. Colon `:` ke pehle user, baad mein group.",
@@ -8357,6 +11106,20 @@ const LINUX_LESSONS = [
             "oracle@prod-db01:~$ chown oracle:oinstall app/app.env"
           ],
           [
+            "flow",
+            "usr",
+            "fenv",
+            "chown user:group",
+            {
+              "tone": "accent",
+              "dur": 550
+            }
+          ],
+          [
+            "ok",
+            "fenv"
+          ],
+          [
             "term",
             "term",
             "oracle@prod-db01:~$ ls -l app/app.env"
@@ -8365,12 +11128,9 @@ const LINUX_LESSONS = [
             "out",
             "term",
             "-rw------- 1 oracle oinstall 80 Oct 29 10:15 app/app.env"
-          ],
-          [
-            "ok",
-            "usr"
           ]
-        ]
+        ],
+        "vo": "अगर ओनरशिप बदलनी हो तो सी-एच-ओन यूज़र कोलन ग्रुप फ़ाइलनेम यूज़ किया जाता है। कोलन के पहले यूज़र, बाद में ग्रुप।"
       },
       {
         "say": "Poore application folder ke andar sabhi files aur sub-folders ki ownership ek saath update karne ke liye `-R` (recursive) flag lagaya jata hai.",
@@ -8385,10 +11145,22 @@ const LINUX_LESSONS = [
             "oracle@prod-db01:~$ chown -R oracle:oinstall app/"
           ],
           [
+            "label",
+            "fenv",
+            "app/ (Recursive -R)",
+            "All files -> oracle:oinstall"
+          ],
+          [
+            "tone",
+            "fenv",
+            "ok"
+          ],
+          [
             "pulse",
-            "usr"
+            "fenv"
           ]
-        ]
+        ],
+        "vo": "पूरे एप्लिकेशन फ़ोल्डर के अंदर सभी फ़ाइल्स और सब-फ़ोल्डर्स की ओनरशिप एक साथ अपडेट करने के लिए डैश कैपिटल आर, यानी रिकर्सिव फ़्लैग, लगाया जाता है।"
       },
       {
         "say": "Services restart ya system package install karne ke liye aage `sudo` lagaya jata hai. Sudo command chalne par system audit log mein entry ho jati hai.",
@@ -8403,14 +11175,49 @@ const LINUX_LESSONS = [
             "oracle@prod-db01:~$ sudo systemctl restart nginx"
           ],
           [
-            "danger",
+            "unlock",
+            "sudo"
+          ],
+          [
+            "flow",
+            "usr",
+            "sudo",
+            "sudo",
+            {
+              "tone": "accent",
+              "dur": 450
+            }
+          ],
+          [
+            "flow",
+            "sudo",
+            "rootcmd",
+            "verified!",
+            {
+              "tone": "ok",
+              "dur": 500
+            }
+          ],
+          [
+            "flow",
+            "rootcmd",
+            "audit",
+            "audit trail",
+            {
+              "tone": "proc",
+              "dur": 500
+            }
+          ],
+          [
+            "ok",
             "rootcmd"
           ],
           [
             "ok",
             "audit"
           ]
-        ]
+        ],
+        "vo": "सर्विसेज़ रीस्टार्ट या सिस्टम पैकेज इंस्टॉल करने के लिए आगे सूडो लगाया जाता है। सूडो कमांड चलने पर सिस्टम ऑडिट लॉग में एंट्री हो जाती है।"
       }
     ],
     "points": [
@@ -8475,7 +11282,8 @@ const LINUX_LESSONS = [
         "why": "`/etc/sudoers` ko direct editor se edit karne par agar ek comma galat hua, toh sudo hamesha ke liye toot jata hai. Hamesha `visudo` command use karo jo syntax check karti hai.",
         "fix": "sudo visudo"
       }
-    ]
+    ],
+    "intro": "वी-आई-पी लॉकर रूम सोचो। हर तिजोरी का एक मालिक है, यानी सी-एच-ओन। अगर तुम नॉर्मल एम्प्लॉई हो पर सर्वर रीबूट करना है, तो तुम डायरेक्ट रूट नहीं बनते; तुम सिक्योरिटी गार्ड को अपना आई-डी कार्ड दिखा कर सूडो बोलते हो। गार्ड अटेंडेंस बुक में लिखता है कि तुमने क्या किया और इजाज़त देता है।"
   },
   {
     "id": "lx-ps-kill",
@@ -8518,72 +11326,89 @@ const LINUX_LESSONS = [
     ],
     "nodes": [
       [
-        "proc",
-        "box",
-        60,
-        60,
-        180,
-        80,
-        "payapi (PID: 1420)\nHigh CPU / Hung",
+        "ptbl",
+        "table",
+        24,
+        38,
+        530,
+        154,
+        "Running Processes (ps aux)",
         {
+          "cols": [
+            "USER",
+            "PID",
+            "%CPU",
+            "%MEM",
+            "COMMAND"
+          ],
+          "cw": [
+            0.16,
+            0.12,
+            0.14,
+            0.14,
+            0.44
+          ]
+        }
+      ],
+      [
+        "cpum",
+        "meter",
+        580,
+        42,
+        356,
+        22,
+        "Server CPU Load",
+        {
+          "sub": "88.4% (Hung Process!)",
+          "level": 0.89,
           "tone": "danger"
         }
       ],
       [
         "sig15",
-        "pill",
-        320,
-        50,
-        160,
-        42,
-        "kill -15 (SIGTERM)\nGraceful Stop",
+        "proc",
+        580,
+        82,
+        170,
+        48,
+        "kill -15 (SIGTERM)",
         {
+          "sub": "1st: Graceful stop",
           "tone": "accent"
         }
       ],
       [
         "sig9",
-        "pill",
-        320,
-        130,
-        160,
-        42,
-        "kill -9 (SIGKILL)\nForce Termination",
+        "proc",
+        766,
+        82,
+        170,
+        48,
+        "kill -9 (SIGKILL)",
+        {
+          "sub": "2nd: Force kill",
+          "tone": "danger"
+        }
+      ],
+      [
+        "status",
+        "chip",
+        580,
+        148,
+        356,
+        30,
+        "PID 1420 (payapi.jar) eating 88.4% CPU!",
         {
           "tone": "danger"
         }
       ],
       [
-        "kernel",
-        "box",
-        560,
-        60,
-        180,
-        80,
-        "Linux Kernel\nProcess cleanup",
-        {
-          "tone": "proc"
-        }
-      ],
-      [
-        "done",
-        "disk",
-        800,
-        75,
-        110,
-        50,
-        "Terminated\nResources freed",
-        {
-          "tone": "ok"
-        }
-      ],
-      [
         "term",
         "term",
-        30,
-        220,
-        890,
-        290,
+        24,
+        212,
+        912,
+        298,
         "Terminal · Process Management"
       ]
     ],
@@ -8606,29 +11431,47 @@ const LINUX_LESSONS = [
         "ops": [
           [
             "show",
-            "proc",
-            "sig15",
-            "sig9",
-            "kernel",
+            "ptbl",
+            "cpum",
+            "status",
             "term"
           ],
           [
-            "link",
-            "proc",
-            "sig15",
-            {
-              "tone": "accent"
-            }
-          ],
-          [
-            "link",
-            "proc",
-            "sig9",
-            {
-              "tone": "danger"
-            }
+            "rows",
+            "ptbl",
+            [
+              [
+                "root",
+                "1",
+                "0.1",
+                "0.2",
+                "/sbin/init (systemd)"
+              ],
+              [
+                "root",
+                "1102",
+                "0.3",
+                "0.8",
+                "nginx: master process"
+              ],
+              [
+                "appuser",
+                "1420",
+                "88.4",
+                "6.2",
+                "java -jar /opt/payapi.jar"
+              ],
+              [
+                "oracle",
+                "1980",
+                "0.5",
+                "1.1",
+                "node worker.js"
+              ]
+            ]
           ]
-        ]
+        ],
+        "vo": "प्रोडक्शन सर्वर पर सी-पी-यू स्पाइक हो जाए या कोई ए-पी-आई हैंग हो जाए, तो सबसे पहले उस प्रोसेस का पी-आई-डी ढूँढा जाता है, पी-एस ए-यू-एक्स पाइप ग्रेप नेम।"
       },
       {
         "say": "PID 1420 dhoondho. Output mein user, PID, %CPU, %MEM aur exact startup command milti hai.",
@@ -8637,6 +11480,23 @@ const LINUX_LESSONS = [
           1
         ],
         "ops": [
+          [
+            "mark",
+            "ptbl",
+            [
+              2
+            ],
+            "danger"
+          ],
+          [
+            "colhl",
+            "ptbl",
+            [
+              1,
+              2
+            ],
+            "danger"
+          ],
           [
             "term",
             "term",
@@ -8648,7 +11508,8 @@ const LINUX_LESSONS = [
             "appuser   1420 88.4  6.2 1420480 512000 ?     Rl   09:15  12:40 /usr/bin/java -jar /opt/payapi.jar",
             "oracle    2401  0.0  0.0   6480   890 pts/0    S+   10:30   0:00 grep payapi"
           ]
-        ]
+        ],
+        "vo": "पी-आई-डी फोर्टीन-ट्वेंटी ढूँढो। आउटपुट में यूज़र, पी-आई-डी, सी-पी-यू परसेंट, मेमोरी परसेंट और एग्ज़ैक्ट स्टार्टअप कमांड मिलती है।"
       },
       {
         "say": "Production Rule #1: Hamesha pehle `kill -15 <PID>` (SIGTERM) bhejo taaki database connections close ho sakein aur logs write ho sakein.",
@@ -8658,19 +11519,31 @@ const LINUX_LESSONS = [
         ],
         "ops": [
           [
-            "link",
-            "sig15",
-            "kernel",
-            {
-              "tone": "accent"
-            }
+            "show",
+            "sig15"
           ],
           [
             "term",
             "term",
             "oracle@prod-db01:~$ kill -15 1420"
+          ],
+          [
+            "flow",
+            "sig15",
+            "ptbl#2",
+            "SIGTERM (-15)",
+            {
+              "tone": "accent",
+              "dur": 600
+            }
+          ],
+          [
+            "label",
+            "status",
+            "SIGTERM sent... process still hung!"
           ]
-        ]
+        ],
+        "vo": "प्रोडक्शन रूल नंबर वन: हमेशा पहले किल डैश फिफ्टीन पी-आई-डी यानी सिग-टर्म भेजो ताकि डेटाबेस कनेक्शन्स क्लोज़ हो सकें और लॉग्स राइट हो सकें।"
       },
       {
         "say": "Agar 10 second baad bhi process unresponsive ho aur band na ho, tab aakhri hathiyar chalao: `kill -9 <PID>` (SIGKILL).",
@@ -8680,12 +11553,8 @@ const LINUX_LESSONS = [
         ],
         "ops": [
           [
-            "link",
-            "sig9",
-            "kernel",
-            {
-              "tone": "danger"
-            }
+            "show",
+            "sig9"
           ],
           [
             "term",
@@ -8693,16 +11562,52 @@ const LINUX_LESSONS = [
             "oracle@prod-db01:~$ kill -9 1420"
           ],
           [
-            "show",
-            "done"
+            "flow",
+            "sig9",
+            "ptbl#2",
+            "SIGKILL (-9)!",
+            {
+              "tone": "danger",
+              "dur": 600
+            }
           ],
           [
-            "link",
-            "kernel",
-            "done",
-            {
-              "tone": "ok"
-            }
+            "delrow",
+            "ptbl",
+            [
+              2
+            ]
+          ],
+          [
+            "colhl",
+            "ptbl",
+            []
+          ],
+          [
+            "level",
+            "cpum",
+            0.08
+          ],
+          [
+            "tone",
+            "cpum",
+            "ok"
+          ],
+          [
+            "label",
+            "cpum",
+            "Server CPU Load",
+            "8% (Healthy)"
+          ],
+          [
+            "label",
+            "status",
+            "PID 1420 Terminated · CPU & RAM Freed!"
+          ],
+          [
+            "tone",
+            "status",
+            "ok"
           ],
           [
             "term",
@@ -8713,12 +11618,9 @@ const LINUX_LESSONS = [
             "out",
             "term",
             "oracle    2405  0.0  0.0   6480   890 pts/0    S+   10:31   0:00 grep payapi"
-          ],
-          [
-            "ok",
-            "done"
           ]
-        ]
+        ],
+        "vo": "अगर दस सेकंड बाद भी प्रोसेस अनरिस्पॉन्सिव हो और बंद न हो, तब आख़िरी हथियार चलाओ: किल डैश नाइन पी-आई-डी यानी सिग-किल।"
       },
       {
         "say": "Agar 20 processes ek hi naam ke hain (jaise 20 python workers), toh PID ek ek karke daalne ke bajaye `pkill -f node` ya `killall` use kiya jata hai.",
@@ -8733,10 +11635,18 @@ const LINUX_LESSONS = [
             "oracle@prod-db01:~$ pkill -f node"
           ],
           [
-            "pulse",
-            "kernel"
+            "delrow",
+            "ptbl",
+            [
+              2
+            ]
+          ],
+          [
+            "ok",
+            "sig9"
           ]
-        ]
+        ],
+        "vo": "अगर बीस प्रोसेसेज़ एक ही नाम के हैं, जैसे बीस पाइथन वर्कर्स, तो पी-आई-डी एक-एक करके डालने के बजाय पी-किल डैश एफ़ नोड या किल-ऑल यूज़ किया जाता है।"
       }
     ],
     "points": [
@@ -8805,7 +11715,8 @@ const LINUX_LESSONS = [
         "why": "Production DB processes (Oracle, Postgres) ko bina soche samjhe kill -9 karne se crash recovery chalani padti hai. Hamesha database shutdown commands use karo.",
         "fix": "sqlplus / as sysdba -> shutdown immediate"
       }
-    ]
+    ],
+    "intro": "हॉस्पिटल इमरजेंसी रूम सोचो। हर पेशेंट का एक टोकन नंबर यानी पी-आई-डी है। डॉक्टर स्क्रीन पर देखता है कौनसा पेशेंट ज़्यादा ऑक्सीजन यानी सी-पी-यू ले रहा है। नर्स पहले प्यार से डिस्चार्ज करती है, यानी किल डैश फिफ्टीन। अगर पेशेंट ज़िद पर अड़े और मशीन जाम कर दे, तो सिक्योरिटी गार्ड फ़ोर्स से बाहर निकाल देता है, यानी किल डैश नाइन।"
   },
   {
     "id": "lx-bg-nohup",
@@ -8854,58 +11765,75 @@ const LINUX_LESSONS = [
       [
         "ssh",
         "box",
-        60,
-        60,
-        160,
-        60,
-        "SSH Terminal\n(Laptop session)",
+        24,
+        48,
+        175,
+        68,
+        "SSH Session (pts/0)",
         {
+          "sub": "Laptop connection",
           "tone": "accent"
         }
       ],
       [
         "hup",
-        "pill",
-        270,
-        65,
-        120,
-        50,
-        "SIGHUP\n(Disconnect)",
+        "proc",
+        240,
+        56,
+        145,
+        52,
+        "SIGHUP Signal",
         {
+          "sub": "WiFi / SSH drop!",
           "tone": "danger"
         }
       ],
       [
         "nohup",
         "box",
-        440,
-        60,
-        180,
-        60,
-        "nohup Shield\nIgnores SIGHUP",
+        430,
+        48,
+        185,
+        68,
+        "nohup Shield",
         {
+          "sub": "Blocks SIGHUP signal",
           "tone": "ok"
         }
       ],
       [
         "job",
         "proc",
-        670,
-        60,
-        200,
-        60,
-        "backup_db.sh &\nRunning in background",
+        660,
+        34,
+        276,
+        52,
+        "backup_db.sh & (PID 2460)",
         {
+          "sub": "Background worker",
           "tone": "proc"
+        }
+      ],
+      [
+        "log",
+        "doc",
+        680,
+        106,
+        236,
+        58,
+        "/var/log/oracle/backup.log",
+        {
+          "sub": "> backup.log 2>&1",
+          "tone": "file"
         }
       ],
       [
         "term",
         "term",
-        30,
-        200,
-        890,
-        310,
+        24,
+        198,
+        912,
+        312,
         "Terminal · Background Jobs"
       ]
     ],
@@ -8930,8 +11858,6 @@ const LINUX_LESSONS = [
             "show",
             "ssh",
             "hup",
-            "nohup",
-            "job",
             "term"
           ],
           [
@@ -8939,26 +11865,12 @@ const LINUX_LESSONS = [
             "ssh",
             "hup",
             {
-              "tone": "danger"
-            }
-          ],
-          [
-            "link",
-            "hup",
-            "nohup",
-            {
-              "tone": "muted"
-            }
-          ],
-          [
-            "link",
-            "nohup",
-            "job",
-            {
-              "tone": "ok"
+              "tone": "danger",
+              "label": "disconnect"
             }
           ]
-        ]
+        ],
+        "vo": "एस-एस-एच पर लंबा स्क्रिप्ट चलाते वक़्त सबसे बड़ा डर: अगर मेरा इंटरनेट गया तो स्क्रिप्ट आधे में टूट जाएगा। नो-हप और एम्परसैंड इसका पर्मनेंट सॉल्यूशन हैं।"
       },
       {
         "say": "Command ke aakhir mein `&` lagao. Terminal tumhe Job Number `[1]` aur Process ID `2450` dega, aur prompt foran free ho jayega.",
@@ -8968,16 +11880,42 @@ const LINUX_LESSONS = [
         ],
         "ops": [
           [
+            "show",
+            "job"
+          ],
+          [
+            "link",
+            "ssh",
+            "job",
+            {
+              "label": "& (background)",
+              "tone": "accent",
+              "bend": -25
+            }
+          ],
+          [
             "term",
             "term",
             "oracle@prod-db01:~$ ./scripts/backup_db.sh &"
+          ],
+          [
+            "flow",
+            "ssh",
+            "job",
+            "PID 2450",
+            {
+              "tone": "accent",
+              "bend": -25,
+              "dur": 550
+            }
           ],
           [
             "out",
             "term",
             "[1] 2450"
           ]
-        ]
+        ],
+        "vo": "कमांड के आख़िर में एम्परसैंड लगाओ। टर्मिनल तुम्हें जॉब नंबर वन और प्रोसेस आई-डी ट्वेंटी-फोर फिफ्टी देगा, और प्रॉम्प्ट फ़ौरन फ़्री हो जाएगा।"
       },
       {
         "say": "Session ke background jobs dekhne ke liye `jobs` type karo. Agar wapas screen par live output dekhna hai, toh `fg %1` chalao.",
@@ -9004,12 +11942,24 @@ const LINUX_LESSONS = [
             "oracle@prod-db01:~$ fg %1"
           ],
           [
+            "flow",
+            "job",
+            "ssh",
+            "fg %1 (foreground)",
+            {
+              "tone": "proc",
+              "bend": 25,
+              "dur": 550
+            }
+          ],
+          [
             "out",
             "term",
             "./scripts/backup_db.sh",
             "Backing up database tablespaces... [in progress]"
           ]
-        ]
+        ],
+        "vo": "सेशन के बैकग्राउंड जॉब्स देखने के लिए जॉब्स टाइप करो। अगर वापस स्क्रीन पर लाइव आउटपुट देखना है, तो एफ़-जी परसेंट वन चलाओ।"
       },
       {
         "say": "Senior DevOps Formula: `nohup <cmd> > file.log 2>&1 &`. Isse: 1. Terminal band hone par bhi process chalega. 2. Output aur errors log file mein judenge. 3. Prompt foran free hoga.",
@@ -9019,9 +11969,55 @@ const LINUX_LESSONS = [
         ],
         "ops": [
           [
+            "show",
+            "nohup",
+            "log"
+          ],
+          [
+            "lock",
+            "nohup"
+          ],
+          [
+            "link",
+            "hup",
+            "nohup",
+            {
+              "tone": "danger",
+              "dash": 1
+            }
+          ],
+          [
+            "link",
+            "nohup",
+            "job",
+            {
+              "tone": "ok",
+              "label": "immune"
+            }
+          ],
+          [
+            "link",
+            "job",
+            "log",
+            {
+              "tone": "file",
+              "label": "2>&1"
+            }
+          ],
+          [
             "term",
             "term",
             "oracle@prod-db01:~$ nohup ./scripts/backup_db.sh > /var/log/oracle/backup.log 2>&1 &"
+          ],
+          [
+            "flow",
+            "job",
+            "log",
+            "logging",
+            {
+              "tone": "ok",
+              "dur": 550
+            }
           ],
           [
             "out",
@@ -9030,9 +12026,14 @@ const LINUX_LESSONS = [
           ],
           [
             "ok",
+            "nohup"
+          ],
+          [
+            "ok",
             "job"
           ]
-        ]
+        ],
+        "vo": "सीनियर डेव-ऑप्स फ़ॉर्मूला: नो-हप कमांड ग्रेटर-दैन फ़ाइल डॉट लॉग टू ग्रेटर-दैन एम्परसैंड वन एम्परसैंड। इससे टर्मिनल बंद होने पर भी प्रोसेस चलेगा, आउटपुट और एरर्स लॉग फ़ाइल में जुड़ेंगे, और प्रॉम्प्ट फ़ौरन फ़्री होगा।"
       },
       {
         "say": "Terminal band karke naye laptop se aao, `ps aux | grep backup_db` se check karo. Script maze se background mein chal rahi hogi.",
@@ -9042,6 +12043,28 @@ const LINUX_LESSONS = [
         ],
         "ops": [
           [
+            "dim",
+            "ssh"
+          ],
+          [
+            "flow",
+            "ssh",
+            "hup",
+            "SSH closed",
+            {
+              "tone": "danger",
+              "dur": 450
+            }
+          ],
+          [
+            "x",
+            "hup"
+          ],
+          [
+            "pulse",
+            "job"
+          ],
+          [
             "term",
             "term",
             "oracle@prod-db01:~$ ps aux | grep backup_db"
@@ -9050,8 +12073,13 @@ const LINUX_LESSONS = [
             "out",
             "term",
             "oracle    2460  1.2  0.4  18400  8400 ?        S    10:35   0:01 /bin/bash ./scripts/backup_db.sh"
+          ],
+          [
+            "ok",
+            "log"
           ]
-        ]
+        ],
+        "vo": "टर्मिनल बंद करके नए लैपटॉप से आओ, पी-एस ए-यू-एक्स पाइप ग्रेप बैकअप डी-बी से चेक करो। स्क्रिप्ट मज़े से बैकग्राउंड में चल रही होगी।"
       }
     ],
     "points": [
@@ -9121,7 +12149,8 @@ const LINUX_LESSONS = [
         "why": "`nohup` akele terminal prompt free nahi karta. Aakhir mein `&` lagana zaroori hai taaki prompt foran wapas mile.",
         "fix": "nohup ./script.sh &"
       }
-    ]
+    ],
+    "intro": "तुम लैपटॉप पर एस-एस-एच से चार घंटे का डेटाबेस बैकअप चला रहे हो। अचानक वाई-फ़ाई डिस्कनेक्ट हो गया या लैपटॉप की बैटरी ख़त्म हो गई। नॉर्मल कमांड उसी वक़्त मर जाएगी! पर अगर नो-हप और एम्परसैंड लगा कर चलाया था, तो सर्वर बैकग्राउंड में बिना लैपटॉप के भी पूरा बैकअप कंप्लीट करेगा।"
   },
   {
     "id": "lx-top-free",
@@ -9164,60 +12193,106 @@ const LINUX_LESSONS = [
     ],
     "nodes": [
       [
-        "cpu",
-        "box",
-        50,
-        60,
-        180,
-        80,
-        "CPU Cores (4 Cores)\nLoad: 0.28, 0.42, 0.35",
+        "mload",
+        "meter",
+        24,
+        42,
+        430,
+        22,
+        "CPU Load Average (4 Xeon Cores)",
         {
+          "sub": "0.28, 0.42, 0.35 (7% Busy)",
+          "level": 0.07,
           "tone": "ok"
         }
       ],
       [
-        "ram",
-        "box",
-        270,
-        60,
-        200,
-        80,
-        "RAM: 16 GB\nUsed: 4.2G | Avail: 11.2G",
+        "mram",
+        "meter",
+        24,
+        102,
+        430,
+        22,
+        "RAM Used by Apps",
         {
-          "tone": "ok"
-        }
-      ],
-      [
-        "cache",
-        "box",
-        510,
-        60,
-        180,
-        80,
-        "Page Cache: 7.1G\n(Safely reclaimable)",
-        {
+          "sub": "4.2 GiB / 15 GiB",
+          "level": 0.28,
           "tone": "accent"
         }
       ],
       [
-        "swap",
-        "box",
-        730,
-        60,
-        170,
-        80,
-        "Swap: 4.0 GB\nUsed: 0 MB (Healthy)",
+        "mcache",
+        "meter",
+        24,
+        162,
+        430,
+        22,
+        "Linux Page Cache (buff/cache)",
         {
+          "sub": "7.1 GiB (Reclaimable)",
+          "level": 0.47,
+          "tone": "proc"
+        }
+      ],
+      [
+        "vavail",
+        "var",
+        490,
+        36,
+        210,
+        56,
+        "Available RAM (Gold Metric)",
+        {
+          "v": "11.2 GiB Free",
           "tone": "ok"
+        }
+      ],
+      [
+        "vswap",
+        "var",
+        724,
+        36,
+        212,
+        56,
+        "Swap Usage (si / so)",
+        {
+          "v": "0 B / 4.0 GiB",
+          "tone": "ok"
+        }
+      ],
+      [
+        "vwa",
+        "var",
+        490,
+        118,
+        210,
+        56,
+        "vmstat IO-Wait (wa)",
+        {
+          "v": "0% (Disk Healthy)",
+          "tone": "ok"
+        }
+      ],
+      [
+        "vcpu",
+        "var",
+        724,
+        118,
+        212,
+        56,
+        "Architecture (lscpu)",
+        {
+          "v": "4 Cores · x86_64",
+          "tone": "accent"
         }
       ],
       [
         "term",
         "term",
-        30,
-        210,
-        890,
-        300,
+        24,
+        206,
+        912,
+        304,
         "Terminal · System Health Dashboard"
       ]
     ],
@@ -9240,37 +12315,16 @@ const LINUX_LESSONS = [
         "ops": [
           [
             "show",
-            "cpu",
-            "ram",
-            "cache",
-            "swap",
+            "mload",
             "term"
           ],
           [
-            "link",
-            "cpu",
-            "ram",
-            {
-              "tone": "accent"
-            }
-          ],
-          [
-            "link",
-            "ram",
-            "cache",
-            {
-              "tone": "ok"
-            }
-          ],
-          [
-            "link",
-            "ram",
-            "swap",
-            {
-              "tone": "ok"
-            }
+            "level",
+            "mload",
+            0.12
           ]
-        ]
+        ],
+        "vo": "क्लाइंट बोलता है: एप्लिकेशन बहुत स्लो चल रही है। पहला काम: अपटाइम चला कर लोड एवरेज चेक करो।"
       },
       {
         "say": "`uptime` ke aakhir mein 3 numbers hote hain: 1 min, 5 min, 15 min ka load average. Agar 4 CPU cores hain aur load 10.0 hai, matlab server par bhari traffic jam hai.",
@@ -9279,6 +12333,16 @@ const LINUX_LESSONS = [
           1
         ],
         "ops": [
+          [
+            "pulse",
+            "mload"
+          ],
+          [
+            "label",
+            "mload",
+            "CPU Load Average (4 Cores)",
+            "0.28 (1m) · 0.42 (5m) · 0.35 (15m) — Healthy"
+          ],
           [
             "term",
             "term",
@@ -9289,7 +12353,8 @@ const LINUX_LESSONS = [
             "term",
             " 10:40:02 up 14 days,  2 users,  load average: 0.28, 0.42, 0.35"
           ]
-        ]
+        ],
+        "vo": "अपटाइम के आख़िर में तीन नंबर्स होते हैं: एक मिनट, पाँच मिनट, पंद्रह मिनट का लोड एवरेज। अगर चार सी-पी-यू कोर्ज़ हैं और लोड टेन पॉइंट ज़ीरो है, मतलब सर्वर पर भारी ट्रैफ़िक जाम है।"
       },
       {
         "say": "Linux Interview Question #1: \"free memory kam hai par server fast chal raha hai, kyun?\". Jawad: Linux khaali RAM ko disk cache (`buff/cache`) mein use karta hai!",
@@ -9300,6 +12365,31 @@ const LINUX_LESSONS = [
           5
         ],
         "ops": [
+          [
+            "show",
+            "mram",
+            "mcache",
+            "vavail",
+            "vswap"
+          ],
+          [
+            "level",
+            "mram",
+            0.28
+          ],
+          [
+            "level",
+            "mcache",
+            0.47
+          ],
+          [
+            "val",
+            "vavail",
+            "11 GiB Available",
+            {
+              "tone": "ok"
+            }
+          ],
           [
             "term",
             "term",
@@ -9312,7 +12402,8 @@ const LINUX_LESSONS = [
             "Mem:            15Gi       4.2Gi       4.5Gi       256Mi       7.1Gi        11Gi",
             "Swap:          4.0Gi          0B       4.0Gi"
           ]
-        ]
+        ],
+        "vo": "लिनक्स इंटरव्यू क्वेश्चन नंबर वन: फ़्री मेमोरी कम है पर सर्वर फ़ास्ट चल रहा है, क्यों? जवाब: लिनक्स खाली रैम को डिस्क कैश, यानी बफ़ स्लैश कैश, में यूज़ करता है!"
       },
       {
         "say": "Gold Metric: Kabhi `free` column mat dekho! Hamesha aakhri column `available` dekho. Yeh batata hai ki apps ke liye real kitni RAM bachi hai.",
@@ -9321,6 +12412,22 @@ const LINUX_LESSONS = [
           7
         ],
         "ops": [
+          [
+            "show",
+            "vwa"
+          ],
+          [
+            "val",
+            "vwa",
+            "wa = 0% · id = 97%",
+            {
+              "tone": "ok"
+            }
+          ],
+          [
+            "pulse",
+            "vavail"
+          ],
           [
             "term",
             "term",
@@ -9334,7 +12441,8 @@ const LINUX_LESSONS = [
             " 0  0      0 4718592 262144 7444889    0    0     4    12   50   80  4  2 94  0  0",
             " 0  0      0 4718592 262144 7444889    0    0     0     0  210  420  2  1 97  0  0"
           ]
-        ]
+        ],
+        "vo": "गोल्ड मेट्रिक: कभी फ़्री कॉलम मत देखो! हमेशा आख़िरी कॉलम अवेलेबल देखो। ये बताता है कि ऐप्स के लिए रियल कितनी रैम बची है।"
       },
       {
         "say": "`vmstat` mein `wa` column dekho: agar `wa` (IO Wait) 30-40% se upar ho, toh CPU nahi balki disk slow hai (database slow query ya disk bottleneck).",
@@ -9343,6 +12451,26 @@ const LINUX_LESSONS = [
           9
         ],
         "ops": [
+          [
+            "show",
+            "vcpu"
+          ],
+          [
+            "val",
+            "vcpu",
+            "4 Xeon Cores (x86_64)",
+            {
+              "tone": "ok"
+            }
+          ],
+          [
+            "ok",
+            "vavail"
+          ],
+          [
+            "ok",
+            "vcpu"
+          ],
           [
             "term",
             "term",
@@ -9359,12 +12487,9 @@ const LINUX_LESSONS = [
             "On-line CPU(s) list:             0-3",
             "Vendor ID:                       GenuineIntel",
             "Model name:                      Intel(R) Xeon(R) Platinum"
-          ],
-          [
-            "ok",
-            "cpu"
           ]
-        ]
+        ],
+        "vo": "वी-एम-स्टैट में डब्ल्यू-ए कॉलम देखो: अगर आई-ओ वेट तीस से चालीस परसेंट से ऊपर हो, तो सी-पी-यू नहीं बल्कि डिस्क स्लो है।"
       }
     ],
     "points": [
@@ -9433,7 +12558,8 @@ const LINUX_LESSONS = [
         "why": "Bina unit ke numbers bytes mein aate hain jisse count karna mushkil hota hai. Hamesha `free -h` ya `free -m` use karo.",
         "fix": "free -h"
       }
-    ]
+    ],
+    "intro": "डॉक्टर के क्लिनिक का मॉनिटर सोचो: बी-पी, हार्ट रेट, ऑक्सीजन। लिनक्स सर्वर पर अपटाइम बराबर पेशेंट का टेम्परेचर। टॉप बराबर हार्ट रेट यानी सी-पी-यू। फ़्री डैश एम बराबर ऑक्सीजन सिलेंडर यानी रैम। और आई-ओ वेट चेक करता है कि क्या हार्ड ड्राइव जाम होने की वजह से पूरा सर्वर फ़्रीज़ है।"
   },
   {
     "id": "lx-systemd",
@@ -9477,71 +12603,78 @@ const LINUX_LESSONS = [
     "nodes": [
       [
         "init",
-        "pill",
-        60,
-        60,
-        160,
-        50,
-        "systemd (PID 1)\nMaster Init",
+        "proc",
+        24,
+        72,
+        165,
+        54,
+        "systemd (PID 1)",
         {
+          "sub": "Service Manager",
           "tone": "accent"
         }
       ],
       [
         "nginx",
         "box",
-        300,
-        45,
-        170,
-        55,
-        "nginx.service\nActive (running)",
+        245,
+        32,
+        200,
+        56,
+        "nginx.service",
         {
+          "sub": "Active: active (running)",
           "tone": "ok"
         }
       ],
       [
         "payapi",
         "box",
-        300,
-        115,
-        170,
-        55,
-        "payapi.service\nInactive (failed)",
+        245,
+        110,
+        200,
+        56,
+        "payapi.service",
         {
+          "sub": "Active: failed (exit-code)",
           "tone": "danger"
         }
       ],
       [
         "jrn",
         "doc",
-        550,
-        80,
-        180,
-        70,
-        "journalctl -u\nCentralized Logs",
+        505,
+        98,
+        200,
+        74,
+        "journalctl -u payapi",
         {
+          "sub": "SqlException: Refused",
           "tone": "proc"
         }
       ],
       [
         "boot",
         "disk",
-        780,
-        80,
-        130,
-        70,
-        "systemctl enable\nAuto-start on boot",
+        760,
+        62,
+        160,
+        74,
+        "systemctl enable",
         {
-          "tone": "ok"
+          "sub": "multi-user.target",
+          "inside": "Boot Symlink",
+          "tone": "ok",
+          "level": 0.65
         }
       ],
       [
         "term",
         "term",
-        30,
-        220,
-        890,
-        290,
+        24,
+        206,
+        912,
+        304,
         "Terminal · systemd Controller"
       ]
     ],
@@ -9567,7 +12700,6 @@ const LINUX_LESSONS = [
             "init",
             "nginx",
             "payapi",
-            "jrn",
             "term"
           ],
           [
@@ -9585,16 +12717,9 @@ const LINUX_LESSONS = [
             {
               "tone": "danger"
             }
-          ],
-          [
-            "link",
-            "payapi",
-            "jrn",
-            {
-              "tone": "proc"
-            }
           ]
-        ]
+        ],
+        "vo": "रेड-हैट, उबंटू, डेबियन सभी मॉडर्न लिनक्स पर सर्विसेज़ सिस्टम-डी से मैनेज होती हैं। स्टेटस चेक करने के लिए सिस्टम-सी-टी-एल स्टेटस सर्विस चलाओ।"
       },
       {
         "say": "Nginx ka status dekho: `Active: active (running)` green light hai aur PID 1102 hai.",
@@ -9603,6 +12728,14 @@ const LINUX_LESSONS = [
           1
         ],
         "ops": [
+          [
+            "ok",
+            "nginx"
+          ],
+          [
+            "pulse",
+            "nginx"
+          ],
           [
             "term",
             "term",
@@ -9616,7 +12749,8 @@ const LINUX_LESSONS = [
             "     Active: active (running) since Wed 2026-10-29 08:00:15 UTC; 2h 40min ago",
             "   Main PID: 1102 (nginx)"
           ]
-        ]
+        ],
+        "vo": "इंजन-एक्स का स्टेटस देखो: एक्टिव रनिंग ग्रीन लाइट है और पी-आई-डी इलेवन ओ टू है।"
       },
       {
         "say": "Ab dekho `payapi`: yeh `failed` state mein hai! Production alert yahan trigger hota hai.",
@@ -9625,6 +12759,14 @@ const LINUX_LESSONS = [
           3
         ],
         "ops": [
+          [
+            "x",
+            "payapi"
+          ],
+          [
+            "pulse",
+            "payapi"
+          ],
           [
             "term",
             "term",
@@ -9637,12 +12779,9 @@ const LINUX_LESSONS = [
             "     Loaded: loaded (/etc/systemd/system/payapi.service; disabled; vendor preset: enabled)",
             "     Active: failed (Result: exit-code) since Wed 2026-10-29 09:20:14 UTC; 1h 20min ago",
             "    Process: 1420 ExecStart=/usr/bin/java -jar /opt/payapi.jar (code=exited, status=1/FAILURE)"
-          ],
-          [
-            "danger",
-            "payapi"
           ]
-        ]
+        ],
+        "vo": "अब देखो पे-ए-पी-आई: ये फ़ेल्ड स्टेट में है! प्रोडक्शन अलर्ट यहाँ ट्रिगर होता है।"
       },
       {
         "say": "Kyun fail hua? Reason dhoondhne ke liye `journalctl -u payapi` chalao. Logs mein saaf dikhega: \"Connection refused to database\".",
@@ -9651,6 +12790,29 @@ const LINUX_LESSONS = [
           7
         ],
         "ops": [
+          [
+            "show",
+            "jrn"
+          ],
+          [
+            "link",
+            "payapi",
+            "jrn",
+            {
+              "tone": "proc",
+              "label": "logs"
+            }
+          ],
+          [
+            "flow",
+            "payapi",
+            "jrn",
+            "exit-code 1",
+            {
+              "tone": "danger",
+              "dur": 550
+            }
+          ],
           [
             "term",
             "term",
@@ -9665,7 +12827,8 @@ const LINUX_LESSONS = [
             "Oct 29 09:20:14 prod-db01 systemd[1]: payapi.service: Main process exited, code=exited, status=1/FAILURE",
             "Oct 29 09:20:14 prod-db01 systemd[1]: payapi.service: Failed with result 'exit-code'."
           ]
-        ]
+        ],
+        "vo": "क्यों फ़ेल हुआ? रीज़न ढूँढने के लिए जर्नल-सी-टी-एल डैश यू पे-ए-पी-आई चलाओ। लॉग्स में साफ़ दिखेगा: कनेक्शन रिफ़्यूज़्ड टू डेटाबेस।"
       },
       {
         "say": "Service start karne ke baad `systemctl enable payapi` zaroor chalao! Agar enable nahi kiya, toh agle server reboot par service band reh jayegi.",
@@ -9681,22 +12844,52 @@ const LINUX_LESSONS = [
             "boot"
           ],
           [
-            "link",
-            "payapi",
-            "boot",
-            {
-              "tone": "ok"
-            }
-          ],
-          [
             "term",
             "term",
             "oracle@prod-db01:~$ sudo systemctl start payapi"
           ],
           [
+            "unx",
+            "payapi"
+          ],
+          [
+            "tone",
+            "payapi",
+            "ok"
+          ],
+          [
+            "label",
+            "payapi",
+            "payapi.service",
+            "Active: active (running) · PID 2850"
+          ],
+          [
+            "ok",
+            "payapi"
+          ],
+          [
             "term",
             "term",
             "oracle@prod-db01:~$ sudo systemctl enable payapi"
+          ],
+          [
+            "link",
+            "payapi",
+            "boot",
+            {
+              "label": "enable",
+              "tone": "ok"
+            }
+          ],
+          [
+            "flow",
+            "payapi",
+            "boot",
+            "symlink",
+            {
+              "tone": "ok",
+              "dur": 550
+            }
           ],
           [
             "out",
@@ -9705,9 +12898,10 @@ const LINUX_LESSONS = [
           ],
           [
             "ok",
-            "payapi"
+            "boot"
           ]
-        ]
+        ],
+        "vo": "सर्विस स्टार्ट करने के बाद सिस्टम-सी-टी-एल इनेबल पे-ए-पी-आई ज़रूर चलाओ! अगर इनेबल नहीं किया, तो अगले सर्वर रीबूट पर सर्विस बंद रह जाएगी।"
       }
     ],
     "points": [
@@ -9776,7 +12970,8 @@ const LINUX_LESSONS = [
         "why": "Jab bhi service unit file modify karo, systemd ko batane ke liye `sudo systemctl daemon-reload` chalana compulsory hota hai.",
         "fix": "sudo systemctl daemon-reload"
       }
-    ]
+    ],
+    "intro": "बिल्डिंग का सेंट्रल पावर कंट्रोल रूम सोचो। हर सर्विस, जैसे इंजन-एक्स वेब सर्वर, पे-ए-पी-आई बैकएंड, ओरेकल डी-बी और एस-एस-एच, का एक मास्टर स्विच है, यानी सिस्टम-सी-टी-एल। इनेबल बोलता है जब भी सर्वर रीबूट शुरू हो, ये स्विच ऑटोमैटिकली ऑन कर देना। और जर्नल-सी-टी-एल बराबर ब्लैक बॉक्स फ़्लाइट रिकॉर्डर जो हर सर्विस का लॉग रखता है।"
   },
   {
     "id": "lx-disk-full",
@@ -9815,60 +13010,75 @@ const LINUX_LESSONS = [
     ],
     "nodes": [
       [
-        "disk",
-        "disk",
-        60,
-        60,
-        160,
-        80,
-        "/var/log\n89% Full (Warning)",
+        "mroot",
+        "meter",
+        24,
+        38,
+        360,
+        20,
+        "/ (/dev/sda2 · 50G)",
         {
-          "tone": "danger"
-        }
-      ],
-      [
-        "du",
-        "box",
-        290,
-        65,
-        170,
-        70,
-        "du -sh /var/log/*\nBig file hunter",
-        {
-          "tone": "accent"
-        }
-      ],
-      [
-        "culprit",
-        "doc",
-        520,
-        60,
-        170,
-        80,
-        "old_syslog.log\n15 GB waste",
-        {
-          "tone": "danger"
-        }
-      ],
-      [
-        "clean",
-        "box",
-        750,
-        65,
-        150,
-        70,
-        "> logfile\nInstant space free",
-        {
+          "sub": "30% Used (Healthy)",
+          "level": 0.3,
           "tone": "ok"
         }
       ],
       [
+        "mvar",
+        "meter",
+        24,
+        92,
+        360,
+        20,
+        "/var/log (/dev/sda3 · 20G)",
+        {
+          "sub": "89% FULL (17G Used!)",
+          "level": 0.89,
+          "tone": "danger"
+        }
+      ],
+      [
+        "mu01",
+        "meter",
+        24,
+        146,
+        360,
+        20,
+        "/u01 (/dev/sdb1 · 200G)",
+        {
+          "sub": "49% Used (98G Avail)",
+          "level": 0.49,
+          "tone": "accent"
+        }
+      ],
+      [
+        "dutbl",
+        "table",
+        416,
+        38,
+        520,
+        148,
+        "du -sh /var/log/* | sort -h",
+        {
+          "cols": [
+            "SIZE",
+            "FILE / FOLDER",
+            "STATE"
+          ],
+          "cw": [
+            0.18,
+            0.46,
+            0.36
+          ]
+        }
+      ],
+      [
         "term",
         "term",
-        30,
-        210,
-        890,
-        300,
+        24,
+        202,
+        912,
+        308,
         "Terminal · Disk Space Incident Triage"
       ]
     ],
@@ -9892,37 +13102,13 @@ const LINUX_LESSONS = [
         "ops": [
           [
             "show",
-            "disk",
-            "du",
-            "culprit",
-            "clean",
+            "mroot",
+            "mvar",
+            "mu01",
             "term"
-          ],
-          [
-            "link",
-            "disk",
-            "du",
-            {
-              "tone": "accent"
-            }
-          ],
-          [
-            "link",
-            "du",
-            "culprit",
-            {
-              "tone": "danger"
-            }
-          ],
-          [
-            "link",
-            "culprit",
-            "clean",
-            {
-              "tone": "ok"
-            }
           ]
-        ]
+        ],
+        "vo": "पेजर-ड्यूटी अलर्ट: क्रिटिकल, डिस्क फ़ुल ऑन प्रोड-डी-बी ज़ीरो वन। डेटाबेस ने राइट्स रिजेक्ट करना शुरू कर दिया। इंजीनियर तुरंत टर्मिनल पर डी-एफ़ डैश एच चलाता है।"
       },
       {
         "say": "Partition check karo: `/var/log` 89% full hai aur 2.1G hi bacha hai. Agar yeh 100% ho gaya toh system freeze ho jayega.",
@@ -9931,6 +13117,10 @@ const LINUX_LESSONS = [
           1
         ],
         "ops": [
+          [
+            "pulse",
+            "mvar"
+          ],
           [
             "term",
             "term",
@@ -9943,12 +13133,9 @@ const LINUX_LESSONS = [
             "/dev/sda2        50G   14G   34G  30% /",
             "/dev/sda3        20G   17G  2.1G  89% /var/log",
             "/dev/sdb1       200G   92G   98G  49% /u01"
-          ],
-          [
-            "danger",
-            "disk"
           ]
-        ]
+        ],
+        "vo": "पार्टीशन चेक करो: स्लैश वार स्लैश लॉग एटी-नाइन परसेंट फ़ुल है और टू पॉइंट वन जी ही बचा है। अगर ये हंड्रेड परसेंट हो गया तो सिस्टम फ़्रीज़ हो जाएगा।"
       },
       {
         "say": "Ab `/var/log` ke andar jao aur `du -sh /var/log/* | sort -h` chalao taaki sabse badi files aakhir mein sort hokar samne aayein.",
@@ -9958,6 +13145,52 @@ const LINUX_LESSONS = [
           4
         ],
         "ops": [
+          [
+            "show",
+            "dutbl"
+          ],
+          [
+            "rows",
+            "dutbl",
+            [
+              [
+                "4.0K",
+                "/var/log/auth.log",
+                "Normal"
+              ],
+              [
+                "16K",
+                "/var/log/nginx",
+                "Normal"
+              ],
+              [
+                "128K",
+                "/var/log/syslog",
+                "Normal"
+              ],
+              [
+                "15G",
+                "/var/log/syslog.1.old",
+                "CULPRIT (75% disk!)"
+              ]
+            ]
+          ],
+          [
+            "mark",
+            "dutbl",
+            [
+              3
+            ],
+            "danger"
+          ],
+          [
+            "colhl",
+            "dutbl",
+            [
+              0
+            ],
+            "danger"
+          ],
           [
             "term",
             "term",
@@ -9971,12 +13204,9 @@ const LINUX_LESSONS = [
             "28K     /var/log/oracle",
             "128K    /var/log/syslog",
             "15G     /var/log/syslog.1.old"
-          ],
-          [
-            "danger",
-            "culprit"
           ]
-        ]
+        ],
+        "vo": "अब स्लैश वार स्लैश लॉग के अंदर जाओ और डी-यू डैश एस-एच स्लैश वार स्लैश लॉग स्लैश स्टार पाइप सॉर्ट डैश एच चलाओ ताकि सबसे बड़ी फ़ाइल्स आख़िर में सॉर्ट होकर सामने आएँ।"
       },
       {
         "say": "Classic Trap: Agar tumne `rm big.log` chala diya par koi process usme likh raha tha, toh file gayab ho jayegi par disk free nahi hogi! Isko `lsof | grep deleted` se pakda jata hai.",
@@ -9985,6 +13215,17 @@ const LINUX_LESSONS = [
           6
         ],
         "ops": [
+          [
+            "cell",
+            "dutbl",
+            3,
+            2,
+            "Held open by PID 1420 (deleted)"
+          ],
+          [
+            "pulse",
+            "dutbl"
+          ],
           [
             "term",
             "term",
@@ -9995,7 +13236,8 @@ const LINUX_LESSONS = [
             "term",
             "payapi    1420 appuser    3w   REG  8,3 16106127360 /var/log/syslog.1.old (deleted)"
           ]
-        ]
+        ],
+        "vo": "क्लासिक ट्रैप: अगर तुमने आर-एम बिग डॉट लॉग चला दिया पर कोई प्रोसेस उसमें लिख रहा था, तो फ़ाइल ग़ायब हो जाएगी पर डिस्क फ़्री नहीं होगी! इसको एल-एस-ओ-एफ़ पाइप ग्रेप डिलीटेड से पकड़ा जाता है।"
       },
       {
         "say": "Job Secret: Running application ke log ko truncate karne ka sabse safe tareeqa: `> /path/logfile.log`. File handle open rehta hai, app crash nahi hoti aur space instant free!",
@@ -10017,6 +13259,49 @@ const LINUX_LESSONS = [
             "oracle@prod-db01:~$ > /tmp/junk.log"
           ],
           [
+            "cell",
+            "dutbl",
+            3,
+            0,
+            "0B"
+          ],
+          [
+            "cell",
+            "dutbl",
+            3,
+            2,
+            "Truncated (> file) · Freed!"
+          ],
+          [
+            "mark",
+            "dutbl",
+            [
+              3
+            ],
+            "ok"
+          ],
+          [
+            "colhl",
+            "dutbl",
+            []
+          ],
+          [
+            "level",
+            "mvar",
+            0.14
+          ],
+          [
+            "tone",
+            "mvar",
+            "ok"
+          ],
+          [
+            "label",
+            "mvar",
+            "/var/log (/dev/sda3 · 20G)",
+            "14% Used (17.2G Free!)"
+          ],
+          [
             "term",
             "term",
             "oracle@prod-db01:~$ ls -lh /tmp/junk.log"
@@ -10025,12 +13310,9 @@ const LINUX_LESSONS = [
             "out",
             "term",
             "-rw-r--r-- 1 oracle oinstall 0 Oct 29 10:45 /tmp/junk.log"
-          ],
-          [
-            "ok",
-            "clean"
           ]
-        ]
+        ],
+        "vo": "जॉब सीक्रेट: रनिंग एप्लिकेशन के लॉग को ट्रंकेट करने का सबसे सेफ़ तरीक़ा: ग्रेटर-दैन स्लैश पाथ स्लैश लॉगफ़ाइल डॉट लॉग। फ़ाइल हैंडल ओपन रहता है, ऐप क्रैश नहीं होती और स्पेस इंस्टेंट फ़्री!"
       }
     ],
     "points": [
@@ -10099,7 +13381,8 @@ const LINUX_LESSONS = [
         "why": "Bina `-h` ke millions of blocks dikhte hain jinhe samajhna mushkil hota hai. Hamesha `du -sh` lagao.",
         "fix": "du -sh /var/log/*"
       }
-    ]
+    ],
+    "intro": "घर का कचरे का डब्बा भर कर ओवरफ़्लो हो गया। पहला स्टेप: पता करो कौनसा कमरा भरा है, यानी डी-एफ़ डैश एच। दूसरा स्टेप: कमरे के अंदर कौनसा बॉक्स सबसे बड़ा है, यानी डी-यू डैश एस-एच स्टार। तीसरा स्टेप: अगर कचरा फेंक दिया फिर भी डब्बा भरा दिखे, तो देखो किसने कचरे के डब्बे पर पैर रख कर रोके रखा है, यानी एल-एस-ओ-एफ़ पाइप ग्रेप डिलीटेड!"
   },
   {
     "id": "lx-mounts",
@@ -10142,60 +13425,78 @@ const LINUX_LESSONS = [
     ],
     "nodes": [
       [
+        "sda",
         "disk",
-        "disk",
-        50,
-        60,
-        180,
-        80,
-        "/dev/sdb1 (200GB)\nRaw partition (XFS)",
+        24,
+        34,
+        130,
+        68,
+        "/dev/sda (50G)",
         {
-          "tone": "accent"
+          "sub": "sda1, sda2, sda3",
+          "inside": "OS Disk",
+          "tone": "file",
+          "level": 0.35
         }
       ],
       [
-        "mntcmd",
-        "pill",
-        290,
-        75,
-        150,
-        48,
-        "mount /dev/sdb1\n/u01",
+        "sdb",
+        "disk",
+        180,
+        34,
+        130,
+        68,
+        "/dev/sdb1 (200G)",
         {
+          "sub": "ext4 partition",
+          "inside": "Oracle Disk",
+          "tone": "accent",
+          "level": 0.49
+        }
+      ],
+      [
+        "mnt",
+        "proc",
+        350,
+        48,
+        155,
+        48,
+        "mount /dev/sdb1",
+        {
+          "sub": "-> /u01 (rw)",
           "tone": "proc"
         }
       ],
       [
-        "dir",
-        "box",
-        500,
-        60,
-        170,
-        80,
-        "Directory /u01\nMount Point Folder",
+        "ftbl",
+        "table",
+        535,
+        36,
+        401,
+        144,
+        "/etc/fstab (Persistent Boot Mounts)",
         {
-          "tone": "ok"
-        }
-      ],
-      [
-        "fstab",
-        "doc",
-        740,
-        60,
-        180,
-        80,
-        "/etc/fstab\nAuto-mount on reboot",
-        {
-          "tone": "file"
+          "cols": [
+            "UUID",
+            "MOUNT",
+            "FS",
+            "OPTS"
+          ],
+          "cw": [
+            0.32,
+            0.24,
+            0.16,
+            0.28
+          ]
         }
       ],
       [
         "term",
         "term",
-        30,
-        210,
-        890,
-        300,
+        24,
+        202,
+        912,
+        308,
         "Terminal · Storage Mounting"
       ]
     ],
@@ -10216,37 +13517,16 @@ const LINUX_LESSONS = [
         "ops": [
           [
             "show",
-            "disk",
-            "mntcmd",
-            "dir",
-            "fstab",
+            "sda",
+            "sdb",
             "term"
           ],
           [
-            "link",
-            "disk",
-            "mntcmd",
-            {
-              "tone": "accent"
-            }
-          ],
-          [
-            "link",
-            "mntcmd",
-            "dir",
-            {
-              "tone": "ok"
-            }
-          ],
-          [
-            "link",
-            "dir",
-            "fstab",
-            {
-              "tone": "file"
-            }
+            "pulse",
+            "sdb"
           ]
-        ]
+        ],
+        "vo": "नई हार्ड डिस्क ए-डब्ल्यू-एस ई-बी-एस या सैन स्टोरेज से अटैच हुई। लिनक्स में उसे डायरेक्टली एक्सेस नहीं किया जा सकता; उसे पहले किसी फ़ोल्डर पर माउंट करना पड़ता है।"
       },
       {
         "say": "Block devices ki list dekhne ke liye `lsblk` chalao. Yahan `sda` (50G root OS) aur `sdb` (200G oracle data disk) dikhai degi.",
@@ -10270,8 +13550,17 @@ const LINUX_LESSONS = [
             "└─sda3   8:3    0   20G  0 part /var/log",
             "sdb      8:16   0  200G  0 disk",
             "└─sdb1   8:17   0  200G  0 part /u01"
+          ],
+          [
+            "ok",
+            "sda"
+          ],
+          [
+            "ok",
+            "sdb"
           ]
-        ]
+        ],
+        "vo": "ब्लॉक डिवाइसेज़ की लिस्ट देखने के लिए एल-एस-बी-एल-के चलाओ। यहाँ एस-डी-ए फिफ्टी जी रूट ओ-एस और एस-डी-बी टू हंड्रेड जी ओरेकल डेटा डिस्क दिखाई देगी।"
       },
       {
         "say": "Check karo `/u01` par kaunsa filesystem laga hai: `mount | grep \"/u01\"` se pata chalta hai yeh `ext4` ya `xfs` filesystem hai jo `rw` (read-write) mounted hai.",
@@ -10281,6 +13570,28 @@ const LINUX_LESSONS = [
         ],
         "ops": [
           [
+            "show",
+            "mnt"
+          ],
+          [
+            "link",
+            "sdb",
+            "mnt",
+            {
+              "tone": "accent"
+            }
+          ],
+          [
+            "flow",
+            "sdb",
+            "mnt",
+            "ext4 (rw)",
+            {
+              "tone": "ok",
+              "dur": 550
+            }
+          ],
+          [
             "term",
             "term",
             "oracle@prod-db01:~$ mount | grep \"/u01\""
@@ -10289,8 +13600,13 @@ const LINUX_LESSONS = [
             "out",
             "term",
             "/dev/sdb1 on /u01 type ext4 (rw,relatime)"
+          ],
+          [
+            "ok",
+            "mnt"
           ]
-        ]
+        ],
+        "vo": "चेक करो स्लैश यू-ज़ीरो-वन पर कौनसा फ़ाइलसिस्टम लगा है: माउंट पाइप ग्रेप स्लैश यू-ज़ीरो-वन से पता चलता है ये ई-एक्स-टी फोर या एक्स-एफ़-एस फ़ाइलसिस्टम है जो रीड-राइट माउंटेड है।"
       },
       {
         "say": "Drives ko reboot ke baad zinda rakhne ke liye `/etc/fstab` mein entry ki jaati hai: `UUID=<id> /u01 ext4 defaults 0 2`.",
@@ -10299,6 +13615,50 @@ const LINUX_LESSONS = [
           5
         ],
         "ops": [
+          [
+            "show",
+            "ftbl"
+          ],
+          [
+            "link",
+            "mnt",
+            "ftbl",
+            {
+              "tone": "proc"
+            }
+          ],
+          [
+            "rows",
+            "ftbl",
+            [
+              [
+                "e2a1b4c3...",
+                "/",
+                "ext4",
+                "defaults,noatime"
+              ],
+              [
+                "f3b2c5d4...",
+                "/var/log",
+                "ext4",
+                "defaults"
+              ],
+              [
+                "a1b2c3d4...",
+                "/u01",
+                "ext4",
+                "defaults"
+              ]
+            ]
+          ],
+          [
+            "mark",
+            "ftbl",
+            [
+              2
+            ],
+            "accent"
+          ],
           [
             "term",
             "term",
@@ -10312,7 +13672,8 @@ const LINUX_LESSONS = [
             "UUID=f3b2c5d4-2222-4b3c-9b23-123456789abc /var/log   ext4    defaults         0 2",
             "UUID=a1b2c3d4-3333-4c4d-0c34-abcdef012345 /u01       ext4    defaults         0 2"
           ]
-        ]
+        ],
+        "vo": "ड्राइव्स को रीबूट के बाद ज़िंदा रखने के लिए स्लैश ई-टी-सी स्लैश एफ़-एस-टैब में एंट्री की जाती है: यू-यू-आई-डी स्लैश यू-ज़ीरो-वन ई-एक्स-टी फोर डिफ़ॉल्ट्स ज़ीरो टू।"
       },
       {
         "say": "Warning: `/etc/fstab` mein ek comma ya typo hua toh server agle reboot par emergency mode mein freeze ho jayega! Hamesha edit ke baad `sudo mount -a` chala kar verify karo.",
@@ -10327,10 +13688,21 @@ const LINUX_LESSONS = [
             "oracle@prod-db01:~$ sudo mount -a"
           ],
           [
+            "mark",
+            "ftbl",
+            [
+              0,
+              1,
+              2
+            ],
+            "ok"
+          ],
+          [
             "ok",
-            "fstab"
+            "ftbl"
           ]
-        ]
+        ],
+        "vo": "वॉर्निंग: स्लैश ई-टी-सी स्लैश एफ़-एस-टैब में एक कॉमा या टाइपो हुआ तो सर्वर अगले रीबूट पर इमरजेंसी मोड में फ़्रीज़ हो जाएगा! हमेशा एडिट के बाद सूडो माउंट डैश ए चला कर वेरिफ़ाई करो।"
       }
     ],
     "points": [
@@ -10399,7 +13771,8 @@ const LINUX_LESSONS = [
         "why": "Agar koi process ya terminal session `/u01` ke andar open ho, toh disk unmount nahi hoti. Pehle bahar niklo (`cd /`) fir unmount karo.",
         "fix": "cd / && umount /u01"
       }
-    ]
+    ],
+    "intro": "यू-एस-बी पेन ड्राइव सोचो। विंडोज़ में प्लग करते ही ई ड्राइव बन जाता है। लिनक्स में कोई सी या डी ड्राइव नहीं होता; हर हार्ड डिस्क को किसी खाली फ़ोल्डर, जैसे स्लैश यू-ज़ीरो-वन या स्लैश एम-एन-टी स्लैश बैकअप, पर माउंट करना पड़ता है। और स्लैश ई-टी-सी स्लैश एफ़-एस-टैब बराबर कंप्यूटर की डायरी जिसमें लिखा होता है कि रीबूट पर कौनसी ड्राइव कहाँ जोड़नी है।"
   },
   {
     "id": "lx-tar-rsync",
@@ -10447,59 +13820,114 @@ const LINUX_LESSONS = [
     "nodes": [
       [
         "src",
-        "box",
-        50,
-        60,
-        180,
-        80,
-        "app/ & scripts/\nLoose source files",
+        "region",
+        24,
+        28,
+        220,
+        152,
+        "app/ (Source Folder)",
+        {
+          "tone": "file",
+          "sub": "740B total"
+        }
+      ],
+      [
+        "f1",
+        "doc",
+        40,
+        66,
+        86,
+        44,
+        "app.env",
+        {
+          "tone": "file"
+        }
+      ],
+      [
+        "f2",
+        "doc",
+        142,
+        66,
+        86,
+        44,
+        "server.js",
+        {
+          "tone": "file"
+        }
+      ],
+      [
+        "f3",
+        "doc",
+        88,
+        122,
+        96,
+        44,
+        "package.json",
         {
           "tone": "file"
         }
       ],
       [
         "tar",
-        "box",
-        290,
-        65,
-        170,
-        70,
-        "tar -czvf\nArchive + Gzip",
+        "proc",
+        274,
+        76,
+        155,
+        54,
+        "tar -czvf",
         {
+          "sub": "Bundle + Gzip",
           "tone": "accent"
         }
       ],
       [
         "targz",
         "disk",
-        520,
-        60,
-        170,
-        80,
-        "app_backup.tar.gz\nCompressed bundle",
+        464,
+        54,
+        160,
+        74,
+        "app_backup.tar.gz",
         {
-          "tone": "ok"
+          "sub": "Compressed archive",
+          "inside": ".tar.gz",
+          "tone": "ok",
+          "level": 0.6
+        }
+      ],
+      [
+        "tmp",
+        "box",
+        664,
+        34,
+        272,
+        64,
+        "/tmp/app/ (Extracted)",
+        {
+          "sub": "tar -xzvf -C /tmp/",
+          "tone": "accent"
         }
       ],
       [
         "rsync",
-        "pill",
-        750,
-        70,
-        150,
-        50,
-        "rsync -avz\nDelta Network Sync",
+        "proc",
+        664,
+        114,
+        272,
+        64,
+        "rsync -av -> /tmp/app_sync/",
         {
+          "sub": "Delta Transfer (Only changed bytes!)",
           "tone": "proc"
         }
       ],
       [
         "term",
         "term",
-        30,
-        210,
-        890,
-        300,
+        24,
+        204,
+        912,
+        306,
         "Terminal · Backup & Transfer"
       ]
     ],
@@ -10523,9 +13951,10 @@ const LINUX_LESSONS = [
           [
             "show",
             "src",
+            "f1",
+            "f2",
+            "f3",
             "tar",
-            "targz",
-            "rsync",
             "term"
           ],
           [
@@ -10535,6 +13964,20 @@ const LINUX_LESSONS = [
             {
               "tone": "accent"
             }
+          ]
+        ],
+        "vo": "प्रोडक्शन रिलीज़ से पहले एप्लिकेशन कोड और कॉन्फ़िगरेशन का क्विक स्नैपशॉट लेना स्टैंडर्ड प्रोटोकॉल है। टार और आर-सिंक इस काम के एंटरप्राइज टूल्स हैं।"
+      },
+      {
+        "say": "Formula yaad rakho: `tar -czvf <archive.tar.gz> <source_folder>`. `c`=create, `z`=gzip, `v`=verbose, `f`=file.",
+        "code": [
+          0,
+          1
+        ],
+        "ops": [
+          [
+            "show",
+            "targz"
           ],
           [
             "link",
@@ -10545,26 +13988,29 @@ const LINUX_LESSONS = [
             }
           ],
           [
-            "link",
-            "targz",
-            "rsync",
-            {
-              "tone": "proc"
-            }
-          ]
-        ]
-      },
-      {
-        "say": "Formula yaad rakho: `tar -czvf <archive.tar.gz> <source_folder>`. `c`=create, `z`=gzip, `v`=verbose, `f`=file.",
-        "code": [
-          0,
-          1
-        ],
-        "ops": [
-          [
             "term",
             "term",
             "oracle@prod-db01:~$ tar -czvf app_backup.tar.gz app/"
+          ],
+          [
+            "flow",
+            "src",
+            "tar",
+            "3 files",
+            {
+              "tone": "accent",
+              "dur": 500
+            }
+          ],
+          [
+            "flow",
+            "tar",
+            "targz",
+            "compress",
+            {
+              "tone": "ok",
+              "dur": 550
+            }
           ],
           [
             "out",
@@ -10578,7 +14024,8 @@ const LINUX_LESSONS = [
             "ok",
             "targz"
           ]
-        ]
+        ],
+        "vo": "फ़ॉर्मूला याद रखो: टार डैश सी-ज़ी-वी-एफ़ आर्काइव डॉट टार डॉट जी-ज़ी सोर्स फ़ोल्डर। सी बराबर क्रिएट, ज़ी बराबर जी-ज़िप, वी बराबर वर्बोस, एफ़ बराबर फ़ाइल।"
       },
       {
         "say": "Archive kholne se pehle dekhna ho ki andar kya hai, toh `t` (test/table) flag use karo: `tar -tzvf app_backup.tar.gz`.",
@@ -10587,6 +14034,10 @@ const LINUX_LESSONS = [
           3
         ],
         "ops": [
+          [
+            "pulse",
+            "targz"
+          ],
           [
             "term",
             "term",
@@ -10600,7 +14051,8 @@ const LINUX_LESSONS = [
             "-rw-r--r-- oracle/oinstall 210 2026-10-29 10:00 app/package.json",
             "-rw-r--r-- oracle/oinstall 450 2026-10-29 10:00 app/server.js"
           ]
-        ]
+        ],
+        "vo": "आर्काइव खोलने से पहले देखना हो कि अंदर क्या है, तो टी फ़्लैग यूज़ करो: टार डैश टी-ज़ी-वी-एफ़ ऐप बैकअप डॉट टार डॉट जी-ज़ी।"
       },
       {
         "say": "Archive extract karne ke liye `-x` (extract) flag lagao. Agar kisi specific directory mein nikaalna ho toh `-C /target/path` lagao.",
@@ -10611,9 +14063,32 @@ const LINUX_LESSONS = [
         ],
         "ops": [
           [
+            "show",
+            "tmp"
+          ],
+          [
+            "link",
+            "targz",
+            "tmp",
+            {
+              "label": "-xzvf -C /tmp",
+              "tone": "accent"
+            }
+          ],
+          [
             "term",
             "term",
             "oracle@prod-db01:~$ tar -xzvf app_backup.tar.gz -C /tmp/"
+          ],
+          [
+            "flow",
+            "targz",
+            "tmp",
+            "extract",
+            {
+              "tone": "accent",
+              "dur": 600
+            }
           ],
           [
             "term",
@@ -10628,8 +14103,13 @@ const LINUX_LESSONS = [
             "-rw------- 1 oracle oinstall   80 Oct 29 10:15 app.env",
             "-rw-r--r-- 1 oracle oinstall  210 Oct 29 10:00 package.json",
             "-rw-r--r-- 1 oracle oinstall  450 Oct 29 10:00 server.js"
+          ],
+          [
+            "ok",
+            "tmp"
           ]
-        ]
+        ],
+        "vo": "आर्काइव एक्सट्रैक्ट करने के लिए डैश एक्स फ़्लैग लगाओ। अगर किसी स्पेसिफ़िक डायरेक्टरी में निकालना हो तो डैश कैपिटल सी स्लैश टार्गेट पाथ लगाओ।"
       },
       {
         "say": "Delta Sync King `rsync`: Agar 50GB data mein se sirf 1MB badla ho, `rsync -avz` sirf wahi 1MB bhejega! Poora 50GB dobara copy nahi karega.",
@@ -10640,9 +14120,34 @@ const LINUX_LESSONS = [
         ],
         "ops": [
           [
+            "show",
+            "rsync"
+          ],
+          [
+            "link",
+            "src",
+            "rsync",
+            {
+              "label": "delta sync",
+              "tone": "proc",
+              "bend": 25
+            }
+          ],
+          [
             "term",
             "term",
             "oracle@prod-db01:~$ rsync -av app/ /tmp/app_sync/"
+          ],
+          [
+            "flow",
+            "src",
+            "rsync",
+            "840B delta",
+            {
+              "tone": "proc",
+              "bend": 25,
+              "dur": 600
+            }
           ],
           [
             "out",
@@ -10660,7 +14165,8 @@ const LINUX_LESSONS = [
             "ok",
             "rsync"
           ]
-        ]
+        ],
+        "vo": "डेल्टा सिंक किंग आर-सिंक: अगर पचास जी-बी डेटा में से सिर्फ़ एक एम-बी बदला हो, आर-सिंक डैश ए-वी-ज़ी सिर्फ़ वही एक एम-बी भेजेगा! पूरा पचास जी-बी दोबारा कॉपी नहीं करेगा।"
       }
     ],
     "points": [
@@ -10734,7 +14240,8 @@ const LINUX_LESSONS = [
         "why": "Rsync mein source ke pichhe slash `/` lagane se folder ke contents copy hote hain; bina slash ke poora folder khud copy hota hai.",
         "fix": "rsync -av app/ /tmp/dest/"
       }
-    ]
+    ],
+    "intro": "कूरियर पैकिंग सोचो। पचास अलग-अलग पेपर्स कूरियर करने के बजाय तुम उन्हें एक बाइंडर फ़ोल्डर में डाल के टेप लगा देते हो, यानी टार, फिर उसे वैक्यूम पैक से स्क्वीज़ करके छोटा कर देते हो, यानी जी-ज़िप। और आर-सिंक बराबर स्मार्ट कूरियर जो दूसरे शहर वही फ़ाइल भेजता है जो पिछली बार से बदली हो, पूरा दोबारा नहीं भेजता।"
   },
   {
     "id": "lx-net-dns",
@@ -10779,58 +14286,75 @@ const LINUX_LESSONS = [
       [
         "srv",
         "box",
-        50,
-        60,
-        160,
-        75,
-        "prod-db01\n192.168.1.10 (eth0)",
+        24,
+        48,
+        185,
+        74,
+        "prod-db01 (eth0)",
         {
+          "sub": "inet 192.168.1.10/24",
           "tone": "accent"
         }
       ],
       [
         "gw",
-        "pill",
-        270,
-        70,
-        140,
-        50,
-        "Default Gateway\n192.168.1.1",
+        "proc",
+        250,
+        56,
+        175,
+        58,
+        "Default Gateway",
         {
+          "sub": "via 192.168.1.1",
           "tone": "proc"
         }
       ],
       [
-        "dns",
-        "disk",
-        480,
-        60,
-        160,
-        75,
-        "DNS Resolver\n/etc/resolv.conf\n(8.8.8.8)",
+        "hosts",
+        "doc",
+        470,
+        26,
+        195,
+        62,
+        "/etc/hosts",
         {
+          "sub": "1st: Local static map",
           "tone": "file"
+        }
+      ],
+      [
+        "dns",
+        "doc",
+        470,
+        108,
+        195,
+        62,
+        "/etc/resolv.conf",
+        {
+          "sub": "2nd: DNS 8.8.8.8 / 1.1.1.1",
+          "tone": "mem"
         }
       ],
       [
         "remote",
         "box",
-        710,
-        60,
-        180,
-        75,
-        "Remote Service / DB\napi.payment.com",
+        715,
+        48,
+        220,
+        74,
+        "Remote Target (8.8.8.8)",
         {
+          "sub": "0% loss · ~14.1 ms RTT",
           "tone": "ok"
         }
       ],
       [
         "term",
         "term",
-        30,
-        210,
-        890,
-        300,
+        24,
+        200,
+        912,
+        310,
         "Terminal · Network Diagnostics"
       ]
     ],
@@ -10854,36 +14378,14 @@ const LINUX_LESSONS = [
           [
             "show",
             "srv",
-            "gw",
-            "dns",
-            "remote",
             "term"
           ],
           [
-            "link",
-            "srv",
-            "gw",
-            {
-              "tone": "accent"
-            }
-          ],
-          [
-            "link",
-            "gw",
-            "dns",
-            {
-              "tone": "proc"
-            }
-          ],
-          [
-            "link",
-            "dns",
-            "remote",
-            {
-              "tone": "ok"
-            }
+            "pulse",
+            "srv"
           ]
-        ]
+        ],
+        "vo": "जब एप्लिकेशन बोलती है कनेक्शन टाइम्ड आउट, तो पहले चेक करो कि क्या सर्वर के पास आई-पी एड्रेस है और गेटवे रीचेबल है।"
       },
       {
         "say": "Pehle `ip a` chalao (deprecated `ifconfig` ki jagah). Yahan `eth0` interface par IP `192.168.1.10/24` dikhayi dega.",
@@ -10892,6 +14394,10 @@ const LINUX_LESSONS = [
           1
         ],
         "ops": [
+          [
+            "ok",
+            "srv"
+          ],
           [
             "term",
             "term",
@@ -10905,7 +14411,8 @@ const LINUX_LESSONS = [
             "2: eth0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc fq_codel state UP",
             "    inet 192.168.1.10/24 brd 192.168.1.255 scope global eth0"
           ]
-        ]
+        ],
+        "vo": "पहले आई-पी ए चलाओ, पुरानी आई-एफ़-कॉन्फ़िग की जगह। यहाँ ई-टी-एच ज़ीरो इंटरफ़ेस पर आई-पी वन नाइंटी-टू डॉट वन सिक्सटी-एट डॉट वन डॉट टेन स्लैश ट्वेंटी-फोर दिखाई देगा।"
       },
       {
         "say": "Default gateway check karne ke liye `ip route` chalao. Yahan `default via 192.168.1.1` router ka address hai.",
@@ -10914,6 +14421,29 @@ const LINUX_LESSONS = [
           3
         ],
         "ops": [
+          [
+            "show",
+            "gw"
+          ],
+          [
+            "link",
+            "srv",
+            "gw",
+            {
+              "label": "ip route",
+              "tone": "accent"
+            }
+          ],
+          [
+            "flow",
+            "srv",
+            "gw",
+            "default via .1.1",
+            {
+              "tone": "accent",
+              "dur": 550
+            }
+          ],
           [
             "term",
             "term",
@@ -10924,8 +14454,13 @@ const LINUX_LESSONS = [
             "term",
             "default via 192.168.1.1 dev eth0 proto dhcp metric 100",
             "192.168.1.0/24 dev eth0 proto kernel scope link src 192.168.1.10"
+          ],
+          [
+            "ok",
+            "gw"
           ]
-        ]
+        ],
+        "vo": "डिफ़ॉल्ट गेटवे चेक करने के लिए आई-पी रूट चलाओ। यहाँ डिफ़ॉल्ट वाया वन नाइंटी-टू डॉट वन सिक्सटी-एट डॉट वन डॉट वन राउटर का एड्रेस है।"
       },
       {
         "say": "Agar IP ping ho raha hai par domain name resolve nahi ho raha, toh `/etc/resolv.conf` dekho ki kaunsa DNS nameserver set hai.",
@@ -10934,6 +14469,28 @@ const LINUX_LESSONS = [
           5
         ],
         "ops": [
+          [
+            "show",
+            "dns"
+          ],
+          [
+            "link",
+            "gw",
+            "dns",
+            {
+              "tone": "mem"
+            }
+          ],
+          [
+            "flow",
+            "gw",
+            "dns",
+            "nameserver 8.8.8.8",
+            {
+              "tone": "mem",
+              "dur": 550
+            }
+          ],
           [
             "term",
             "term",
@@ -10946,7 +14503,8 @@ const LINUX_LESSONS = [
             "nameserver 8.8.8.8",
             "nameserver 1.1.1.1"
           ]
-        ]
+        ],
+        "vo": "अगर आई-पी पिंग हो रहा है पर डोमेन नेम रिज़ॉल्व नहीं हो रहा, तो स्लैश ई-टी-सी स्लैश रिज़ॉल्व डॉट कॉन्फ़ देखो कि कौनसा डी-एन-एस नेमसर्वर सेट है।"
       },
       {
         "say": "Local DB cluster ya staging servers ke liye `/etc/hosts` mein direct mapping hoti hai. Linux hamesha DNS se pehle `/etc/hosts` padhta hai!",
@@ -10957,6 +14515,29 @@ const LINUX_LESSONS = [
           9
         ],
         "ops": [
+          [
+            "show",
+            "hosts",
+            "remote"
+          ],
+          [
+            "link",
+            "gw",
+            "hosts",
+            {
+              "tone": "file",
+              "dash": 1
+            }
+          ],
+          [
+            "link",
+            "gw",
+            "remote",
+            {
+              "tone": "ok",
+              "label": "ICMP"
+            }
+          ],
           [
             "term",
             "term",
@@ -10975,6 +14556,26 @@ const LINUX_LESSONS = [
             "oracle@prod-db01:~$ ping -c 3 8.8.8.8"
           ],
           [
+            "flow",
+            "srv",
+            "remote",
+            "ICMP Echo Req",
+            {
+              "tone": "accent",
+              "dur": 500
+            }
+          ],
+          [
+            "flow",
+            "remote",
+            "srv",
+            "Reply 14.1ms",
+            {
+              "tone": "ok",
+              "dur": 500
+            }
+          ],
+          [
             "out",
             "term",
             "PING 8.8.8.8 (8.8.8.8) 56(84) bytes of data.",
@@ -10988,7 +14589,8 @@ const LINUX_LESSONS = [
             "ok",
             "remote"
           ]
-        ]
+        ],
+        "vo": "लोकल डी-बी क्लस्टर या स्टेजिंग सर्वर्स के लिए स्लैश ई-टी-सी स्लैश होस्ट्स में डायरेक्ट मैपिंग होती है। लिनक्स हमेशा डी-एन-एस से पहले स्लैश ई-टी-सी स्लैश होस्ट्स पढ़ता है!"
       }
     ],
     "points": [
@@ -11053,7 +14655,8 @@ const LINUX_LESSONS = [
         "why": "`net-tools` (ifconfig) 10 saal pehle deprecate ho chuka hai. Enterprise Linux par hamesha `ip a` aur `ip route` use karo.",
         "fix": "ip a"
       }
-    ]
+    ],
+    "intro": "फ़ोन कॉल मिलाने जैसा सोचो। आई-पी ए बराबर तुम्हारा अपना फ़ोन नंबर और सिम कार्ड। पिंग बराबर बेल बजा कर चेक करना कि दूसरी साइड कोई उठा रहा है या नहीं। स्लैश ई-टी-सी स्लैश होस्ट्स बराबर तुम्हारी पर्सनल कॉन्टैक्ट बुक। और स्लैश ई-टी-सी स्लैश रिज़ॉल्व डॉट कॉन्फ़ बराबर टेलीफ़ोन डायरेक्टरी जहाँ नाम बोलने पर नंबर मिलता है।"
   },
   {
     "id": "lx-ports",
@@ -11100,72 +14703,63 @@ const LINUX_LESSONS = [
     ],
     "nodes": [
       [
-        "p22",
-        "pill",
-        60,
-        60,
-        160,
-        50,
-        "Port 22 (SSH)\nsshd (PID: 890)",
-        {
-          "tone": "ok"
-        }
-      ],
-      [
-        "p80",
-        "pill",
-        60,
-        130,
-        160,
-        50,
-        "Port 80 (HTTP)\nnginx (PID: 1102)",
-        {
-          "tone": "ok"
-        }
-      ],
-      [
-        "p1521",
-        "pill",
-        60,
-        200,
-        160,
-        50,
-        "Port 1521 (TNS)\noracle (PID: 1250)",
-        {
-          "tone": "accent"
-        }
-      ],
-      [
         "ss",
-        "box",
-        320,
-        110,
-        200,
-        80,
-        "ss -tulpn\nSocket Inspector",
+        "proc",
+        24,
+        42,
+        230,
+        56,
+        "ss -tulpn / lsof -i",
         {
+          "sub": "Socket & Port Inspector",
           "tone": "proc"
         }
       ],
       [
-        "report",
-        "doc",
-        620,
-        85,
-        270,
-        130,
-        "Active Listening Ports:\n22   -> sshd\n80   -> nginx\n1521 -> oracle tnslsnr\n8080 -> payapi (down)",
+        "vp8080",
+        "var",
+        24,
+        120,
+        230,
+        56,
+        "Port 8080 (payapi)",
         {
-          "tone": "file"
+          "v": "Checking...",
+          "tone": "muted"
+        }
+      ],
+      [
+        "ptbl",
+        "table",
+        284,
+        38,
+        652,
+        152,
+        "Active Listening Sockets on prod-db01",
+        {
+          "cols": [
+            "PROTO",
+            "STATE",
+            "LOCAL PORT",
+            "PROCESS",
+            "PID"
+          ],
+          "cw": [
+            0.12,
+            0.16,
+            0.22,
+            0.32,
+            0.18
+          ]
         }
       ],
       [
         "term",
         "term",
-        30,
-        275,
-        890,
-        240,
+        24,
+        210,
+        912,
+        300,
         "Terminal · Port Investigation"
       ]
     ],
@@ -11186,46 +14780,21 @@ const LINUX_LESSONS = [
         "ops": [
           [
             "show",
-            "p22",
-            "p80",
-            "p1521",
             "ss",
-            "report",
+            "vp8080",
+            "ptbl",
             "term"
           ],
           [
             "link",
-            "p22",
             "ss",
-            {
-              "tone": "ok"
-            }
-          ],
-          [
-            "link",
-            "p80",
-            "ss",
-            {
-              "tone": "ok"
-            }
-          ],
-          [
-            "link",
-            "p1521",
-            "ss",
-            {
-              "tone": "accent"
-            }
-          ],
-          [
-            "link",
-            "ss",
-            "report",
+            "ptbl",
             {
               "tone": "proc"
             }
           ]
-        ]
+        ],
+        "vo": "एप्लिकेशन स्टार्ट करते वक़्त एरर: एड्रेस ऑलरेडी इन यूज़, बाइंड एटी-एटी। या क्लाइंट बोलता है डी-बी कनेक्ट नहीं हो रही। पहला टूल: एस-एस डैश टी-यू-एल-पी-एन।"
       },
       {
         "say": "Flags yaad rakho: `t` (TCP) + `u` (UDP) + `l` (listening) + `p` (process name) + `n` (numeric ports) = `ss -tulpn`.",
@@ -11234,6 +14803,58 @@ const LINUX_LESSONS = [
           1
         ],
         "ops": [
+          [
+            "rows",
+            "ptbl",
+            [
+              [
+                "tcp",
+                "LISTEN",
+                "0.0.0.0:22",
+                "sshd",
+                "890"
+              ],
+              [
+                "tcp",
+                "LISTEN",
+                "0.0.0.0:80",
+                "nginx",
+                "1102"
+              ],
+              [
+                "tcp",
+                "LISTEN",
+                "0.0.0.0:1521",
+                "tnslsnr (Oracle)",
+                "1250"
+              ],
+              [
+                "tcp",
+                "CLOSED",
+                "0.0.0.0:8080",
+                "payapi (Not bound)",
+                "-"
+              ]
+            ]
+          ],
+          [
+            "mark",
+            "ptbl",
+            [
+              0,
+              1,
+              2
+            ],
+            "ok"
+          ],
+          [
+            "mark",
+            "ptbl",
+            [
+              3
+            ],
+            "danger"
+          ],
           [
             "term",
             "term",
@@ -11247,7 +14868,8 @@ const LINUX_LESSONS = [
             "tcp   LISTEN 0      511          0.0.0.0:80         0.0.0.0:*     users:((\"nginx\",pid=1102,fd=6))",
             "tcp   LISTEN 0      128          0.0.0.0:1521       0.0.0.0:*     users:((\"tnslsnr\",pid=1250,fd=8))"
           ]
-        ]
+        ],
+        "vo": "फ़्लैग्स याद रखो: टी यानी टी-सी-पी, यू यानी यू-डी-पी, एल यानी लिसनिंग, पी यानी प्रोसेस नेम, एन यानी न्यूमेरिक पोर्ट्स, मिलकर बनता है एस-एस डैश टी-यू-एल-पी-एन।"
       },
       {
         "say": "Oracle DBA Check: `ss -tulpn | grep 1521` se confirm karo ki TNS Listener port 1521 par active listen kar raha hai ya nahi.",
@@ -11257,6 +14879,33 @@ const LINUX_LESSONS = [
         ],
         "ops": [
           [
+            "fade",
+            "ptbl",
+            [
+              0,
+              1,
+              3
+            ]
+          ],
+          [
+            "mark",
+            "ptbl",
+            [
+              2
+            ],
+            "accent"
+          ],
+          [
+            "colhl",
+            "ptbl",
+            [
+              2,
+              3,
+              4
+            ],
+            "accent"
+          ],
+          [
             "term",
             "term",
             "oracle@prod-db01:~$ ss -tulpn | grep 1521"
@@ -11265,12 +14914,9 @@ const LINUX_LESSONS = [
             "out",
             "term",
             "tcp   LISTEN 0      128          0.0.0.0:1521       0.0.0.0:*     users:((\"tnslsnr\",pid=1250,fd=8))"
-          ],
-          [
-            "ok",
-            "p1521"
           ]
-        ]
+        ],
+        "vo": "ओरेकल डी-बी-ए चेक: एस-एस डैश टी-यू-एल-पी-एन पाइप ग्रेप फिफ्टीन ट्वेंटी-वन से कन्फ़र्म करो कि टी-एन-एस लिसनर पोर्ट फिफ्टीन ट्वेंटी-वन पर एक्टिव लिसन कर रहा है या नहीं।"
       },
       {
         "say": "Targeted Search: `lsof -i :80` seedha us process ka user, PID aur exact command nikaal deta hai jo port 80 par baithi hai.",
@@ -11279,6 +14925,37 @@ const LINUX_LESSONS = [
           5
         ],
         "ops": [
+          [
+            "unfade",
+            "ptbl"
+          ],
+          [
+            "fade",
+            "ptbl",
+            [
+              0,
+              2,
+              3
+            ]
+          ],
+          [
+            "mark",
+            "ptbl",
+            [
+              1
+            ],
+            "ok"
+          ],
+          [
+            "flow",
+            "ss",
+            "ptbl#1",
+            "lsof -i :80",
+            {
+              "tone": "ok",
+              "dur": 550
+            }
+          ],
           [
             "term",
             "term",
@@ -11289,12 +14966,9 @@ const LINUX_LESSONS = [
             "term",
             "COMMAND  PID  USER   FD   TYPE DEVICE SIZE/OFF NODE NAME",
             "nginx   1102  root    6u  IPv4  24890      0t0  TCP *:http (LISTEN)"
-          ],
-          [
-            "ok",
-            "p80"
           ]
-        ]
+        ],
+        "vo": "टार्गेटेड सर्च: एल-एस-ओ-एफ़ डैश आई कोलन एटी सीधा उस प्रोसेस का यूज़र, पी-आई-डी और एग्ज़ैक्ट कमांड निकाल देता है जो पोर्ट एटी पर बैठी है।"
       },
       {
         "say": "Port 8080 check karo: agar koi output na aaye, matlab port khaali hai aur service band ya crashed hai.",
@@ -11304,15 +14978,41 @@ const LINUX_LESSONS = [
         ],
         "ops": [
           [
+            "unfade",
+            "ptbl"
+          ],
+          [
+            "colhl",
+            "ptbl",
+            []
+          ],
+          [
+            "mark",
+            "ptbl",
+            [
+              3
+            ],
+            "danger"
+          ],
+          [
+            "val",
+            "vp8080",
+            "NO LISTENER (Down!)",
+            {
+              "tone": "danger"
+            }
+          ],
+          [
             "term",
             "term",
             "oracle@prod-db01:~$ ss -tulpn | grep 8080"
           ],
           [
-            "pulse",
-            "report"
+            "ok",
+            "ss"
           ]
-        ]
+        ],
+        "vo": "पोर्ट एटी-एटी चेक करो: अगर कोई आउटपुट न आए, मतलब पोर्ट खाली है और सर्विस बंद या क्रैश्ड है।"
       }
     ],
     "points": [
@@ -11385,7 +15085,8 @@ const LINUX_LESSONS = [
         "why": "80 port number hai, PID nahi! Port number ko kill nahi kiya ja sakta. Pehle `lsof -i :80` se PID dhoondho fir PID kill karo.",
         "fix": "lsof -i :80 -> kill -15 <PID>"
       }
-    ]
+    ],
+    "intro": "एयरपोर्ट के बोर्डिंग गेट्स सोचो। गेट एटी बराबर वेब पैसेंजर्स यानी इंजन-एक्स। गेट ट्वेंटी-टू बराबर सिक्योरिटी स्टाफ़ यानी एस-एस-एच। गेट फिफ्टीन ट्वेंटी-वन बराबर वी-आई-पी कार्गो यानी ओरेकल डी-बी। एस-एस डैश टी-यू-एल-पी-एन स्क्रीन पर दिखाता है कौनसे गेट्स खुले हैं और हर गेट पर कौनसा गार्ड यानी पी-आई-डी खड़ा है। अगर दो एयरलाइन्स एक ही गेट माँगें, तो एड्रेस ऑलरेडी इन यूज़ क्लैश हो जाता है।"
   },
   {
     "id": "lx-ssh-scp",
@@ -11428,60 +15129,103 @@ const LINUX_LESSONS = [
     ],
     "nodes": [
       [
-        "client",
-        "box",
-        50,
-        60,
-        180,
-        80,
-        "Local Laptop\nPrivate Key\n(~/.ssh/id_ed25519)",
+        "lap",
+        "region",
+        24,
+        24,
+        310,
+        164,
+        "Local Machine (~/.ssh)",
         {
+          "tone": "accent",
+          "sub": "ssh-keygen"
+        }
+      ],
+      [
+        "priv",
+        "doc",
+        42,
+        64,
+        130,
+        68,
+        "id_ed25519",
+        {
+          "sub": "Private (600 · Never share!)",
+          "tone": "danger"
+        }
+      ],
+      [
+        "pub",
+        "doc",
+        188,
+        64,
+        130,
+        68,
+        "id_ed25519.pub",
+        {
+          "sub": "Public key (Shareable)",
           "tone": "accent"
         }
       ],
       [
         "tunnel",
-        "pill",
-        320,
-        75,
-        160,
-        48,
-        "SSH Tunnel (22)\nEncrypted Handshake",
+        "proc",
+        368,
+        74,
+        184,
+        54,
+        "SSH Tunnel (:22)",
         {
+          "sub": "Ed25519 Encrypted",
           "tone": "proc"
         }
       ],
       [
-        "server",
-        "box",
-        570,
-        60,
-        200,
-        80,
-        "prod-db01 Server\n~/.ssh/authorized_keys\nPublic Key",
+        "srv",
+        "region",
+        586,
+        24,
+        350,
+        164,
+        "Remote Server (192.168.1.20)",
         {
+          "tone": "ok",
+          "sub": "Passwordless Auth"
+        }
+      ],
+      [
+        "auth",
+        "doc",
+        606,
+        64,
+        150,
+        68,
+        "authorized_keys",
+        {
+          "sub": "~/.ssh/ (600)",
           "tone": "ok"
         }
       ],
       [
         "scpbox",
-        "disk",
-        830,
-        65,
-        100,
-        70,
-        "scp file\nEncrypted Copy",
+        "doc",
+        772,
+        64,
+        145,
+        68,
+        "/tmp/app.env",
         {
+          "sub": "Transferred via scp",
           "tone": "file"
         }
       ],
       [
         "term",
         "term",
-        30,
-        210,
-        890,
-        300,
+        24,
+        206,
+        912,
+        304,
         "Terminal · SSH & Key Authentication"
       ]
     ],
@@ -11502,15 +15246,14 @@ const LINUX_LESSONS = [
         "ops": [
           [
             "show",
-            "client",
+            "lap",
             "tunnel",
-            "server",
-            "scpbox",
+            "srv",
             "term"
           ],
           [
             "link",
-            "client",
+            "lap",
             "tunnel",
             {
               "tone": "accent"
@@ -11519,20 +15262,13 @@ const LINUX_LESSONS = [
           [
             "link",
             "tunnel",
-            "server",
+            "srv",
             {
               "tone": "ok"
             }
-          ],
-          [
-            "link",
-            "tunnel",
-            "scpbox",
-            {
-              "tone": "file"
-            }
           ]
-        ]
+        ],
+        "vo": "प्रोडक्शन रूल: पासवर्ड्स से एस-एस-एच लॉगिन करना बैन्ड होता है, ब्रूट फ़ोर्स अटैक का ख़तरा रहता है। हमेशा एस-एस-एच की पेयर ऑथेंटिकेशन यूज़ होता है।"
       },
       {
         "say": "Key generate karo: `ssh-keygen -t ed25519`. Isse do files banti hain: secret private key (`id_ed25519`) aur public key (`id_ed25519.pub`).",
@@ -11541,6 +15277,19 @@ const LINUX_LESSONS = [
           1
         ],
         "ops": [
+          [
+            "show",
+            "priv",
+            "pub"
+          ],
+          [
+            "lock",
+            "priv"
+          ],
+          [
+            "pulse",
+            "pub"
+          ],
           [
             "term",
             "term",
@@ -11553,7 +15302,8 @@ const LINUX_LESSONS = [
             "Your identification has been saved in /home/oracle/.ssh/id_ed25519",
             "Your public key has been saved in /home/oracle/.ssh/id_ed25519.pub"
           ]
-        ]
+        ],
+        "vo": "की जनरेट करो: एस-एस-एच की-जेन डैश टी ई-डी पच्चीस-इक्यावन-उन्नीस। इससे दो फ़ाइल्स बनती हैं: सीक्रेट प्राइवेट की और डॉट पब वाली पब्लिक की।"
       },
       {
         "say": "Public key screen par dekho. Yeh lambi string remote server ki `~/.ssh/authorized_keys` file ke andar daali jaati hai.",
@@ -11562,6 +15312,10 @@ const LINUX_LESSONS = [
           3
         ],
         "ops": [
+          [
+            "pulse",
+            "pub"
+          ],
           [
             "term",
             "term",
@@ -11572,7 +15326,8 @@ const LINUX_LESSONS = [
             "term",
             "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIExampleAdminKey2026Ed25519Signature admin@company.com"
           ]
-        ]
+        ],
+        "vo": "पब्लिक की स्क्रीन पर देखो। ये लंबी स्ट्रिंग रिमोट सर्वर की डॉट एस-एस-एच स्लैश ऑथराइज़्ड कीज़ फ़ाइल के अंदर डाली जाती है।"
       },
       {
         "say": "Shortcut: `ssh-copy-id user@server` chalao toh yeh automatically public key remote server ke `~/.ssh/authorized_keys` mein append kar deta hai.",
@@ -11582,6 +15337,34 @@ const LINUX_LESSONS = [
         ],
         "ops": [
           [
+            "show",
+            "auth"
+          ],
+          [
+            "flow",
+            "pub",
+            "tunnel",
+            "ssh-copy-id",
+            {
+              "tone": "accent",
+              "dur": 500
+            }
+          ],
+          [
+            "flow",
+            "tunnel",
+            "auth",
+            "store pubkey",
+            {
+              "tone": "ok",
+              "dur": 500
+            }
+          ],
+          [
+            "ok",
+            "auth"
+          ],
+          [
             "term",
             "term",
             "oracle@prod-db01:~$ cat ~/.ssh/authorized_keys"
@@ -11590,12 +15373,9 @@ const LINUX_LESSONS = [
             "out",
             "term",
             "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIExampleAdminKey2026Ed25519Signature admin@company.com"
-          ],
-          [
-            "ok",
-            "server"
           ]
-        ]
+        ],
+        "vo": "शॉर्टकट: एस-एस-एच कॉपी आई-डी यूज़र ऐट सर्वर चलाओ तो ये ऑटोमैटिकली पब्लिक की रिमोट सर्वर के ऑथराइज़्ड कीज़ में अपेंड कर देता है।"
       },
       {
         "say": "Ab files bhejne ke liye `scp` (Secure Copy) use karo. Syntax: `scp <local_file> <user>@<server>:<remote_path>`. Bina password maange file instant transfer!",
@@ -11605,9 +15385,33 @@ const LINUX_LESSONS = [
         ],
         "ops": [
           [
+            "show",
+            "scpbox"
+          ],
+          [
             "term",
             "term",
             "oracle@prod-db01:~$ scp app/app.env oracle@192.168.1.20:/tmp/app.env"
+          ],
+          [
+            "flow",
+            "lap",
+            "tunnel",
+            "scp app.env",
+            {
+              "tone": "file",
+              "dur": 500
+            }
+          ],
+          [
+            "flow",
+            "tunnel",
+            "scpbox",
+            "100% 24.1KB/s",
+            {
+              "tone": "ok",
+              "dur": 500
+            }
           ],
           [
             "out",
@@ -11617,8 +15421,13 @@ const LINUX_LESSONS = [
           [
             "ok",
             "scpbox"
+          ],
+          [
+            "ok",
+            "tunnel"
           ]
-        ]
+        ],
+        "vo": "अब फ़ाइल्स भेजने के लिए एस-सी-पी यानी सिक्योर कॉपी यूज़ करो। सिंटैक्स: एस-सी-पी लोकल फ़ाइल यूज़र ऐट सर्वर कोलन रिमोट पाथ। बिना पासवर्ड माँगे फ़ाइल इंस्टेंट ट्रांसफ़र!"
       }
     ],
     "points": [
@@ -11683,7 +15492,8 @@ const LINUX_LESSONS = [
         "why": "Public key (`.pub`) baanti jaati hai. Private key (bina .pub wali) hamesha secret rehti hai.",
         "fix": "share ~/.ssh/id_ed25519.pub only"
       }
-    ]
+    ],
+    "intro": "असली ताले और चाबी जैसा सोचो। प्राइवेट की बराबर तुम्हारी जेब की पर्सनल चाबी जो किसी को नहीं देनी। पब्लिक की बराबर ताले का साँचा जो तुम पचास अलग सर्वर्स के दरवाज़े पर लगा देते हो। अब तुम बिना पासवर्ड टाइप किए चाबी लगाते ही अंदर!"
   },
   {
     "id": "lx-curl-fw",
@@ -11728,58 +15538,83 @@ const LINUX_LESSONS = [
       [
         "client",
         "box",
-        50,
-        60,
-        160,
-        80,
-        "curl command\nTerminal client",
+        24,
+        36,
+        175,
+        58,
+        "curl HTTP Client",
         {
+          "sub": "-I headers · -s silent",
           "tone": "accent"
         }
       ],
       [
-        "fw",
-        "pill",
-        280,
-        75,
-        140,
-        50,
-        "ufw Firewall\nAllow 80 / Block IP",
+        "spam",
+        "box",
+        24,
+        114,
+        175,
+        58,
+        "Attacker IP",
         {
+          "sub": "203.0.113.9",
           "tone": "danger"
+        }
+      ],
+      [
+        "fw",
+        "table",
+        235,
+        36,
+        420,
+        148,
+        "ufw Firewall Rules Table",
+        {
+          "cols": [
+            "TO / PORT",
+            "ACTION",
+            "FROM SOURCE"
+          ],
+          "cw": [
+            0.32,
+            0.26,
+            0.42
+          ]
         }
       ],
       [
         "nginx",
         "box",
-        490,
-        60,
-        160,
-        80,
-        "Nginx Web Srv\nHTTP 200 OK",
+        690,
+        36,
+        246,
+        58,
+        "Nginx Web Server (:80)",
         {
+          "sub": "HTTP/1.1 200 OK",
           "tone": "ok"
         }
       ],
       [
         "api",
-        "box",
-        720,
-        60,
-        170,
-        80,
-        "Payment API :8080\nJSON Healthcheck",
+        "proc",
+        690,
+        114,
+        246,
+        58,
+        "PayAPI (:8080/health)",
         {
+          "sub": "{\"status\":\"UP\"}",
           "tone": "proc"
         }
       ],
       [
         "term",
         "term",
-        30,
-        210,
-        890,
-        300,
+        24,
+        204,
+        912,
+        306,
         "Terminal · API & Firewall Controller"
       ]
     ],
@@ -11809,6 +15644,27 @@ const LINUX_LESSONS = [
             "term"
           ],
           [
+            "rows",
+            "fw",
+            [
+              [
+                "22/tcp (SSH)",
+                "ALLOW",
+                "Anywhere"
+              ],
+              [
+                "80/tcp (HTTP)",
+                "ALLOW",
+                "Anywhere"
+              ],
+              [
+                "1521/tcp (DB)",
+                "ALLOW",
+                "192.168.1.0/24"
+              ]
+            ]
+          ],
+          [
             "link",
             "client",
             "fw",
@@ -11826,13 +15682,14 @@ const LINUX_LESSONS = [
           ],
           [
             "link",
-            "nginx",
+            "fw",
             "api",
             {
               "tone": "proc"
             }
           ]
-        ]
+        ],
+        "vo": "ब्राउज़र खोले बिना माइक्रोसर्विसेज़ और वेब सर्वर्स टेस्ट करने का नंबर वन टूल कर्ल है। साथ ही फ़ायरवॉल रूल्स से नेटवर्क ट्रैफ़िक कंट्रोल होता है।"
       },
       {
         "say": "Healthcheck verify karne ke liye `curl -I` chalao. Output mein status code `HTTP/1.1 200 OK` aur web server signature dikhega.",
@@ -11847,6 +15704,26 @@ const LINUX_LESSONS = [
             "oracle@prod-db01:~$ curl -I http://localhost:80/"
           ],
           [
+            "flow",
+            "client",
+            "nginx",
+            "HEAD :80",
+            {
+              "tone": "accent",
+              "dur": 500
+            }
+          ],
+          [
+            "flow",
+            "nginx",
+            "client",
+            "200 OK",
+            {
+              "tone": "ok",
+              "dur": 500
+            }
+          ],
+          [
             "out",
             "term",
             "HTTP/1.1 200 OK",
@@ -11859,7 +15736,8 @@ const LINUX_LESSONS = [
             "ok",
             "nginx"
           ]
-        ]
+        ],
+        "vo": "हेल्थचेक वेरिफ़ाई करने के लिए कर्ल डैश कैपिटल आई चलाओ। आउटपुट में स्टेटस कोड एच-टी-टी-पी टू हंड्रेड ओके और वेब सर्वर सिग्नेचर दिखेगा।"
       },
       {
         "say": "REST API test karne ke liye `-s` (silent) lagao taaki progress bar na aaye aur sirf clean JSON response mile.",
@@ -11874,6 +15752,26 @@ const LINUX_LESSONS = [
             "oracle@prod-db01:~$ curl -s http://localhost:8080/health"
           ],
           [
+            "flow",
+            "client",
+            "api",
+            "GET /health",
+            {
+              "tone": "proc",
+              "dur": 500
+            }
+          ],
+          [
+            "flow",
+            "api",
+            "client",
+            "{\"status\":\"UP\"}",
+            {
+              "tone": "ok",
+              "dur": 500
+            }
+          ],
+          [
             "out",
             "term",
             "{\"status\":\"UP\",\"service\":\"payapi\",\"database\":\"connected\",\"timestamp\":\"2026-10-29T10:50:00Z\"}"
@@ -11882,7 +15780,8 @@ const LINUX_LESSONS = [
             "ok",
             "api"
           ]
-        ]
+        ],
+        "vo": "रेस्ट ए-पी-आई टेस्ट करने के लिए डैश एस यानी साइलेंट लगाओ ताकि प्रोग्रेस बार न आए और सिर्फ़ क्लीन जे-सॉन रिस्पॉन्स मिले।"
       },
       {
         "say": "Ab security perimeter dekho: `sudo ufw status` se check karo kaunse ports khule hain aur kaunse blocked hain.",
@@ -11891,6 +15790,16 @@ const LINUX_LESSONS = [
           5
         ],
         "ops": [
+          [
+            "mark",
+            "fw",
+            [
+              0,
+              1,
+              2
+            ],
+            "ok"
+          ],
           [
             "term",
             "term",
@@ -11906,7 +15815,8 @@ const LINUX_LESSONS = [
             "80/tcp                     ALLOW       Anywhere",
             "1521/tcp                   ALLOW       192.168.1.0/24"
           ]
-        ]
+        ],
+        "vo": "अब सिक्योरिटी पेरिमीटर देखो: सूडो यू-एफ़-डब्ल्यू स्टेटस से चेक करो कौनसे पोर्ट्स खुले हैं और कौनसे ब्लॉक्ड हैं।"
       },
       {
         "say": "Lesson 12 mein humne rogue IP `203.0.113.9` pakda tha. Ab firewall se use permanently block karo: `sudo ufw deny from 203.0.113.9`.",
@@ -11918,9 +15828,39 @@ const LINUX_LESSONS = [
         ],
         "ops": [
           [
+            "show",
+            "spam"
+          ],
+          [
             "term",
             "term",
             "oracle@prod-db01:~$ sudo ufw deny from 203.0.113.9"
+          ],
+          [
+            "addrow",
+            "fw",
+            [
+              "Anywhere",
+              "DENY",
+              "203.0.113.9 (Blocked!)"
+            ],
+            {
+              "tone": "danger"
+            }
+          ],
+          [
+            "flow",
+            "spam",
+            "fw",
+            "flood",
+            {
+              "tone": "danger",
+              "dur": 450
+            }
+          ],
+          [
+            "x",
+            "spam"
           ],
           [
             "out",
@@ -11938,10 +15878,11 @@ const LINUX_LESSONS = [
             "Rule added (v6)"
           ],
           [
-            "danger",
+            "ok",
             "fw"
           ]
-        ]
+        ],
+        "vo": "लेसन बारह में हमने रोग आई-पी टू ओ थ्री डॉट ज़ीरो डॉट वन थर्टीन डॉट नाइन पकड़ा था। अब फ़ायरवॉल से उसे पर्मनेंटली ब्लॉक करो: सूडो यू-एफ़-डब्ल्यू डिनाई फ़्रॉम टू ओ थ्री डॉट ज़ीरो डॉट वन थर्टीन डॉट नाइन।"
       }
     ],
     "points": [
@@ -12011,7 +15952,8 @@ const LINUX_LESSONS = [
         "why": "Automated scripts mein bina `-s` ke curl har second progress meter likhta rehta hai jo logs ko bhar deta hai.",
         "fix": "curl -s http://api"
       }
-    ]
+    ],
+    "intro": "सर्वर का दरबान और पोस्टमैन सोचो। कर्ल बराबर पोस्टमैन बिना माउस के: तुम टर्मिनल से किसी भी वेब ए-पी-आई पर लेटर भेज कर रिस्पॉन्स चेक करते हो। और यू-एफ़-डब्ल्यू यानी फ़ायरवॉल बराबर बाउंसर्स की लिस्ट जो डिसाइड करती है कौनसे आई-पीज़ और पोर्ट्स को सर्वर के अंदर आने देना है और किसे बाहर ही ड्रॉप करना है।"
   },
   {
     "id": "lx-packages",
@@ -12056,58 +15998,61 @@ const LINUX_LESSONS = [
       [
         "repo",
         "disk",
-        50,
-        60,
-        180,
-        80,
-        "Ubuntu Repositories\n(Cloud Mirrors)",
+        24,
+        42,
+        165,
+        76,
+        "Ubuntu Cloud Repo",
         {
-          "tone": "file"
+          "sub": "Signed InRelease index",
+          "inside": "Mirrors",
+          "tone": "file",
+          "level": 0.75
         }
       ],
       [
         "apt",
-        "box",
-        310,
-        65,
-        170,
-        70,
-        "apt update / install\nDependency resolver",
+        "proc",
+        225,
+        58,
+        175,
+        56,
+        "apt Package Mgr",
         {
+          "sub": "update · search · clean",
           "tone": "accent"
         }
       ],
       [
-        "pkg",
-        "box",
-        560,
-        60,
-        180,
-        80,
-        "Installed Binary\n/usr/bin/nginx",
-        {
-          "tone": "ok"
-        }
-      ],
-      [
         "dpkg",
-        "doc",
-        790,
-        60,
-        130,
-        80,
-        "dpkg -l\nInstalled DB",
+        "table",
+        435,
+        36,
+        501,
+        148,
+        "Local Package Database (dpkg -l)",
         {
-          "tone": "proc"
+          "cols": [
+            "STATE",
+            "PACKAGE",
+            "VERSION",
+            "DESCRIPTION"
+          ],
+          "cw": [
+            0.14,
+            0.22,
+            0.24,
+            0.4
+          ]
         }
       ],
       [
         "term",
         "term",
-        30,
-        210,
-        890,
-        300,
+        24,
+        204,
+        912,
+        306,
         "Terminal · Package Management"
       ]
     ],
@@ -12130,7 +16075,6 @@ const LINUX_LESSONS = [
             "show",
             "repo",
             "apt",
-            "pkg",
             "dpkg",
             "term"
           ],
@@ -12145,20 +16089,31 @@ const LINUX_LESSONS = [
           [
             "link",
             "apt",
-            "pkg",
+            "dpkg",
             {
               "tone": "accent"
             }
           ],
           [
-            "link",
-            "pkg",
+            "rows",
             "dpkg",
-            {
-              "tone": "ok"
-            }
+            [
+              [
+                "ii",
+                "nginx",
+                "1.24.0-1ubuntu1",
+                "High performance web server"
+              ],
+              [
+                "ii",
+                "openssh-server",
+                "1:8.9p1-3",
+                "Secure shell server daemon"
+              ]
+            ]
           ]
-        ]
+        ],
+        "vo": "लिनक्स पर सॉफ़्टवेयर इंस्टॉल करने के लिए विंडोज़ की तरह सेटअप डॉट ई-एक्स-ई डाउनलोड नहीं किया जाता। पैकेज मैनेजर्स डिपेंडेंसी मैनेजमेंट और सिक्योरिटी साइनिंग ख़ुद सँभालते हैं।"
       },
       {
         "say": "Important Rule: Naya software install karne se pehle hamesha `sudo apt update` chalao taaki repository index refresh ho sake.",
@@ -12173,6 +16128,16 @@ const LINUX_LESSONS = [
             "oracle@prod-db01:~$ sudo apt update"
           ],
           [
+            "flow",
+            "repo",
+            "apt",
+            "InRelease index",
+            {
+              "tone": "file",
+              "dur": 600
+            }
+          ],
+          [
             "out",
             "term",
             "Hit:1 http://archive.ubuntu.com/ubuntu jammy InRelease",
@@ -12180,8 +16145,13 @@ const LINUX_LESSONS = [
             "Reading package lists... Done",
             "Building dependency tree... Done",
             "All packages are up to date."
+          ],
+          [
+            "ok",
+            "apt"
           ]
-        ]
+        ],
+        "vo": "इम्पॉर्टेंट रूल: नया सॉफ़्टवेयर इंस्टॉल करने से पहले हमेशा सूडो ए-पी-टी अपडेट चलाओ ताकि रिपॉज़िटरी इंडेक्स रिफ़्रेश हो सके।"
       },
       {
         "say": "System par installed package check karne ke liye `dpkg -l | grep <name>` use hota hai. `ii` status ka matlab installed and configured.",
@@ -12191,6 +16161,24 @@ const LINUX_LESSONS = [
         ],
         "ops": [
           [
+            "mark",
+            "dpkg",
+            [
+              0
+            ],
+            "ok"
+          ],
+          [
+            "colhl",
+            "dpkg",
+            [
+              0,
+              1,
+              2
+            ],
+            "ok"
+          ],
+          [
             "term",
             "term",
             "oracle@prod-db01:~$ dpkg -l | grep -i nginx"
@@ -12199,12 +16187,9 @@ const LINUX_LESSONS = [
             "out",
             "term",
             "ii  nginx                          1.24.0-1ubuntu1  amd64  small, powerful, scalable web server"
-          ],
-          [
-            "ok",
-            "pkg"
           ]
-        ]
+        ],
+        "vo": "सिस्टम पर इंस्टॉल्ड पैकेज चेक करने के लिए डी-पी-के-जी डैश एल पाइप ग्रेप नेम यूज़ होता है। आई-आई स्टेटस का मतलब इंस्टॉल्ड एंड कॉन्फ़िगर्ड।"
       },
       {
         "say": "Agar package ka exact naam pata na ho, toh `apt search <keyword>` se repository search kar sakte ho.",
@@ -12213,6 +16198,34 @@ const LINUX_LESSONS = [
           5
         ],
         "ops": [
+          [
+            "colhl",
+            "dpkg",
+            []
+          ],
+          [
+            "flow",
+            "repo",
+            "apt",
+            "htop 3.2.1",
+            {
+              "tone": "accent",
+              "dur": 550
+            }
+          ],
+          [
+            "addrow",
+            "dpkg",
+            [
+              "avail",
+              "htop",
+              "3.2.1-1",
+              "Interactive process viewer"
+            ],
+            {
+              "tone": "accent"
+            }
+          ],
           [
             "term",
             "term",
@@ -12224,7 +16237,8 @@ const LINUX_LESSONS = [
             "htop/jammy 3.2.1-1 amd64",
             "  interactive processes viewer and system monitor"
           ]
-        ]
+        ],
+        "vo": "अगर पैकेज का एग्ज़ैक्ट नाम पता न हो, तो ए-पी-टी सर्च कीवर्ड से रिपॉज़िटरी सर्च कर सकते हो।"
       },
       {
         "say": "Purane unused kernels aur orphan packages ko clean karne ke liye `sudo apt autoremove` chalaya jata hai, jisse disk space bachti hai.",
@@ -12247,7 +16261,8 @@ const LINUX_LESSONS = [
             "ok",
             "dpkg"
           ]
-        ]
+        ],
+        "vo": "पुराने अनयूज़्ड कर्नल्स और ऑर्फ़न पैकेजेस को क्लीन करने के लिए सूडो ए-पी-टी ऑटो-रिमूव चलाया जाता है, जिससे डिस्क स्पेस बचती है।"
       }
     ],
     "points": [
@@ -12312,7 +16327,8 @@ const LINUX_LESSONS = [
         "why": "Production server par blind `apt upgrade` chalane se glibc ya kernel update ho jata hai jo enterprise software tod sakta hai. Hamesha specific package update karo.",
         "fix": "sudo apt install --only-upgrade nginx"
       }
-    ]
+    ],
+    "intro": "फ़ोन का ऐप स्टोर सोचो। ए-पी-टी अपडेट बराबर ऐप स्टोर की नई ऐप्स और वर्ज़न्स की लिस्ट रिफ़्रेश करना। ए-पी-टी इंस्टॉल इंजन-एक्स बराबर एक क्लिक पर इंजन-एक्स और उसकी सारी ज़रूरी डिपेंडेंसीज़ डाउनलोड करके इंस्टॉल करना। और डी-पी-के-जी डैश एल बराबर चेक करना कि फ़ोन में कौन-कौनसी ऐप्स इंस्टॉल्ड हैं।"
   },
   {
     "id": "lx-cron",
@@ -12359,60 +16375,133 @@ const LINUX_LESSONS = [
     ],
     "nodes": [
       [
-        "daemon",
-        "pill",
-        60,
-        60,
-        160,
+        "vm",
+        "var",
+        24,
+        38,
+        86,
         50,
-        "crond Daemon\nChecks every min",
+        "1. MIN",
+        {
+          "v": "0",
+          "tone": "accent",
+          "type": "0-59"
+        }
+      ],
+      [
+        "vh",
+        "var",
+        120,
+        38,
+        86,
+        50,
+        "2. HOUR",
+        {
+          "v": "2",
+          "tone": "accent",
+          "type": "0-23"
+        }
+      ],
+      [
+        "vdom",
+        "var",
+        216,
+        38,
+        86,
+        50,
+        "3. DOM",
+        {
+          "v": "*",
+          "tone": "muted",
+          "type": "1-31"
+        }
+      ],
+      [
+        "vmon",
+        "var",
+        312,
+        38,
+        86,
+        50,
+        "4. MON",
+        {
+          "v": "*",
+          "tone": "muted",
+          "type": "1-12"
+        }
+      ],
+      [
+        "vdow",
+        "var",
+        408,
+        38,
+        86,
+        50,
+        "5. DOW",
+        {
+          "v": "*",
+          "tone": "muted",
+          "type": "0-6"
+        }
+      ],
+      [
+        "meaning",
+        "chip",
+        24,
+        102,
+        470,
+        30,
+        "Schedule: 0 2 * * *  =  Every Night at 02:00 AM",
         {
           "tone": "accent"
         }
       ],
       [
-        "tab",
-        "doc",
-        290,
-        50,
-        200,
-        75,
-        "crontab\n0 2 * * * backup.sh",
+        "daemon",
+        "proc",
+        524,
+        38,
+        175,
+        52,
+        "crond Daemon",
         {
-          "tone": "file"
+          "sub": "Wakes every 60s",
+          "tone": "proc"
         }
       ],
       [
         "script",
         "box",
-        560,
-        50,
-        180,
-        75,
-        "backup_db.sh\nNightly Execution",
+        524,
+        110,
+        195,
+        58,
+        "scripts/backup_db.sh",
         {
-          "tone": "proc"
+          "sub": "Automated job",
+          "tone": "ok"
         }
       ],
       [
         "log",
         "doc",
-        800,
-        50,
-        120,
-        75,
-        "cron.log\n>> output",
+        755,
+        64,
+        180,
+        74,
+        "backup.log",
         {
-          "tone": "ok"
+          "sub": ">> file.log 2>&1",
+          "tone": "file"
         }
       ],
       [
         "term",
         "term",
-        30,
-        200,
-        890,
-        310,
+        24,
+        190,
+        912,
+        320,
         "Terminal · cron Automation"
       ]
     ],
@@ -12435,7 +16524,6 @@ const LINUX_LESSONS = [
           [
             "show",
             "daemon",
-            "tab",
             "script",
             "log",
             "term"
@@ -12443,14 +16531,6 @@ const LINUX_LESSONS = [
           [
             "link",
             "daemon",
-            "tab",
-            {
-              "tone": "accent"
-            }
-          ],
-          [
-            "link",
-            "tab",
             "script",
             {
               "tone": "proc"
@@ -12461,10 +16541,12 @@ const LINUX_LESSONS = [
             "script",
             "log",
             {
-              "tone": "ok"
+              "label": ">> 2>&1",
+              "tone": "file"
             }
           ]
-        ]
+        ],
+        "vo": "डेटाबेस बैकअप्स, लॉग रोटेशन, कैश क्लीनिंग और रिपोर्ट्स जनरेशन सभी लिनक्स क्रॉनटैब से ऑटोमेट होते हैं।"
       },
       {
         "say": "Active jobs dekhne ke liye `crontab -l` chalao. Yahan har schedule 5 fields se shuru hota hai.",
@@ -12473,6 +16555,20 @@ const LINUX_LESSONS = [
           1
         ],
         "ops": [
+          [
+            "show",
+            "vm",
+            "vh",
+            "vdom",
+            "vmon",
+            "vdow",
+            "meaning"
+          ],
+          [
+            "pulse",
+            "vm",
+            "vh"
+          ],
           [
             "term",
             "term",
@@ -12486,7 +16582,8 @@ const LINUX_LESSONS = [
             "0 2 * * * /home/oracle/scripts/backup_db.sh >> /var/log/oracle/backup.log 2>&1",
             "*/15 * * * * /home/oracle/scripts/healthcheck.sh >> /tmp/health.log 2>&1"
           ]
-        ]
+        ],
+        "vo": "एक्टिव जॉब्स देखने के लिए क्रॉनटैब डैश एल चलाओ। यहाँ हर शेड्यूल पाँच फ़ील्ड्स से शुरू होता है।"
       },
       {
         "say": "5 Stars ka structure yaad rakho: 1=Minute (0-59), 2=Hour (0-23), 3=Day (1-31), 4=Month (1-12), 5=Weekday (0-6, 0=Sunday). `0 2 * * *` matlab roz raat 2:00 AM.",
@@ -12495,6 +16592,11 @@ const LINUX_LESSONS = [
           3
         ],
         "ops": [
+          [
+            "label",
+            "meaning",
+            "System cron dirs: /etc/cron.hourly, .daily, .weekly, .monthly"
+          ],
           [
             "term",
             "term",
@@ -12509,7 +16611,8 @@ const LINUX_LESSONS = [
             "drwxr-xr-x 2 root root 4096 Oct 29 08:00 /etc/cron.monthly",
             "drwxr-xr-x 2 root root 4096 Oct 29 08:00 /etc/cron.weekly"
           ]
-        ]
+        ],
+        "vo": "पाँच स्टार्स का स्ट्रक्चर याद रखो: पहला मिनट ज़ीरो से फिफ्टी-नाइन, दूसरा आवर ज़ीरो से ट्वेंटी-थ्री, तीसरा डे वन से थर्टी-वन, चौथा मंथ वन से ट्वेल्व, पाँचवाँ वीकडे ज़ीरो से सिक्स जहाँ ज़ीरो संडे है। ज़ीरो टू स्टार स्टार स्टार मतलब रोज़ रात दो ए-एम।"
       },
       {
         "say": "Golden Production Rule: Cron job ke aakhir mein hamesha `>> /path/file.log 2>&1` lagao! Agar redirect nahi kiya, toh cron output kho jayega aur failure ka pata nahi chalega.",
@@ -12518,6 +16621,11 @@ const LINUX_LESSONS = [
           5
         ],
         "ops": [
+          [
+            "label",
+            "meaning",
+            "Installed: 0 2 * * * backup_db.sh >> backup.log 2>&1"
+          ],
           [
             "term",
             "term",
@@ -12535,9 +16643,10 @@ const LINUX_LESSONS = [
           ],
           [
             "ok",
-            "tab"
+            "daemon"
           ]
-        ]
+        ],
+        "vo": "गोल्डन प्रोडक्शन रूल: क्रॉन जॉब के आख़िर में हमेशा डबल ग्रेटर-दैन स्लैश पाथ स्लैश फ़ाइल डॉट लॉग टू ग्रेटर-दैन एम्परसैंड वन लगाओ! अगर रीडायरेक्ट नहीं किया, तो क्रॉन आउटपुट खो जाएगा और फ़ेल्योर का पता नहीं चलेगा।"
       },
       {
         "say": "Job chali ya nahi yeh dekhne ke liye `/var/log/syslog` mein CRON entries dekhi jaati hain.",
@@ -12552,6 +16661,26 @@ const LINUX_LESSONS = [
             "oracle@prod-db01:~$ grep -i \"cron\" /var/log/syslog"
           ],
           [
+            "flow",
+            "daemon",
+            "script",
+            "CMD trigger",
+            {
+              "tone": "proc",
+              "dur": 500
+            }
+          ],
+          [
+            "flow",
+            "script",
+            "log",
+            ">> backup.log",
+            {
+              "tone": "ok",
+              "dur": 500
+            }
+          ],
+          [
             "out",
             "term",
             "Oct 29 09:00:01 prod-db01 CRON[1200]: (root) CMD (/usr/lib/x86_64-linux-gnu/sa/sa1 1 1)",
@@ -12560,8 +16689,13 @@ const LINUX_LESSONS = [
           [
             "ok",
             "script"
+          ],
+          [
+            "ok",
+            "log"
           ]
-        ]
+        ],
+        "vo": "जॉब चली या नहीं ये देखने के लिए स्लैश वार स्लैश लॉग स्लैश सिसलॉग में क्रॉन एंट्रीज़ देखी जाती हैं।"
       }
     ],
     "points": [
@@ -12627,7 +16761,8 @@ const LINUX_LESSONS = [
         "why": "Cron environment minimal hota hai; relative paths aur PATH variable available nahi hote. Hamesha `/usr/bin/python3 /home/oracle/backup.py` likho.",
         "fix": "0 2 * * * /usr/bin/python3 /home/oracle/backup.py"
       }
-    ]
+    ],
+    "intro": "अलार्म क्लॉक सोचो जिसमें पाँच बटन्स हैं: पहला मिनट ज़ीरो से फिफ्टी-नाइन, दूसरा घंटा ज़ीरो से ट्वेंटी-थ्री, तीसरा तारीख़ वन से थर्टी-वन, चौथा महीना वन से ट्वेल्व, पाँचवाँ हफ़्ते का दिन ज़ीरो से सिक्स। तुम सेट करते हो रोज़ रात दो बजे डेटाबेस बैकअप चलाओ बराबर ज़ीरो टू स्टार स्टार स्टार स्लैश स्क्रिप्ट्स स्लैश बैकअप डी-बी डॉट एस-एच। कंप्यूटर बिना इंसानी मदद के रोज़ एग्ज़ैक्ट टाइम पर चलाता है।"
   },
   {
     "id": "lx-env-path",
@@ -12672,58 +16807,75 @@ const LINUX_LESSONS = [
       [
         "bashrc",
         "doc",
-        50,
-        60,
-        180,
-        80,
-        "~/.bashrc\nexport ORACLE_SID=FREE\nexport PATH=$PATH:...",
+        24,
+        42,
+        185,
+        86,
+        "~/.bashrc",
         {
+          "sub": "Persistent shell config",
           "tone": "file"
         }
       ],
       [
         "source",
-        "pill",
-        290,
-        75,
-        150,
-        48,
-        "source ~/.bashrc\nInstant Reload",
+        "proc",
+        240,
+        58,
+        165,
+        52,
+        "source ~/.bashrc",
         {
+          "sub": "Apply without logout",
           "tone": "proc"
         }
       ],
       [
-        "env",
-        "box",
-        500,
-        60,
-        180,
-        80,
-        "Active Shell Env\n$PATH\n$ORACLE_HOME",
+        "vpath",
+        "var",
+        440,
+        34,
+        496,
+        48,
+        "$PATH (Executable Lookup Order)",
         {
+          "v": "/u01/.../dbhomeFree/bin:/usr/local/bin:/usr/bin:/bin",
           "tone": "accent"
         }
       ],
       [
-        "app",
-        "box",
-        740,
-        60,
-        170,
-        80,
-        "sqlplus / python\nFinds commands",
+        "vora",
+        "var",
+        440,
+        102,
+        240,
+        52,
+        "$ORACLE_SID / $ORACLE_HOME",
         {
+          "v": "FREE · 23ai dbhomeFree",
           "tone": "ok"
+        }
+      ],
+      [
+        "venv",
+        "var",
+        700,
+        102,
+        236,
+        52,
+        "$APP_ENV (export)",
+        {
+          "v": "(unset)",
+          "tone": "muted"
         }
       ],
       [
         "term",
         "term",
-        30,
-        210,
-        890,
-        300,
+        24,
+        194,
+        912,
+        316,
         "Terminal · Environment Variables"
       ]
     ],
@@ -12749,8 +16901,7 @@ const LINUX_LESSONS = [
             "show",
             "bashrc",
             "source",
-            "env",
-            "app",
+            "vpath",
             "term"
           ],
           [
@@ -12764,20 +16915,13 @@ const LINUX_LESSONS = [
           [
             "link",
             "source",
-            "env",
+            "vpath",
             {
               "tone": "proc"
             }
-          ],
-          [
-            "link",
-            "env",
-            "app",
-            {
-              "tone": "ok"
-            }
           ]
-        ]
+        ],
+        "vo": "जब तुम एल-एस या सीक्वल-प्लस लिखते हो, लिनक्स को कैसे पता चलता है कि बाइनरी कहाँ रखी है? डॉलर पाथ वेरिएबल से!"
       },
       {
         "say": "`echo $PATH` chalao: yeh colon `:` separated folders hain jaise `/usr/bin:/bin:/u01/app/oracle/product/23ai/dbhomeFree/bin`.",
@@ -12786,6 +16930,10 @@ const LINUX_LESSONS = [
           1
         ],
         "ops": [
+          [
+            "pulse",
+            "vpath"
+          ],
           [
             "term",
             "term",
@@ -12796,7 +16944,8 @@ const LINUX_LESSONS = [
             "term",
             "/u01/app/oracle/product/23ai/dbhomeFree/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
           ]
-        ]
+        ],
+        "vo": "इको डॉलर पाथ चलाओ: ये कोलन सेपरेटेड फ़ोल्डर्स हैं जैसे स्लैश यू-एस-आर स्लैश बिन कोलन स्लैश बिन कोलन ओरेकल होम बिन।"
       },
       {
         "say": "Oracle DBA ke liye `$ORACLE_HOME` aur `$ORACLE_SID` set hona compulsory hai, warna `sqlplus / as sysdba` chalane par `ORA-12162` error aayega.",
@@ -12806,6 +16955,14 @@ const LINUX_LESSONS = [
         ],
         "ops": [
           [
+            "show",
+            "vora"
+          ],
+          [
+            "ok",
+            "vora"
+          ],
+          [
             "term",
             "term",
             "oracle@prod-db01:~$ echo \"ORACLE_HOME: $ORACLE_HOME | ORACLE_SID: $ORACLE_SID\""
@@ -12814,12 +16971,9 @@ const LINUX_LESSONS = [
             "out",
             "term",
             "ORACLE_HOME: /u01/app/oracle/product/23ai/dbhomeFree | ORACLE_SID: FREE"
-          ],
-          [
-            "ok",
-            "env"
           ]
-        ]
+        ],
+        "vo": "ओरेकल डी-बी-ए के लिए डॉलर ओरेकल होम और डॉलर ओरेकल एस-आई-डी सेट होना कंपल्सरी है, वरना सीक्वल-प्लस स्लैश ऐज़ सिस-डी-बी-ए चलाने पर ओ-आर-ए ट्वेल्व वन सिक्सटी-टू एरर आएगा।"
       },
       {
         "say": "Variable set karne ke liye `export VAR=value` use kiya jata hai. Bina `export` ke yeh sirf current shell tak rehta hai aur script ya program ko nahi milta.",
@@ -12830,9 +16984,21 @@ const LINUX_LESSONS = [
         ],
         "ops": [
           [
+            "show",
+            "venv"
+          ],
+          [
             "term",
             "term",
             "oracle@prod-db01:~$ export APP_ENV=production"
+          ],
+          [
+            "val",
+            "venv",
+            "production (exported)",
+            {
+              "tone": "ok"
+            }
           ],
           [
             "term",
@@ -12844,7 +17010,8 @@ const LINUX_LESSONS = [
             "term",
             "production"
           ]
-        ]
+        ],
+        "vo": "वेरिएबल सेट करने के लिए एक्सपोर्ट वार बराबर वैल्यू यूज़ किया जाता है। बिना एक्सपोर्ट के ये सिर्फ़ करंट शेल तक रहता है और स्क्रिप्ट या प्रोग्राम को नहीं मिलता।"
       },
       {
         "say": "Variables ko permanent banane ke liye `~/.bashrc` ke aakhir mein add kiya jata hai, aur `source ~/.bashrc` se foran apply ho jata hai bina logout kiye.",
@@ -12875,10 +17042,35 @@ const LINUX_LESSONS = [
             "oracle@prod-db01:~$ source ~/.bashrc"
           ],
           [
+            "flow",
+            "bashrc",
+            "source",
+            "load",
+            {
+              "tone": "file",
+              "dur": 450
+            }
+          ],
+          [
+            "flow",
+            "source",
+            "vpath",
+            "updated!",
+            {
+              "tone": "ok",
+              "dur": 500
+            }
+          ],
+          [
             "ok",
-            "app"
+            "bashrc"
+          ],
+          [
+            "ok",
+            "source"
           ]
-        ]
+        ],
+        "vo": "वेरिएबल्स को पर्मनेंट बनाने के लिए डॉट बैश-आर-सी के आख़िर में ऐड किया जाता है, और सोर्स डॉट बैश-आर-सी से फ़ौरन अप्लाई हो जाता है बिना लॉगआउट किए।"
       }
     ],
     "points": [
@@ -12943,7 +17135,8 @@ const LINUX_LESSONS = [
         "why": "Normal assignment sirf current shell memory mein rehti hai. Child scripts ko pass karne ke liye `export` lagana compulsory hai.",
         "fix": "export VAR=\"val\""
       }
-    ]
+    ],
+    "intro": "दुकान का टूलकिट सोचो। डॉलर पाथ बराबर वो दरवाज़े जहाँ बैश किसी टूल का नाम सुनते ही ढूँढने दौड़ता है, जैसे स्लैश यू-एस-आर स्लैश बिन और स्लैश यू-एस-आर स्लैश लोकल स्लैश बिन। अगर टूल का फ़ोल्डर डॉलर पाथ में नहीं है, तो कंप्यूटर बोलेगा कमांड नॉट फ़ाउंड। और डॉट बैश-आर-सी बराबर तुम्हारी पर्सनल नोटबुक जिसमें लिखे रूल्स हर नया टर्मिनल खोलते ही लोड हो जाते हैं।"
   },
   {
     "id": "lx-bash-1",
@@ -12988,70 +17181,75 @@ const LINUX_LESSONS = [
       [
         "cmd",
         "box",
-        60,
-        60,
-        160,
-        60,
-        "Run Command\n(ls, backup.sh)",
+        24,
+        58,
+        190,
+        64,
+        "Run Command",
         {
+          "sub": "ls / systemctl",
           "tone": "accent"
         }
       ],
       [
-        "exitcode",
-        "pill",
-        280,
-        65,
-        140,
-        50,
-        "$? Exit Code\n0 or Non-Zero",
+        "vexit",
+        "var",
+        250,
+        62,
+        165,
+        56,
+        "$? (Exit Code)",
         {
+          "v": "0",
           "tone": "proc"
         }
       ],
       [
         "branch",
-        "box",
-        480,
-        60,
-        170,
-        60,
-        "if [ $? -eq 0 ]\nConditional Check",
+        "proc",
+        455,
+        62,
+        195,
+        56,
+        "if [ $? -eq 0 ]",
         {
+          "sub": "Conditional branch",
           "tone": "file"
         }
       ],
       [
         "pass",
         "box",
-        720,
-        30,
-        180,
-        50,
-        "Success: echo \"OK\"",
+        700,
+        26,
+        236,
+        56,
+        "then -> [OK] Branch",
         {
+          "sub": "Exit code 0 (Success)",
           "tone": "ok"
         }
       ],
       [
         "fail",
         "box",
-        720,
-        100,
-        180,
-        50,
-        "Failure: exit 1 (Alert)",
+        700,
+        102,
+        236,
+        56,
+        "else -> [FAIL] Branch",
         {
+          "sub": "Non-zero 1..255 (Error!)",
           "tone": "danger"
         }
       ],
       [
         "term",
         "term",
-        30,
-        210,
-        890,
-        300,
+        24,
+        194,
+        912,
+        316,
         "Terminal · Bash Logic & Exit Codes"
       ]
     ],
@@ -13075,7 +17273,7 @@ const LINUX_LESSONS = [
           [
             "show",
             "cmd",
-            "exitcode",
+            "vexit",
             "branch",
             "pass",
             "fail",
@@ -13084,14 +17282,14 @@ const LINUX_LESSONS = [
           [
             "link",
             "cmd",
-            "exitcode",
+            "vexit",
             {
               "tone": "accent"
             }
           ],
           [
             "link",
-            "exitcode",
+            "vexit",
             "branch",
             {
               "tone": "proc"
@@ -13102,6 +17300,7 @@ const LINUX_LESSONS = [
             "branch",
             "pass",
             {
+              "label": "0",
               "tone": "ok"
             }
           ],
@@ -13110,10 +17309,12 @@ const LINUX_LESSONS = [
             "branch",
             "fail",
             {
+              "label": "!= 0",
               "tone": "danger"
             }
           ]
-        ]
+        ],
+        "vo": "हर सीनियर डेव-ऑप्स इंजीनियर स्क्रिप्ट लिखने से पहले एग्ज़िट कोड्स और कंडीशनल्स समझता है। लिनक्स में हर कमांड चलने के बाद डॉलर क्वेश्चन-मार्क सेट करती है।"
       },
       {
         "say": "`ls /var/log/syslog` chalao aur foran `echo $?` karo. Result `0` aayega (Success).",
@@ -13123,6 +17324,16 @@ const LINUX_LESSONS = [
           2
         ],
         "ops": [
+          [
+            "label",
+            "cmd",
+            "ls /var/log/syslog",
+            "File found"
+          ],
+          [
+            "dim",
+            "fail"
+          ],
           [
             "term",
             "term",
@@ -13139,6 +17350,34 @@ const LINUX_LESSONS = [
             "oracle@prod-db01:~$ echo \"Exit code: $?\""
           ],
           [
+            "flow",
+            "cmd",
+            "vexit",
+            "0",
+            {
+              "tone": "ok",
+              "dur": 450
+            }
+          ],
+          [
+            "val",
+            "vexit",
+            "0 (Success)",
+            {
+              "tone": "ok"
+            }
+          ],
+          [
+            "flow",
+            "branch",
+            "pass",
+            "0 == 0",
+            {
+              "tone": "ok",
+              "dur": 500
+            }
+          ],
+          [
             "out",
             "term",
             "Exit code: 0"
@@ -13147,7 +17386,8 @@ const LINUX_LESSONS = [
             "ok",
             "pass"
           ]
-        ]
+        ],
+        "vo": "एल-एस स्लैश वार स्लैश लॉग स्लैश सिसलॉग चलाओ और फ़ौरन इको डॉलर क्वेश्चन-मार्क करो। रिज़ल्ट ज़ीरो आएगा, यानी सक्सेस।"
       },
       {
         "say": "Ab galat folder `ls /nonexistent_folder_xyz` chalao aur `echo $?` karo. Result `2` aayega (Error). Har non-zero code error hota hai.",
@@ -13157,6 +17397,24 @@ const LINUX_LESSONS = [
           5
         ],
         "ops": [
+          [
+            "undim",
+            "fail"
+          ],
+          [
+            "unok",
+            "pass"
+          ],
+          [
+            "dim",
+            "pass"
+          ],
+          [
+            "label",
+            "cmd",
+            "ls /nonexistent_xyz",
+            "Missing path!"
+          ],
           [
             "term",
             "term",
@@ -13168,15 +17426,44 @@ const LINUX_LESSONS = [
             "oracle@prod-db01:~$ echo \"Exit code: $?\""
           ],
           [
+            "flow",
+            "cmd",
+            "vexit",
+            "2",
+            {
+              "tone": "danger",
+              "dur": 450
+            }
+          ],
+          [
+            "val",
+            "vexit",
+            "2 (Error!)",
+            {
+              "tone": "danger"
+            }
+          ],
+          [
+            "flow",
+            "branch",
+            "fail",
+            "2 != 0",
+            {
+              "tone": "danger",
+              "dur": 500
+            }
+          ],
+          [
             "out",
             "term",
             "Exit code: 2"
           ],
           [
-            "danger",
+            "x",
             "fail"
           ]
-        ]
+        ],
+        "vo": "अब ग़लत फ़ोल्डर एल-एस स्लैश नॉन-एग्ज़िस्टेंट फ़ोल्डर चलाओ और इको डॉलर क्वेश्चन-मार्क करो। रिज़ल्ट टू आएगा, यानी एरर। हर नॉन-ज़ीरो कोड एरर होता है।"
       },
       {
         "say": "File checking condition: `[ -f <file> ]` check karta hai file maujood hai ya nahi. `if ... then ... else ... fi` se flow control hota hai.",
@@ -13186,6 +17473,34 @@ const LINUX_LESSONS = [
         ],
         "ops": [
           [
+            "unx",
+            "fail"
+          ],
+          [
+            "undim",
+            "pass"
+          ],
+          [
+            "dim",
+            "fail"
+          ],
+          [
+            "label",
+            "branch",
+            "if [ -f /var/log/syslog ]",
+            "File existence test"
+          ],
+          [
+            "flow",
+            "branch",
+            "pass",
+            "-f true",
+            {
+              "tone": "ok",
+              "dur": 500
+            }
+          ],
+          [
             "term",
             "term",
             "oracle@prod-db01:~$ if [ -f /var/log/syslog ]; then echo \"File exists!\"; else echo \"Missing!\"; fi"
@@ -13194,8 +17509,13 @@ const LINUX_LESSONS = [
             "out",
             "term",
             "File exists!"
+          ],
+          [
+            "ok",
+            "pass"
           ]
-        ]
+        ],
+        "vo": "फ़ाइल चेकिंग कंडीशन: ब्रैकेट डैश एफ़ फ़ाइल चेक करता है फ़ाइल मौजूद है या नहीं। इफ़ देन एल्स एफ़-आई से फ़्लो कंट्रोल होता है।"
       },
       {
         "say": "`scripts/healthcheck.sh` ko inspect karo: dekho kaise exit code aur if-else se automated status reporting banayi gayi hai.",
@@ -13204,6 +17524,16 @@ const LINUX_LESSONS = [
           9
         ],
         "ops": [
+          [
+            "undim",
+            "fail"
+          ],
+          [
+            "label",
+            "branch",
+            "if systemctl is-active nginx",
+            "Production healthcheck.sh"
+          ],
           [
             "term",
             "term",
@@ -13219,8 +17549,13 @@ const LINUX_LESSONS = [
             "else",
             "  echo \"[FAIL] Nginx is down!\"",
             "fi"
+          ],
+          [
+            "ok",
+            "branch"
           ]
-        ]
+        ],
+        "vo": "स्क्रिप्ट्स स्लैश हेल्थचेक डॉट एस-एच को इंस्पेक्ट करो: देखो कैसे एग्ज़िट कोड और इफ़-एल्स से ऑटोमेटेड स्टेटस रिपोर्टिंग बनाई गई है।"
       }
     ],
     "points": [
@@ -13290,7 +17625,8 @@ const LINUX_LESSONS = [
         "why": "`$?` har nayi command ke sath foran overwrite ho jata hai. Agar original command ka exit code rakhna ho toh turant variable mein store karo (`STATUS=$?`).",
         "fix": "STATUS=$?"
       }
-    ]
+    ],
+    "intro": "ट्रैफ़िक सिग्नल सोचो। हर कमांड चलने के बाद एक हिडन पर्ची छोड़ती है जिसका नाम है डॉलर क्वेश्चन-मार्क, यानी एग्ज़िट कोड। अगर पर्ची पर ज़ीरो लिखा है बराबर ग्रीन लाइट यानी सक्सेस। अगर वन या वन ट्वेंटी-सेवन लिखा है बराबर रेड लाइट यानी एरर। इफ़-एल्स इस पर्ची को देख कर फ़ैसला लेता है: अगर बैकअप पास हुआ तो ईमेल भेजो, अगर फ़ेल हुआ तो सायरन बजाओ।"
   },
   {
     "id": "lx-bash-2",
@@ -13335,70 +17671,57 @@ const LINUX_LESSONS = [
       [
         "script",
         "doc",
-        50,
-        60,
-        200,
-        80,
-        "audit_server.sh\nProduction Script",
+        24,
+        38,
+        190,
+        86,
+        "scripts/backup_db.sh",
         {
+          "sub": "#!/bin/bash + set -e",
           "tone": "file"
         }
       ],
       [
-        "fn1",
-        "box",
-        310,
-        45,
-        170,
-        50,
-        "check_disk()\ndf -h threshold",
+        "loop",
+        "proc",
+        244,
+        52,
+        210,
+        58,
+        "for / while Loop",
         {
+          "sub": "Iterates services & lines",
           "tone": "accent"
         }
       ],
       [
-        "fn2",
-        "box",
-        310,
-        105,
-        170,
-        50,
-        "check_service()\nsystemctl is-active",
+        "stbl",
+        "table",
+        484,
+        36,
+        452,
+        150,
+        "Script Execution Audit Log",
         {
-          "tone": "proc"
-        }
-      ],
-      [
-        "fn3",
-        "box",
-        310,
-        165,
-        170,
-        50,
-        "check_ports()\nss -tulpn listener",
-        {
-          "tone": "accent"
-        }
-      ],
-      [
-        "report",
-        "box",
-        560,
-        80,
-        200,
-        80,
-        "Formatted Report\n[OK] Disk healthy\n[OK] Nginx running",
-        {
-          "tone": "ok"
+          "cols": [
+            "TARGET",
+            "CONSTRUCT",
+            "STATUS"
+          ],
+          "cw": [
+            0.34,
+            0.28,
+            0.38
+          ]
         }
       ],
       [
         "term",
         "term",
-        30,
-        245,
-        890,
-        265,
+        24,
+        206,
+        912,
+        304,
         "Terminal · Modular Bash Automation"
       ]
     ],
@@ -13420,45 +17743,28 @@ const LINUX_LESSONS = [
           [
             "show",
             "script",
-            "fn1",
-            "fn2",
-            "fn3",
-            "report",
+            "loop",
+            "stbl",
             "term"
           ],
           [
             "link",
             "script",
-            "fn1",
+            "loop",
             {
               "tone": "file"
             }
           ],
           [
             "link",
-            "script",
-            "fn2",
+            "loop",
+            "stbl",
             {
-              "tone": "file"
-            }
-          ],
-          [
-            "link",
-            "script",
-            "fn3",
-            {
-              "tone": "file"
-            }
-          ],
-          [
-            "link",
-            "fn2",
-            "report",
-            {
-              "tone": "ok"
+              "tone": "accent"
             }
           ]
-        ]
+        ],
+        "vo": "प्रोडक्शन में रिपिटिटिव टास्क्स के लिए लूप और मॉड्यूलर फ़ंक्शन्स यूज़ किए जाते हैं ताकि कोड क्लीन और मेंटेनेबल रहे।"
       },
       {
         "say": "Services check karne ke liye ek line ka for loop: `for srv in nginx sshd; do ... done`. Dono services ka health status ek second mein samne aa gaya.",
@@ -13468,21 +17774,58 @@ const LINUX_LESSONS = [
         ],
         "ops": [
           [
+            "label",
+            "loop",
+            "for srv in nginx sshd",
+            "Service health loop"
+          ],
+          [
             "term",
             "term",
             "oracle@prod-db01:~$ for srv in nginx sshd; do systemctl is-active --quiet $srv && echo \"[OK] $srv active\" || echo \"[FAIL] $srv down\"; done"
+          ],
+          [
+            "flow",
+            "loop",
+            "stbl",
+            "check nginx, sshd",
+            {
+              "tone": "ok",
+              "dur": 550
+            }
+          ],
+          [
+            "addrow",
+            "stbl",
+            [
+              "nginx.service",
+              "for-loop",
+              "[OK] nginx active"
+            ],
+            {
+              "tone": "ok"
+            }
+          ],
+          [
+            "addrow",
+            "stbl",
+            [
+              "sshd.service",
+              "for-loop",
+              "[OK] sshd active"
+            ],
+            {
+              "tone": "ok"
+            }
           ],
           [
             "out",
             "term",
             "[OK] nginx active",
             "[OK] sshd active"
-          ],
-          [
-            "ok",
-            "fn2"
           ]
-        ]
+        ],
+        "vo": "सर्विसेज़ चेक करने के लिए एक लाइन का फ़ॉर लूप: फ़ॉर एस-आर-वी इन इंजन-एक्स एस-एस-एच-डी डू डन। दोनों सर्विसेज़ का हेल्थ स्टेटस एक सेकंड में सामने आ गया।"
       },
       {
         "say": "`scripts/backup_db.sh` inspect karo. Dekho kaise timestamp variable `$(date +%Y%m%d_%H%M%S)` aur logging functions banaye gaye hain.",
@@ -13491,6 +17834,14 @@ const LINUX_LESSONS = [
           3
         ],
         "ops": [
+          [
+            "pulse",
+            "script"
+          ],
+          [
+            "ok",
+            "script"
+          ],
           [
             "term",
             "term",
@@ -13506,12 +17857,9 @@ const LINUX_LESSONS = [
             "echo \"=== [START] Database Backup at $TIMESTAMP ===\"",
             "echo \"Exporting schemas and validating tablespace free space...\"",
             "echo \"=== [DONE] Backup finished successfully ===\""
-          ],
-          [
-            "ok",
-            "script"
           ]
-        ]
+        ],
+        "vo": "स्क्रिप्ट्स स्लैश बैकअप डी-बी डॉट एस-एच इंस्पेक्ट करो। देखो कैसे टाइमस्टैम्प वेरिएबल और लॉगिंग फ़ंक्शन्स बनाए गए हैं।"
       },
       {
         "say": "Script run karo: `./scripts/backup_db.sh`. Output clean aur audited aayega.",
@@ -13526,17 +17874,36 @@ const LINUX_LESSONS = [
             "oracle@prod-db01:~$ ./scripts/backup_db.sh"
           ],
           [
+            "flow",
+            "script",
+            "stbl",
+            "run backup_db.sh",
+            {
+              "tone": "ok",
+              "dur": 550
+            }
+          ],
+          [
+            "addrow",
+            "stbl",
+            [
+              "backup_db.sh",
+              "set -e script",
+              "[DONE] 20261029_110000"
+            ],
+            {
+              "tone": "ok"
+            }
+          ],
+          [
             "out",
             "term",
             "=== [START] Database Backup at 20261029_110000 ===",
             "Exporting schemas and validating tablespace free space...",
             "=== [DONE] Backup finished successfully ==="
-          ],
-          [
-            "ok",
-            "report"
           ]
-        ]
+        ],
+        "vo": "स्क्रिप्ट रन करो: डॉट स्लैश स्क्रिप्ट्स स्लैश बैकअप डी-बी डॉट एस-एच। आउटपुट क्लीन और ऑडिटेड आएगा।"
       },
       {
         "say": "Files ko line-by-line iterate karne ke liye `while read line; do ... done < file.txt` sabse safe tareeqa hai (spaces aur special characters break nahi hote).",
@@ -13546,9 +17913,27 @@ const LINUX_LESSONS = [
         ],
         "ops": [
           [
+            "label",
+            "loop",
+            "while read line < todo.txt",
+            "Line-by-line file reader"
+          ],
+          [
             "term",
             "term",
             "oracle@prod-db01:~$ while read line; do echo \"Task: $line\"; done < todo.txt | head -n 3"
+          ],
+          [
+            "addrow",
+            "stbl",
+            [
+              "todo.txt (3 lines)",
+              "while read",
+              "Tasks processed"
+            ],
+            {
+              "tone": "accent"
+            }
           ],
           [
             "out",
@@ -13556,8 +17941,13 @@ const LINUX_LESSONS = [
             "Task: backup database",
             "Task: check disk",
             "Task: rotate logs"
+          ],
+          [
+            "ok",
+            "loop"
           ]
-        ]
+        ],
+        "vo": "फ़ाइल्स को लाइन-बाय-लाइन इटरेट करने के लिए वाइल रीड लाइन डू डन लेस-दैन फ़ाइल डॉट टी-एक्स-टी सबसे सेफ़ तरीक़ा है, इससे स्पेसेज़ और स्पेशल कैरेक्टर्स ब्रेक नहीं होते।"
       }
     ],
     "points": [
@@ -13627,7 +18017,8 @@ const LINUX_LESSONS = [
         "why": "Agar `$DIR` variable khaali ho, toh `rm -rf $DIR/` command `rm -rf /` ban jaati hai! Isliye shuru mein `set -u` lagao taaki unassigned variable par script ruk jaye.",
         "fix": "set -u && rm -rf \"${DIR:?}/\""
       }
-    ]
+    ],
+    "intro": "जूनियर स्क्रिप्ट पाँच कमांड्स एक के बाद एक लिखता है। सीनियर प्रोडक्शन स्क्रिप्ट एक ऑर्गनाइज़्ड फ़ैक्ट्री जैसी होती है: हर काम का एक फ़ंक्शन होता है जैसे चेक डिस्क और चेक डी-बी, सारे सर्वर्स पर लूप घूमता है, और क्लीन टाइमस्टैम्प्ड लॉग्स बनते हैं ताकि रात तीन बजे ऑन-कॉल इंजीनियर को पढ़ते ही इश्यू समझ आए।"
   },
   {
     "id": "lx-limits-sysctl",
@@ -13671,59 +18062,102 @@ const LINUX_LESSONS = [
     "nodes": [
       [
         "ora",
-        "pill",
-        50,
-        60,
-        160,
-        50,
-        "oracle user\nHigh concurrency",
+        "user",
+        34,
+        48,
+        62,
+        54,
+        "oracle",
         {
+          "sub": "DBA Account",
           "tone": "accent"
         }
       ],
       [
         "limits",
         "doc",
-        280,
-        50,
-        200,
-        75,
-        "/etc/security/limits.conf\noracle soft nofile 65536\noracle hard nofile 65536",
+        140,
+        38,
+        210,
+        78,
+        "/etc/security/limits.conf",
         {
+          "sub": "nofile 65536 · nproc 16384",
           "tone": "file"
         }
       ],
       [
         "sysctl",
-        "box",
-        540,
-        50,
-        190,
-        75,
-        "sysctl.conf (Kernel)\nvm.swappiness=10\nfs.file-max=6815744",
+        "doc",
+        380,
+        38,
+        210,
+        78,
+        "/etc/sysctl.conf",
         {
+          "sub": "shmmax · swappiness = 10",
           "tone": "proc"
         }
       ],
       [
-        "engine",
-        "disk",
-        780,
+        "vnofile",
+        "var",
+        625,
+        34,
+        148,
         50,
-        140,
-        75,
-        "Linux Kernel\nOptimized for DB",
+        "ulimit -n (nofile)",
         {
+          "v": "65536",
+          "tone": "ok"
+        }
+      ],
+      [
+        "vnproc",
+        "var",
+        788,
+        34,
+        148,
+        50,
+        "ulimit -u (nproc)",
+        {
+          "v": "16384",
+          "tone": "ok"
+        }
+      ],
+      [
+        "vswap",
+        "var",
+        625,
+        102,
+        148,
+        50,
+        "vm.swappiness",
+        {
+          "v": "10 (Tuned)",
+          "tone": "accent"
+        }
+      ],
+      [
+        "engine",
+        "proc",
+        788,
+        102,
+        148,
+        50,
+        "sysctl -p",
+        {
+          "sub": "Live Kernel Apply",
           "tone": "ok"
         }
       ],
       [
         "term",
         "term",
-        30,
-        200,
-        890,
-        310,
+        24,
+        190,
+        912,
+        320,
         "Terminal · Kernel & Limits Tuning"
       ]
     ],
@@ -13750,7 +18184,6 @@ const LINUX_LESSONS = [
             "ora",
             "limits",
             "sysctl",
-            "engine",
             "term"
           ],
           [
@@ -13766,18 +18199,11 @@ const LINUX_LESSONS = [
             "limits",
             "sysctl",
             {
-              "tone": "file"
-            }
-          ],
-          [
-            "link",
-            "sysctl",
-            "engine",
-            {
-              "tone": "ok"
+              "tone": "proc"
             }
           ]
-        ]
+        ],
+        "vo": "ओरेकल डेटाबेस इंस्टॉल करने से पहले ऑफ़िशियल इंस्टॉलेशन गाइड बोलती है: कॉन्फ़िगर कर्नल लिमिट्स एंड सिस-सी-टी-एल। बिना इसके प्रोडक्शन क्रैश हो जाएगी।"
       },
       {
         "say": "Open files limit check karo: `ulimit -n`. Production Oracle server par yeh 65536 ya 1048576 honi chahiye.",
@@ -13788,6 +18214,16 @@ const LINUX_LESSONS = [
           3
         ],
         "ops": [
+          [
+            "show",
+            "vnofile",
+            "vnproc"
+          ],
+          [
+            "pulse",
+            "vnofile",
+            "vnproc"
+          ],
           [
             "term",
             "term",
@@ -13812,7 +18248,8 @@ const LINUX_LESSONS = [
             "ok",
             "ora"
           ]
-        ]
+        ],
+        "vo": "ओपन फ़ाइल्स लिमिट चेक करो: यू-लिमिट डैश एन। प्रोडक्शन ओरेकल सर्वर पर ये पैंसठ हज़ार पाँच सौ छत्तीस होनी चाहिए।"
       },
       {
         "say": "`/etc/security/limits.conf` mein `oracle soft nofile 65536` aur `oracle hard nofile 65536` define kiya jata hai taaki login hote hi limits auto-set hon.",
@@ -13821,6 +18258,20 @@ const LINUX_LESSONS = [
           5
         ],
         "ops": [
+          [
+            "flow",
+            "limits",
+            "vnofile",
+            "soft/hard 65536",
+            {
+              "tone": "file",
+              "dur": 550
+            }
+          ],
+          [
+            "ok",
+            "limits"
+          ],
           [
             "term",
             "term",
@@ -13837,7 +18288,8 @@ const LINUX_LESSONS = [
             "oracle   soft   stack    10240",
             "oracle   hard   stack    32768"
           ]
-        ]
+        ],
+        "vo": "स्लैश ई-टी-सी स्लैश सिक्योरिटी स्लैश लिमिट्स डॉट कॉन्फ़ में ओरेकल सॉफ़्ट नो-फ़ाइल और हार्ड नो-फ़ाइल डिफ़ाइन किया जाता है ताकि लॉगिन होते ही लिमिट्स ऑटो-सेट हों।"
       },
       {
         "say": "Database performance ke liye `vm.swappiness` bohot ahem hai. Default `60` hota hai jisse kernel jaldi swap karne lagta hai. DB ke liye ise `10` ya `1` rakha jata hai.",
@@ -13846,6 +18298,18 @@ const LINUX_LESSONS = [
           7
         ],
         "ops": [
+          [
+            "show",
+            "vswap"
+          ],
+          [
+            "val",
+            "vswap",
+            "10 (Avoid Swap)",
+            {
+              "tone": "accent"
+            }
+          ],
           [
             "term",
             "term",
@@ -13856,7 +18320,8 @@ const LINUX_LESSONS = [
             "term",
             "10"
           ]
-        ]
+        ],
+        "vo": "डेटाबेस परफ़ॉर्मेंस के लिए वी-एम डॉट स्वैपिनेस बहुत अहम है। डिफ़ॉल्ट सिक्सटी होता है जिससे कर्नल जल्दी स्वैप करने लगता है। डी-बी के लिए इसे टेन या वन रखा जाता है।"
       },
       {
         "say": "`/etc/sysctl.conf` modify karne ke baad server reboot karne ki zaroorat nahi hoti; `sudo sysctl -p` chalao aur kernel parameters live apply ho jaate hain.",
@@ -13866,6 +18331,18 @@ const LINUX_LESSONS = [
           10
         ],
         "ops": [
+          [
+            "show",
+            "engine"
+          ],
+          [
+            "link",
+            "sysctl",
+            "engine",
+            {
+              "tone": "ok"
+            }
+          ],
           [
             "term",
             "term",
@@ -13886,6 +18363,16 @@ const LINUX_LESSONS = [
             "oracle@prod-db01:~$ sudo sysctl -p"
           ],
           [
+            "flow",
+            "sysctl",
+            "engine",
+            "apply live",
+            {
+              "tone": "ok",
+              "dur": 550
+            }
+          ],
+          [
             "out",
             "term",
             "fs.file-max = 6815744",
@@ -13896,9 +18383,14 @@ const LINUX_LESSONS = [
           ],
           [
             "ok",
+            "sysctl"
+          ],
+          [
+            "ok",
             "engine"
           ]
-        ]
+        ],
+        "vo": "स्लैश ई-टी-सी स्लैश सिस-सी-टी-एल डॉट कॉन्फ़ मॉडिफ़ाई करने के बाद सर्वर रीबूट करने की ज़रूरत नहीं होती; सूडो सिस-सी-टी-एल डैश पी चलाओ और कर्नल पैरामीटर्स लाइव अप्लाई हो जाते हैं।"
       }
     ],
     "points": [
@@ -13964,7 +18456,8 @@ const LINUX_LESSONS = [
         "why": "`0` karne par kernel swap use karne se bilkul inkaar kar deta hai, jisse OOM (Out Of Memory) killer database ko turant kill kar deta hai. Hamesha `1` ya `10` safe value rakho.",
         "fix": "vm.swappiness = 10"
       }
-    ]
+    ],
+    "intro": "हाईवे पर स्पीड लिमिट और फ़्लाईओवर की वेट लिमिट सोचो। डिफ़ॉल्ट लिनक्स एक नॉर्मल लैपटॉप के हिसाब से सेट होता है: मैक्स टेन ट्वेंटी-फोर ओपन फ़ाइल्स। पर ओरेकल डेटाबेस या इंजन-एक्स को एक सेकंड में सिक्सटी-फाइव थाउज़ंड फ़ाइल्स और नेटवर्क सॉकेट्स ओपन करने होते हैं! अगर लिमिट न बढ़ाओ, तो टू मेनी ओपन फ़ाइल्स क्रैश आ जाता है। लिमिट्स डॉट कॉन्फ़ और सिस-सी-टी-एल लिनक्स के इंजन को रेस कार बनाते हैं।"
   },
   {
     "id": "lx-sec-audit",
@@ -14009,57 +18502,71 @@ const LINUX_LESSONS = [
       [
         "sshd",
         "doc",
-        50,
-        60,
-        200,
-        80,
-        "/etc/ssh/sshd_config\nPermitRootLogin no\nPasswordAuth no",
+        24,
+        38,
+        190,
+        74,
+        "/etc/ssh/sshd_config",
         {
-          "tone": "danger"
-        }
-      ],
-      [
-        "harden",
-        "box",
-        310,
-        65,
-        170,
-        70,
-        "sshd Hardening\nRestart sshd",
-        {
+          "sub": "PermitRootLogin no",
           "tone": "accent"
         }
       ],
       [
         "authlog",
         "doc",
-        550,
-        60,
+        24,
+        124,
         190,
-        80,
-        "/var/log/auth.log\nSecurity Audit Trail",
+        68,
+        "/var/log/auth.log",
         {
+          "sub": "SSH & sudo audit trail",
           "tone": "file"
         }
       ],
       [
-        "safe",
-        "disk",
-        800,
-        60,
-        120,
-        80,
-        "CIS Compliant\nAudited Host",
+        "cistbl",
+        "table",
+        244,
+        38,
+        510,
+        154,
+        "CIS Security Compliance Audit Table",
         {
+          "cols": [
+            "CONTROL",
+            "SOURCE",
+            "FINDING",
+            "VERDICT"
+          ],
+          "cw": [
+            0.26,
+            0.22,
+            0.34,
+            0.18
+          ]
+        }
+      ],
+      [
+        "safe",
+        "box",
+        780,
+        64,
+        156,
+        96,
+        "CIS Hardened",
+        {
+          "sub": "prod-db01 Verified",
           "tone": "ok"
         }
       ],
       [
         "term",
         "term",
-        30,
+        24,
         210,
-        890,
+        912,
         300,
         "Terminal · Security Audit & Hardening"
       ]
@@ -14082,36 +18589,37 @@ const LINUX_LESSONS = [
           [
             "show",
             "sshd",
-            "harden",
             "authlog",
+            "cistbl",
             "safe",
             "term"
           ],
           [
             "link",
             "sshd",
-            "harden",
+            "cistbl",
             {
-              "tone": "danger"
+              "tone": "accent"
             }
           ],
           [
             "link",
-            "harden",
             "authlog",
+            "cistbl",
             {
               "tone": "file"
             }
           ],
           [
             "link",
-            "authlog",
+            "cistbl",
             "safe",
             {
               "tone": "ok"
             }
           ]
-        ]
+        ],
+        "vo": "प्रोडक्शन ऑडिट के दौरान सिक्योरिटी कंप्लायंस टीम आती है। उनका पहला चेक: एस-एस-एच कॉन्फ़िगरेशन और लॉगिन ऑडिट लॉग्स।"
       },
       {
         "say": "SSH settings inspect karo: `PermitRootLogin no` aur `PasswordAuthentication no` enterprise CIS benchmark rule #1 hai.",
@@ -14126,6 +18634,29 @@ const LINUX_LESSONS = [
             "oracle@prod-db01:~$ grep -E \"^(PermitRootLogin|PasswordAuthentication)\" /etc/ssh/sshd_config"
           ],
           [
+            "flow",
+            "sshd",
+            "cistbl",
+            "SSH policy",
+            {
+              "tone": "ok",
+              "dur": 500
+            }
+          ],
+          [
+            "addrow",
+            "cistbl",
+            [
+              "SSH Root & Passwd",
+              "sshd_config",
+              "Both set to \"no\"",
+              "PASS"
+            ],
+            {
+              "tone": "ok"
+            }
+          ],
+          [
             "out",
             "term",
             "PermitRootLogin no",
@@ -14135,7 +18666,8 @@ const LINUX_LESSONS = [
             "ok",
             "sshd"
           ]
-        ]
+        ],
+        "vo": "एस-एस-एच सेटिंग्स इंस्पेक्ट करो: परमिट रूट लॉगिन नो और पासवर्ड ऑथेंटिकेशन नो एंटरप्राइज सी-आई-एस बेंचमार्क रूल नंबर वन है।"
       },
       {
         "say": "Security Audit: `/var/log/auth.log` mein search karo `Failed password`. Agar ek hi IP se 500 lines aayi hain, matlab hacker brute-force dictionary attack kar raha hai!",
@@ -14150,16 +18682,36 @@ const LINUX_LESSONS = [
             "oracle@prod-db01:~$ grep -i \"failed password\" /var/log/auth.log"
           ],
           [
+            "flow",
+            "authlog",
+            "cistbl",
+            "brute-force",
+            {
+              "tone": "danger",
+              "dur": 500
+            }
+          ],
+          [
+            "addrow",
+            "cistbl",
+            [
+              "Brute-Force Log",
+              "auth.log",
+              "203.0.113.9 (2 fails)",
+              "DETECTED"
+            ],
+            {
+              "tone": "danger"
+            }
+          ],
+          [
             "out",
             "term",
             "Oct 29 09:12:00 prod-db01 sshd[901]: Failed password for invalid user admin from 203.0.113.9 port 44120 ssh2",
             "Oct 29 09:12:02 prod-db01 sshd[904]: Failed password for invalid user test from 203.0.113.9 port 44122 ssh2"
-          ],
-          [
-            "danger",
-            "authlog"
           ]
-        ]
+        ],
+        "vo": "सिक्योरिटी ऑडिट: स्लैश वार स्लैश लॉग स्लैश ऑथ डॉट लॉग में सर्च करो फ़ेल्ड पासवर्ड। अगर एक ही आई-पी से पाँच सौ लाइन्स आई हैं, मतलब हैकर ब्रूट-फ़ोर्स डिक्शनरी अटैक कर रहा है!"
       },
       {
         "say": "Sudo Accountability: `grep \"COMMAND\" /var/log/auth.log` se har sudo action ka user aur exact command milta hai (kisi ne chori se file delete toh nahi ki).",
@@ -14174,12 +18726,26 @@ const LINUX_LESSONS = [
             "oracle@prod-db01:~$ grep \"COMMAND\" /var/log/auth.log"
           ],
           [
+            "addrow",
+            "cistbl",
+            [
+              "Sudo Accountability",
+              "auth.log",
+              "nginx + ufw logged",
+              "PASS"
+            ],
+            {
+              "tone": "accent"
+            }
+          ],
+          [
             "out",
             "term",
             "Oct 29 08:30:15 prod-db01 sudo:   oracle : TTY=pts/0 ; PWD=/home/oracle ; USER=root ; COMMAND=/bin/systemctl restart nginx",
             "Oct 29 09:45:00 prod-db01 sudo:   oracle : TTY=pts/0 ; PWD=/home/oracle ; USER=root ; COMMAND=/usr/sbin/ufw status"
           ]
-        ]
+        ],
+        "vo": "सूडो अकाउंटेबिलिटी: ग्रेप कमांड स्लैश वार स्लैश लॉग स्लैश ऑथ डॉट लॉग से हर सूडो एक्शन का यूज़र और एग्ज़ैक्ट कमांड मिलता है।"
       },
       {
         "say": "Permission Audit: Kabhi bhi production par `777` permissions nahi honi chahiye. `find /home -type f -perm 0777` se open vulnerable files pakdo.",
@@ -14194,15 +18760,33 @@ const LINUX_LESSONS = [
             "oracle@prod-db01:~$ find /home/oracle -type f -perm 0777"
           ],
           [
+            "addrow",
+            "cistbl",
+            [
+              "0777 File Scan",
+              "/home/oracle",
+              "0 world-writable files",
+              "PASS"
+            ],
+            {
+              "tone": "ok"
+            }
+          ],
+          [
             "out",
             "term",
             "# No dangerous 777 files found - Clean!"
           ],
           [
             "ok",
+            "authlog"
+          ],
+          [
+            "ok",
             "safe"
           ]
-        ]
+        ],
+        "vo": "परमिशन ऑडिट: कभी भी प्रोडक्शन पर सेवन-सेवन-सेवन परमिशन्स नहीं होनी चाहिए। फ़ाइंड स्लैश होम डैश टाइप एफ़ डैश पर्म ज़ीरो सेवन-सेवन-सेवन से ओपन वल्नरेबल फ़ाइल्स पकड़ो।"
       }
     ],
     "points": [
@@ -14267,7 +18851,8 @@ const LINUX_LESSONS = [
         "why": "Audit logs sirf root readable hone chahiye taaki koi hacker aakar apne footprints delete na kar sake.",
         "fix": "chmod 640 /var/log/auth.log"
       }
-    ]
+    ],
+    "intro": "अपने घर का सिक्योरिटी लॉक सिस्टम अपग्रेड करना सोचो। पहला काम: डायरेक्ट मास्टर की का होल बंद करो, यानी परमिट रूट लॉगिन नो। दूसरा: कमज़ोर पासवर्ड्स बैन करो, सिर्फ़ बायोमेट्रिक चाबी अलाउ करो, यानी पासवर्ड ऑथेंटिकेशन नो। तीसरा: दरवाज़े के सी-सी-टी-वी कैमरे की रिकॉर्डिंग चेक करो कौन बार-बार लॉक तोड़ने की कोशिश कर रहा था, यानी स्लैश वार स्लैश लॉग स्लैश ऑथ डॉट लॉग।"
   },
   {
     "id": "lx-incident",
@@ -14302,60 +18887,84 @@ const LINUX_LESSONS = [
     ],
     "nodes": [
       [
-        "p1",
-        "pill",
-        50,
-        60,
-        160,
-        50,
-        "P1 ALERT\nPayAPI Down!",
+        "runbook",
+        "stages",
+        24,
+        32,
+        912,
+        34,
+        "SRE P1 INCIDENT RESPONSE RUNBOOK",
         {
+          "items": [
+            "1. Alert 502",
+            "2. Triage Host",
+            "3. Inspect Logs",
+            "4. Restart Svc",
+            "5. Verify 200 OK"
+          ],
+          "tone": "danger",
+          "at": 0
+        }
+      ],
+      [
+        "p1",
+        "proc",
+        24,
+        92,
+        195,
+        68,
+        "P1: PayAPI 502",
+        {
+          "sub": "Checkout failing!",
           "tone": "danger"
         }
       ],
       [
         "triage",
         "box",
-        270,
-        50,
-        180,
-        75,
-        "Step 1 & 2: Triage\nuptime & df -h",
+        255,
+        92,
+        200,
+        68,
+        "Host Triage",
         {
+          "sub": "Load 0.28 · Disk OK",
           "tone": "proc"
         }
       ],
       [
         "invest",
         "box",
-        510,
-        50,
-        190,
-        75,
-        "Step 3: Logs\njournalctl -u payapi",
+        490,
+        92,
+        205,
+        68,
+        "payapi.service",
         {
-          "tone": "accent"
+          "sub": "FAILED (DB Refused)",
+          "tone": "danger"
         }
       ],
       [
         "fix",
         "box",
-        760,
-        50,
-        160,
-        75,
-        "Step 4 & 5: Fix\nsystemctl start payapi\ncurl health 200 OK",
+        730,
+        92,
+        206,
+        68,
+        "Endpoint :8080/health",
         {
-          "tone": "ok"
+          "sub": "Waiting for recovery...",
+          "tone": "muted"
         }
       ],
       [
         "term",
         "term",
-        30,
-        200,
-        890,
-        310,
+        24,
+        186,
+        912,
+        324,
         "Terminal · P1 Incident Command Center"
       ]
     ],
@@ -14380,11 +18989,25 @@ const LINUX_LESSONS = [
         "ops": [
           [
             "show",
+            "runbook",
             "p1",
             "triage",
             "invest",
             "fix",
             "term"
+          ],
+          [
+            "at",
+            "runbook",
+            0
+          ],
+          [
+            "x",
+            "p1"
+          ],
+          [
+            "x",
+            "invest"
           ],
           [
             "link",
@@ -14410,7 +19033,8 @@ const LINUX_LESSONS = [
               "tone": "ok"
             }
           ]
-        ]
+        ],
+        "vo": "अलर्ट! पेजर-ड्यूटी: क्रिटिकल, पे-ए-पी-आई एंडपॉइंट इज़ फ़ेलिंग विद फाइव ओ टू बैड गेटवे। ऐज़ लीड लिनक्स एंड डेव-ऑप्स इंजीनियर, तुम रनबुक एग्ज़ीक्यूट करते हो।"
       },
       {
         "say": "Step 1 & 2: Pehle server ka load aur disk space check karo. Load 0.28 normal hai, disk par space available hai.",
@@ -14421,6 +19045,11 @@ const LINUX_LESSONS = [
           3
         ],
         "ops": [
+          [
+            "at",
+            "runbook",
+            1
+          ],
           [
             "term",
             "term",
@@ -14448,7 +19077,8 @@ const LINUX_LESSONS = [
             "ok",
             "triage"
           ]
-        ]
+        ],
+        "vo": "स्टेप वन एंड टू: पहले सर्वर का लोड और डिस्क स्पेस चेक करो। लोड ज़ीरो पॉइंट ट्वेंटी-एट नॉर्मल है, डिस्क पर स्पेस अवेलेबल है।"
       },
       {
         "say": "Step 3: Service status dekho: `systemctl status payapi`! Yeh `failed` state mein hai. Foran `journalctl -u payapi -n 5` se error pakdo.",
@@ -14459,6 +19089,25 @@ const LINUX_LESSONS = [
           7
         ],
         "ops": [
+          [
+            "at",
+            "runbook",
+            2
+          ],
+          [
+            "flow",
+            "triage",
+            "invest",
+            "check service",
+            {
+              "tone": "danger",
+              "dur": 500
+            }
+          ],
+          [
+            "pulse",
+            "invest"
+          ],
           [
             "term",
             "term",
@@ -14482,12 +19131,9 @@ const LINUX_LESSONS = [
             "Oct 29 09:20:14 prod-db01 payapi[1420]: ERROR SqlExceptionHelper - Connection refused",
             "Oct 29 09:20:14 prod-db01 payapi[1420]: Application failed to start: Database cluster unreachable",
             "Oct 29 09:20:14 prod-db01 systemd[1]: payapi.service: Failed with result 'exit-code'."
-          ],
-          [
-            "danger",
-            "invest"
           ]
-        ]
+        ],
+        "vo": "स्टेप थ्री: सर्विस स्टेटस देखो, सिस्टम-सी-टी-एल स्टेटस पे-ए-पी-आई! ये फ़ेल्ड स्टेट में है। फ़ौरन जर्नल-सी-टी-एल डैश यू पे-ए-पी-आई डैश एन फाइव से एरर पकड़ो।"
       },
       {
         "say": "Root Cause mil gaya: Database listener down hua tha jo ab wapas aa chuka hai, par service restart nahi hui thi. Ab service start karo: `sudo systemctl start payapi`.",
@@ -14497,9 +19143,33 @@ const LINUX_LESSONS = [
         ],
         "ops": [
           [
+            "at",
+            "runbook",
+            3
+          ],
+          [
             "term",
             "term",
             "oracle@prod-db01:~$ sudo systemctl start payapi"
+          ],
+          [
+            "unx",
+            "invest"
+          ],
+          [
+            "tone",
+            "invest",
+            "ok"
+          ],
+          [
+            "label",
+            "invest",
+            "payapi.service",
+            "Active: running (PID 2850)"
+          ],
+          [
+            "ok",
+            "invest"
           ],
           [
             "term",
@@ -14512,12 +19182,9 @@ const LINUX_LESSONS = [
             "● payapi.service - Payment Gateway REST API Microservice",
             "     Active: active (running) since Wed 2026-10-29 11:15:30 UTC; 5s ago",
             "   Main PID: 2850 (java)"
-          ],
-          [
-            "ok",
-            "invest"
           ]
-        ]
+        ],
+        "vo": "रूट कॉज़ मिल गया: डेटाबेस लिसनर डाउन हुआ था जो अब वापस आ चुका है, पर सर्विस रीस्टार्ट नहीं हुई थी। अब सर्विस स्टार्ट करो: सूडो सिस्टम-सी-टी-एल स्टार्ट पे-ए-पी-आई।"
       },
       {
         "say": "Step 5: Final Verification! Check karo port 8080 listening hai aur health API `{\"status\":\"UP\"}` return kar rahi hai. INCIDENT RESOLVED!",
@@ -14528,6 +19195,16 @@ const LINUX_LESSONS = [
           13
         ],
         "ops": [
+          [
+            "at",
+            "runbook",
+            4
+          ],
+          [
+            "tone",
+            "runbook",
+            "ok"
+          ],
           [
             "term",
             "term",
@@ -14544,19 +19221,56 @@ const LINUX_LESSONS = [
             "oracle@prod-db01:~$ curl -s http://localhost:8080/health"
           ],
           [
+            "flow",
+            "invest",
+            "fix",
+            "LISTEN :8080",
+            {
+              "tone": "ok",
+              "dur": 550
+            }
+          ],
+          [
             "out",
             "term",
             "{\"status\":\"UP\",\"service\":\"payapi\",\"database\":\"connected\",\"timestamp\":\"2026-10-29T11:15:32Z\"}"
+          ],
+          [
+            "tone",
+            "fix",
+            "ok"
+          ],
+          [
+            "label",
+            "fix",
+            "Endpoint :8080/health",
+            "200 OK · {\"status\":\"UP\"}"
           ],
           [
             "ok",
             "fix"
           ],
           [
+            "unx",
+            "p1"
+          ],
+          [
+            "tone",
+            "p1",
+            "ok"
+          ],
+          [
+            "label",
+            "p1",
+            "P1 RESOLVED",
+            "MTTR: 4 mins · All Green"
+          ],
+          [
             "ok",
             "p1"
           ]
-        ]
+        ],
+        "vo": "स्टेप फाइव: फ़ाइनल वेरिफ़िकेशन! चेक करो पोर्ट एटी-एटी लिसनिंग है और हेल्थ ए-पी-आई स्टेटस अप रिटर्न कर रही है। इंसिडेंट रिज़ॉल्व्ड!"
       }
     ],
     "points": [
@@ -14625,7 +19339,8 @@ const LINUX_LESSONS = [
         "why": "Hamesha 2-3 minutes wait karke curl healthcheck verify karo taaki crash-looping service pakad mein aa sake.",
         "fix": "curl -s http://localhost:8080/health"
       }
-    ]
+    ],
+    "intro": "पूरे कोर्स का ग्रैंड फ़िनाले! इमेजिन करो शाम के सात बजे हैं और प्रोडक्शन अलर्ट बजी: क्रिटिकल, पेमेंट गेटवे डाउन, कस्टमर्स कैननॉट चेकआउट! तुम स्क्रीन पर बैठ कर स्टेप-बाय-स्टेप प्रोडक्शन एस-आर-ई रनबुक एग्ज़ीक्यूट करते हो और सर्वर को तीन मिनट में ज़िंदा कर देते हो!"
   }
 ];
 
