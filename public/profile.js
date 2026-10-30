@@ -15,7 +15,7 @@ const SITE = {
   name: 'Oracle in Motion',
   prefix: 'oim.',                     // localStorage prefix used by index.html's store
   slug: 'oracle-in-motion',
-  roles: ['SQL & PL/SQL Developer','Oracle DBA Trainee','Forms & Reports 12c Dev','Python + Oracle Engineer','Full-Stack Student'],
+  roles: ['SQL & PL/SQL Developer','Oracle DBA Trainee','Forms & Reports 12c Dev','Python + Oracle Engineer','Linux / DevOps Engineer','Full-Stack Student'],
   practice: 'SQL/PLSQL practice',
   taskDone: 'queries solve ki',
   noteWhat: 'SQL snippets',
@@ -234,6 +234,7 @@ function initUI(){
         </div>
         <nav class="ptabs" role="tablist" id="pmTabs" aria-orientation="vertical" aria-label="Profile sections">
           <button type="button" class="ptab" role="tab" data-ptab="overview" aria-selected="true">${ico('M2.5 13.5h11M4 11V8M7 11V4.5M10 11V6.5M13 11V3')}Progress</button>
+          <button type="button" class="ptab" role="tab" data-ptab="revision" aria-selected="false">${ico('M8 2.2l1.6 3.3 3.6.5-2.6 2.5.6 3.6L8 10.4l-3.2 1.7.6-3.6-2.6-2.5 3.6-.5z')}Revision & Quiz<span class="ct" id="pmRevCt"></span></button>
           <button type="button" class="ptab" role="tab" data-ptab="bookmarks" aria-selected="false">${ico('M4 2.5h8a1 1 0 0 1 1 1v10l-5-3-5 3v-10a1 1 0 0 1 1-1z')}Bookmarks & notes<span class="ct" id="pmSavedCt"></span></button>
           <button type="button" class="ptab" role="tab" data-ptab="certificates" aria-selected="false">${ico('M8 9.5a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM5.8 8.6 5 14l3-1.6 3 1.6-.8-5.4')}Certificates<span class="ct" id="pmCertCt"></span></button>
           <button type="button" class="ptab" role="tab" data-ptab="cloud" aria-selected="false">${ico('M8 7.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5zM3 13.5c.6-2.6 2.6-4 5-4s4.4 1.4 5 4')}Account</button>
@@ -431,7 +432,11 @@ function decorateSidebarBookmarks(){
 /* ---------- Modal Rendering ---------- */
 let activeModalTab = 'overview';
 let modalReturnFocus = null;
-const TAB_TITLES = { overview: 'Progress', bookmarks: 'Bookmarks aur notes', certificates: 'Certificates', cloud: 'Profile aur account' };
+let mockState = null;
+let mockTimer = 0;
+function stopMockTimer(){ if(mockTimer){ clearInterval(mockTimer); mockTimer = 0; } }
+const mdInline = s => esc(s).replace(/`([^`]+)`/g, '<code>$1</code>');
+const TAB_TITLES = { overview: 'Progress', revision: 'Revision aur Mock Test', bookmarks: 'Bookmarks aur notes', certificates: 'Certificates', cloud: 'Profile aur account' };
 
 function openProfileModal(tabName){
   activeModalTab = tabName || 'overview';
@@ -442,6 +447,7 @@ function openProfileModal(tabName){
   if(sel) sel.focus();
 }
 function closeProfileModal(){
+  stopMockTimer();
   $('pModalBack').hidden = true;
   if(modalReturnFocus && modalReturnFocus.focus) modalReturnFocus.focus();
 }
@@ -465,6 +471,8 @@ function renderModalHeader(){
   $('pmXpNext').textContent = (lvCeil - st.xp) + ' XP aur, phir Level ' + (st.level + 1);
   const saved = bookmarks.size + Object.keys(notes).filter(id => notes[id] && notes[id].trim()).length;
   $('pmSavedCt').textContent = saved || '';
+  const wrongCt = Object.keys(quizzes).filter(id => quizzes[id] && !quizzes[id].ok && oim.byId[id] && oim.byId[id].check).length;
+  if($('pmRevCt')) $('pmRevCt').textContent = wrongCt || '';
   const certs = getCoursesList().filter(c => { const k = courseCounts(c, done); return k.total && k.cDone >= k.total; }).length;
   $('pmCertCt').textContent = certs || '';
   const sb = $('pmSyncBadge');
@@ -598,6 +606,176 @@ function renderModalTab(tabName){
     body.querySelectorAll('[data-goto]').forEach(b => b.addEventListener('click', () => {
       location.hash = b.dataset.goto;
       closeProfileModal();
+    }));
+  }
+
+  else if(tabName === 'revision'){
+    stopMockTimer();
+    const recordAttempt = (lessonId, chosen, isOk) => {
+      const prev = quizzes[lessonId];
+      quizzes[lessonId] = { ans: chosen, ok: isOk, ts: Date.now() };
+      store.set('quizzes', quizzes);
+      if(!prev){
+        const d = ensureDay(todayKey());
+        d.quizzes = (d.quizzes || 0) + 1;
+        store.set('activity', activity);
+      }
+      updateHeaderPill();
+      renderModalHeader();
+      onLessonSwitched();
+      scheduleCloudPush();
+    };
+
+    const startMock = (courseFilter) => {
+      let pool = oim.ALL.filter(l => l.check && l.check.q && Array.isArray(l.check.a) && (courseFilter === 'all' || (l.c && l.c.id === courseFilter)));
+      if(!pool.length) return;
+      // Prioritise missed or unanswered questions first, shuffled within priority groups
+      const shuf = arr => { const a = arr.slice(); for(let i = a.length - 1; i > 0; i--){ const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+      const missed = shuf(pool.filter(l => quizzes[l.id] && !quizzes[l.id].ok));
+      const fresh = shuf(pool.filter(l => !quizzes[l.id]));
+      const seenOk = shuf(pool.filter(l => quizzes[l.id] && quizzes[l.id].ok));
+      const picked = [...missed, ...fresh, ...seenOk].slice(0, Math.min(10, pool.length));
+      mockState = { course: courseFilter, items: picked, idx: 0, answers: [], secLeft: picked.length * 18, done: false };
+      renderModalTab('revision');
+    };
+
+    const fmtSec = s => Math.floor(s / 60) + ':' + String(s % 60).padStart(2, '0');
+    const selCourse = (mockState && mockState.course) || 'all';
+    const wrongList = Object.keys(quizzes).filter(id => quizzes[id] && !quizzes[id].ok && oim.byId[id] && oim.byId[id].check).map(id => oim.byId[id]);
+
+    let mockHtml = '';
+    if(mockState && !mockState.done){
+      const qL = mockState.items[mockState.idx];
+      const curAns = mockState.answers[mockState.idx];
+      mockHtml = `
+        <div class="pm-qcard" id="pmQCard">
+          <div class="pm-qtop">
+            <span>SAWAL ${mockState.idx + 1} / ${mockState.items.length} · ${esc(qL.c.name)}</span>
+            <span class="pm-qtimer ${mockState.secLeft <= 25 ? 'low' : ''}" id="pmQTimer">⏱ ${fmtSec(mockState.secLeft)}</span>
+          </div>
+          <p class="pm-qq">${mdInline(qL.check.q)}</p>
+          <div style="display:grid;gap:7px" id="pmQOpts">
+            ${qL.check.a.map((opt, oi) => {
+              let cls = 'opt';
+              if(curAns != null){
+                if(oi === qL.check.c) cls += ' right';
+                else if(oi === curAns) cls += ' wrong';
+              }
+              return `<button type="button" class="${cls}" data-mopt="${oi}" ${curAns != null ? 'disabled' : ''}><span class="k">${'ABCD'[oi]}</span><span>${mdInline(opt)}</span></button>`;
+            }).join('')}
+          </div>
+          ${curAns != null ? `<p class="pm-qwhy"><b>${curAns === qL.check.c ? 'Sahi jawab!' : 'Galat jawab.'}</b> ${mdInline(qL.check.why || '')}</p>` : ''}
+          <div class="pm-qfoot">
+            <button type="button" class="btn ghost" id="pmQQuit">Test band karo</button>
+            ${curAns != null ? `<button type="button" class="btn" id="pmQNext">${mockState.idx + 1 < mockState.items.length ? 'Agla sawal →' : 'Result dekho'}</button>` : '<span class="note">Option chuno</span>'}
+          </div>
+        </div>`;
+    } else if(mockState && mockState.done){
+      const rightCt = mockState.items.filter((l, i) => mockState.answers[i] === l.check.c).length;
+      const missedInMock = mockState.items.filter((l, i) => mockState.answers[i] !== l.check.c);
+      const pctScore = Math.round(rightCt / mockState.items.length * 100);
+      mockHtml = `
+        <div class="pm-qcard">
+          <div class="pm-qtop"><span>MOCK TEST POORA HUA</span><span>${pctScore}% ACCURACY</span></div>
+          <p class="pm-qq">${rightCt} / ${mockState.items.length} sawal sahi! ${pctScore >= 80 ? 'Shabaash — zabardast pakad hai!' : pctScore >= 50 ? 'Achhi koshish — neeche wale topics ek baar phir dekho.' : 'Koi baat nahi — neeche diye lessons khol ke concept pakka karo.'}</p>
+          ${missedInMock.length ? `<div class="pm-list">${missedInMock.map(l => `
+            <div class="pm-item">
+              <div class="pm-item-txt">
+                <a href="#${esc(l.id)}" data-close="1">${esc(l.title)}</a>
+                <small>${esc(l.c.name)} · Sahi jawab: ${mdInline(l.check.a[l.check.c])}</small>
+              </div>
+              <a class="btn ghost" href="#${esc(l.id)}" data-close="1">Lesson kholo</a>
+            </div>`).join('')}</div>` : ''}
+          <div class="pm-actions">
+            <button type="button" class="btn" id="pmQAgain">Naya 10-Sawal Test</button>
+            <button type="button" class="btn ghost" id="pmQReset">Wapas</button>
+          </div>
+        </div>`;
+    }
+
+    body.innerHTML = `
+      <section class="psec">
+        <div class="psec-hd"><h4>Rapid-Fire Mock Test (10 MCQs)</h4><span>Galat aur naye sawal pehle aate hain</span></div>
+        <div class="pm-qbar">
+          <label for="pmQCourse" style="font-size:13.5px;font-weight:600">Course:</label>
+          <select id="pmQCourse">
+            <option value="all" ${selCourse === 'all' ? 'selected' : ''}>Saare courses (${oim.ALL.length} lessons)</option>
+            ${courses.map(c => `<option value="${esc(c.id)}" ${selCourse === c.id ? 'selected' : ''}>${esc(c.name)} (${c.lessons.length})</option>`).join('')}
+          </select>
+          <button type="button" class="btn" id="pmQStart">${mockState && !mockState.done ? 'Naye sire se shuru karo' : 'Mock Test shuru karo'}</button>
+        </div>
+        ${mockHtml}
+      </section>
+
+      <section class="psec">
+        <div class="psec-hd"><h4>Galat sawalon ka Revision</h4><span>${wrongList.length} baaki</span></div>
+        ${wrongList.length ? `<p class="pm-lead">In lessons ke Test sawal pichhli baar galat hue the. Yahin dobara jawab do (+20 XP) ya lesson khol ke animation dekho.</p>
+          <div class="pm-list">${wrongList.map(l => `
+            <div class="pm-rev-item" data-rev="${esc(l.id)}">
+              <div class="pm-item-row">
+                <div class="pm-item-txt">
+                  <a href="#${esc(l.id)}" data-close="1">${esc(l.title)}</a>
+                  <small>${esc(l.c.name)} · ${esc(l.secName)}</small>
+                </div>
+                <a class="btn ghost" href="#${esc(l.id)}" data-close="1">Lesson</a>
+              </div>
+              <p style="margin:0;font-weight:600;font-size:14px">${mdInline(l.check.q)}</p>
+              <div style="display:grid;gap:6px">
+                ${l.check.a.map((opt, oi) => `<button type="button" class="opt" data-ropt="${oi}" data-lid="${esc(l.id)}"><span class="k">${'ABCD'[oi]}</span><span>${mdInline(opt)}</span></button>`).join('')}
+              </div>
+              <p class="pm-qwhy" data-rwhy="${esc(l.id)}" hidden></p>
+            </div>`).join('')}</div>`
+          : '<p class="pm-empty">Badhiya! Abhi koi galat quiz sawal pending nahi hai. Upar se 10-sawal ka Rapid-Fire Mock Test chala ke apni taiyari check karo.</p>'}
+      </section>
+    `;
+
+    body.querySelectorAll('[data-close]').forEach(a => a.addEventListener('click', closeProfileModal));
+    $('pmQStart').addEventListener('click', () => startMock($('pmQCourse').value));
+    if($('pmQAgain')) $('pmQAgain').addEventListener('click', () => startMock($('pmQCourse').value));
+    if($('pmQReset')) $('pmQReset').addEventListener('click', () => { mockState = null; renderModalTab('revision'); });
+    if($('pmQQuit')) $('pmQQuit').addEventListener('click', () => { mockState = null; renderModalTab('revision'); });
+
+    if(mockState && !mockState.done){
+      mockTimer = setInterval(() => {
+        if(!mockState || mockState.done || $('pModalBack').hidden || activeModalTab !== 'revision'){ stopMockTimer(); return; }
+        mockState.secLeft = Math.max(0, mockState.secLeft - 1);
+        const tEl = $('pmQTimer');
+        if(tEl){ tEl.textContent = '⏱ ' + fmtSec(mockState.secLeft); tEl.classList.toggle('low', mockState.secLeft <= 25); }
+        if(mockState.secLeft <= 0){ stopMockTimer(); mockState.done = true; renderModalTab('revision'); }
+      }, 1000);
+
+      body.querySelectorAll('[data-mopt]').forEach(b => b.addEventListener('click', () => {
+        if(mockState.answers[mockState.idx] != null) return;
+        const chosen = +b.dataset.mopt;
+        const qL = mockState.items[mockState.idx];
+        mockState.answers[mockState.idx] = chosen;
+        recordAttempt(qL.id, chosen, chosen === qL.check.c);
+        renderModalTab('revision');
+      }));
+      if($('pmQNext')) $('pmQNext').addEventListener('click', () => {
+        if(mockState.idx + 1 < mockState.items.length) mockState.idx++;
+        else mockState.done = true;
+        renderModalTab('revision');
+      });
+    }
+
+    body.querySelectorAll('[data-ropt]').forEach(b => b.addEventListener('click', () => {
+      const lid = b.dataset.lid, chosen = +b.dataset.ropt, l = oim.byId[lid];
+      if(!l || !l.check) return;
+      const card = body.querySelector(`[data-rev="${lid}"]`);
+      card.querySelectorAll('[data-ropt]').forEach(x => {
+        x.disabled = true;
+        const j = +x.dataset.ropt;
+        if(j === l.check.c) x.classList.add('right');
+        else if(j === chosen) x.classList.add('wrong');
+      });
+      const ok = chosen === l.check.c;
+      recordAttempt(lid, chosen, ok);
+      const why = card.querySelector(`[data-rwhy="${lid}"]`);
+      if(why){
+        why.innerHTML = '<b>' + (ok ? 'Sahi jawab! (+20 XP — revision list se clear ho gaya)' : 'Abhi bhi galat — explanation padho:') + '</b> ' + mdInline(l.check.why || '');
+        why.hidden = false;
+      }
     }));
   }
 

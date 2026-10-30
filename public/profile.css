@@ -145,6 +145,19 @@
 /* lesson Notes tab */
 .note-box{display:grid;gap:8px}
 
+/* Revision & Rapid-Fire Quiz tab */
+.pm-qbar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;padding:12px 14px;border:1px solid var(--line);border-radius:9px;background:var(--panel-2)}
+.pm-qbar select{height:34px;padding:0 10px;border-radius:7px;border:1px solid var(--line);background:var(--panel);font-size:13.5px}
+.pm-qcard{display:grid;gap:12px;padding:16px;border:1px solid var(--line);border-radius:10px;background:var(--panel)}
+.pm-qtop{display:flex;justify-content:space-between;align-items:center;gap:10px;font:600 12px/1.2 var(--f-mono);color:var(--muted)}
+.pm-qtimer{padding:4px 8px;border-radius:6px;background:var(--accent-soft);color:var(--accent);font-variant-numeric:tabular-nums}
+.pm-qtimer.low{background:var(--danger-soft);color:var(--danger)}
+.pm-qq{margin:0;font:600 15.5px/1.45 var(--f-body);color:var(--ink)}
+.pm-qwhy{margin:0;padding:10px 12px;border-radius:8px;background:var(--panel-2);font-size:13.5px;line-height:1.5;color:var(--muted)}
+.pm-qwhy b{color:var(--ink)}
+.pm-qfoot{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.pm-rev-item{display:grid;gap:10px;padding:14px 0;border-bottom:1px solid var(--line)}
+
 @media (max-width:760px){
   .pmodal{grid-template-columns:minmax(0,1fr);grid-template-rows:auto minmax(0,1fr);height:min(92vh,760px)}
   .pm-rail{flex-direction:column;gap:12px;padding:14px 12px 0;border-right:0;border-bottom:1px solid var(--line);overflow:visible}

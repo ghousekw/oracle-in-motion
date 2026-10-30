@@ -1,0 +1,20 @@
+{
+  "name": "Oracle in Motion",
+  "short_name": "Oracle in Motion",
+  "description": "Animated Oracle SQL, PL/SQL, Functions, DBA, Forms, Reports & Python course in Hinglish with Hindi voice-over and in-browser Oracle simulator.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#0D141B",
+  "theme_color": "#141E28",
+  "lang": "hi",
+  "icons": [
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
+
