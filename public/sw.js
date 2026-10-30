@@ -1,7 +1,21 @@
 'use strict';
-const SHELL_CACHE = 'oim-shell-v4';
+const SHELL_CACHE = 'oim-shell-v5';
 const VOICE_CACHE = 'oim-voice-v1';
-const SHELL_FILES = ['./', './index.html', './profile.css', './profile.js', './linux.js', './icon.svg', './manifest.webmanifest'];
+const SHELL_FILES = [
+  './',
+  './index.html',
+  './app.css',
+  './profile.css',
+  './motion.js',
+  './sim.js',
+  './lessons-oracle.js',
+  './linux.js',
+  './audio-map.js',
+  './app.js',
+  './profile.js',
+  './icon.svg',
+  './manifest.webmanifest'
+];
 
 self.addEventListener('install', event => {
   event.waitUntil(
@@ -22,8 +36,6 @@ async function serveVoiceWithRange(req) {
   const cleanUrl = req.url;
   let full = await cache.match(cleanUrl);
   if (!full) {
-    // If browser sent a Range header and we don't have the full MP3 cached yet, let network handle Range directly
-    // and warm the full MP3 in the background for offline replay.
     if (req.headers.has('range')) {
       fetch(cleanUrl).then(r => { if (r && r.status === 200) cache.put(cleanUrl, r); }).catch(() => {});
       return fetch(req);
@@ -62,15 +74,20 @@ self.addEventListener('fetch', event => {
     return;
   }
 
-  // Network-first for HTML/CSS/JS shell so updates appear immediately, falling back to cache offline
+  // Stale-while-revalidate for instant page load from cache while refreshing in background
   event.respondWith(
-    fetch(req).then(res => {
-      if (res && res.status === 200) {
-        const copy = res.clone();
-        caches.open(SHELL_CACHE).then(c => c.put(req, copy)).catch(() => {});
-      }
-      return res;
-    }).catch(() => caches.match(req).then(hit => hit || (req.mode === 'navigate' ? caches.match('./index.html') : Response.error())))
+    caches.open(SHELL_CACHE).then(async cache => {
+      const cached = await cache.match(req);
+      const netPromise = fetch(req).then(res => {
+        if (res && res.status === 200) {
+          cache.put(req, res.clone()).catch(() => {});
+        }
+        return res;
+      }).catch(() => null);
+      if (cached) return cached;
+      const net = await netPromise;
+      if (net) return net;
+      return req.mode === 'navigate' ? cache.match('./index.html') : Response.error();
+    })
   );
 });
-
